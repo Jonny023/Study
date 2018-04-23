@@ -196,7 +196,7 @@ endpoints:
     jmx:
         unique-names: true
 ```
-使用数据源的时候请注意，官网文档还有网上很多解释都是用def dataSource_one这样来注入数据源，经过几番测试，事实并不是这样，默认的数据源def dataSource可以在service和controller这样来注入，但是如果定义了多数据源，比如在service或者controller中注入数据源，必须以"dataSource_"开头来注入，其他方式注入都为null，注入方式如下：
+> 使用数据源的时候请注意，官网文档还有网上很多解释都是用def dataSource_one这样来注入数据源，经过几番测试，事实并不是这样，默认的数据源def > dataSource可以在service和controller这样来注入，但是如果定义了多数据源，比如在service或者controller中注入数据源，必须以"dataSource_"开头来注入，> 其他方式注入都为null，注入方式如下：
 ```
 package grails_multi_datasource
 
