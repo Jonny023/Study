@@ -2,7 +2,6 @@ build.gradle依赖：
 ```
 //报表依赖
 compile "net.sf.jasperreports:jasperreports:5.6.1"
-//compile "com.lowagie:itext:2.1.7.js2"
 compile "com.lowagie:itext:2.1.7"
 compile 'org.olap4j:olap4j:1.2.0'
 //此包来自ireport设计器下面
