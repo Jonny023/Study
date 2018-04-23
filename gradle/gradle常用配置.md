@@ -8,7 +8,6 @@ allprojects {
         maven { url "https://repo.grails.org/grails/core" }
     }
 }
-```
 
 
 //启动时加载
