@@ -153,6 +153,42 @@ class BootStrap {
 ```
 ### 注意：注释掉auth里面的注销方法里面的：webRequest.getCurrentRequest().session = null这句话，不然会报错
 
+## 如何开放权限，比如某个功能无需登录即可访问，可以通过拦截器来控制，但是需要注意优先级，值越小优先级越高
+```
+package com.system
+
+
+class IndexInterceptor {
+
+    int order = HIGHEST_PRECEDENCE+100
+
+    static anon = ["index"]
+
+    IndexInterceptor() {
+        match(controller: "index",action: "*")
+    }
+
+    boolean before() {
+
+        //无需登录的权限
+        if(actionName in anon) {
+            println "success..."
+            return true
+        }else{
+            accessControl(auth: true)
+        }
+
+
+    }
+
+    boolean after() { true }
+
+    void afterView() {
+        // no-op
+    }
+}
+```
+
 ftl模板文件中如何使用权限控制标签呢？
 ```
 <#include "header.ftl"/>
