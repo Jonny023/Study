@@ -4,3 +4,7 @@ svn更新/提交文件冲突解决：
 ```
 svn revert --depth=infinity .
 ```
+svn清理
+```
+svn cleanup
+```
