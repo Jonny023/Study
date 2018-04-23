@@ -12,7 +12,8 @@ def username = springSecurityService?.principal?.username
 获取登录用户角色(集合)
 
 ```
-def roles = springSecurityService.getPrincipal().getAuthorities() //or springSecurityService.authentication.authorities //or springSecurityService?.principal?.authorities
+def roles = springSecurityService.getPrincipal().getAuthorities() 
+//or springSecurityService.authentication.authorities //or springSecurityService?.principal?.authorities
 
 ```
 清理requestmap缓存
