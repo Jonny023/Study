@@ -7,8 +7,9 @@ compile 'org.grails.plugins:quartz:2.0.0.M4'
 创建一个job，执行命令：
 ```
 create-job com.test.Test
+```
 修改TestJob：
-
+```
 package com.test
 
 class TestJob {
