@@ -1,3 +1,8 @@
+build.gradle
+```
+compile 'mysql:mysql-connector-java:5.1.38'
+```
+
 ```
 dataSource:
     pooled: true
@@ -9,5 +14,6 @@ dataSource:
 environments:
     development:
         dataSource:
-            dbCreate: jdbc:mysql://localhost/test?createDatabaseIfNotExist=true&useUnicode=true&amp;characterEncoding=UTF-8&useSSL=false
+            dbCreate: update
+            url: jdbc:mysql://localhost/test?createDatabaseIfNotExist=true&useUnicode=true&amp;characterEncoding=UTF-8&useSSL=false
 ```
