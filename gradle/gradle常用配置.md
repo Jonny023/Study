@@ -25,7 +25,7 @@ compileJava {
     options.compilerArgs << "-Xlint:unchecked"
 }
 ```
-如需将项目的gradle-wapper.properties中的distributionUrl配置问本地zip，配置如下
+如需将项目的gradle-wapper.properties中的distributionUrl配置为本地zip，配置如下
 
 ```
 #Fri Nov 27 23:09:32 CET 2015
