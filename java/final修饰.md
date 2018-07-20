@@ -10,8 +10,8 @@
 
 ## final修饰不可修改案例
   
-  1.基本数据类型不可修改  final int a = 0; a = 2;(这里a=2将会报错)
-  2.引用数据类型不可修改  final User u = null; u = new User();(u=new User()将会报错)
+  * 1.基本数据类型不可修改  final int a = 0; a = 2;(这里a=2将会报错)
+  * 2.引用数据类型不可修改  final User u = null; u = new User();(u=new User()将会报错)
   
 ## static和final容易
 
