@@ -1,0 +1,20 @@
+> resources本来为资源目录，目录上应该有个特殊的标识，如果没有就需要在pom中添加如下配置
+```
+<build>
+        <finalName>Strike</finalName>
+        <resources>
+            <!--编译之后包含xml-->
+            <resource>
+                <directory>src/main/java</directory>
+                <includes>
+                    <include>**/*.xml</include>
+                </includes>
+                <filtering>true</filtering>
+            </resource>
+            <!--解决maven项目resources目录显示为普通目录问题-->
+            <resource>
+                <directory>src/main/resources</directory>
+            </resource>
+        </resources>
+</bulid>
+```
