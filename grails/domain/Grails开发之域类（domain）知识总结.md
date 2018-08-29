@@ -45,7 +45,7 @@ def beforeValidate() {}
 def afterValidate() {}
 def onLoad() {}
 ```
-3、在domain中使用mapping映射
+3、在domain中使用mapping映射(使用composite联合主键必须实现序列化接口)
 ```
 static mapping = {
     //使用composite组合id是域类必须实现implements Serializable接口
