@@ -5,7 +5,8 @@ import ch.qos.logback.core.spi.FilterReply
 // See http://logback.qos.ch/manual/groovy.html for details on configuration
 appender('STDOUT', ConsoleAppender) {
     encoder(PatternLayoutEncoder) {
-        pattern = "%-4(%d{HH:mm:ss.SSS} [%thread]) %-5level %logger{32} \\(%file:%line\\) - %msg%n"
+        //pattern = "%-4(%d{HH:mm:ss.SSS} [%thread]) %-5level %logger{32} \\(%file:%line\\) - %msg%n"
+        pattern = "%-4(%d{HH:mm:ss.SSS} | [%thread]) %-5level | %logger | \\(%class:%line\\) - %msg%n"
     }
 }
 logger("console",ERROR,['STDOUT'],false)
@@ -31,7 +32,8 @@ appender("ERROR", RollingFileAppender) {
         //默认为pattern = "%level %logger - %msg%n"
         //%d表示日期，%thread表示线程名，%level日志级别，%file具体的文件，%line记录日志位置，%msg日志消息，%n换行符
 //        pattern = "%-4(%d{HH:mm:ss.SSS} [%thread]) %-5level %logger{32} \\(%file:%line\\) - %msg%n"
-        pattern = "%-4(%d{HH:mm:ss.SSS} [%thread]) %-5level %logger{32} \\(%F:%L\\) - %msg%n"
+        //pattern = "%-4(%d{HH:mm:ss.SSS} [%thread]) %-5level %logger{32} \\(%F:%L\\) - %msg%n"
+        pattern = "%-4(%d{HH:mm:ss.SSS} | [%thread]) %-5level | %logger | \\(%class:%line\\) - %msg%n"
     }
     //指定日志生成格式
     rollingPolicy(TimeBasedRollingPolicy) {
