@@ -7,13 +7,13 @@ server {
     server_name  localhost;
      
     location / {
-        proxy_pass http://192.168.1.216/test/;
+        proxy_pass http://192.168.1.10:9999/test/;
         proxy_set_header   Host    $host;
         proxy_set_header   X-Real-IP   $remote_addr;
         proxy_set_header   X-Forwarded-For $proxy_add_x_forwarded_for;
     }
     location /test/ {
-        proxy_pass http://192.168.1.216/test/;
+        proxy_pass http://192.168.1.10:9999/test/;
         proxy_set_header   Host    $host;
         proxy_set_header   X-Real-IP   $remote_addr;
         proxy_set_header   X-Forwarded-For $proxy_add_x_forwarded_for;
