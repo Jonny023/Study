@@ -1,4 +1,4 @@
-配置全局仓库
+> 配置全局仓库
 ```
 //配置全局仓库
 allprojects {
@@ -25,7 +25,7 @@ compileJava {
     options.compilerArgs << "-Xlint:unchecked"
 }
 ```
-如需将项目的gradle-wapper.properties中的distributionUrl配置为本地zip，配置如下
+> 如需将项目的gradle-wapper.properties中的distributionUrl配置为本地zip，配置如下
 
 ```
 #Fri Nov 27 23:09:32 CET 2015
@@ -36,7 +36,7 @@ zipStorePath=wrapper/dists
 #distributionUrl=https\://services.gradle.org/distributions/gradle-3.5-bin.zip
 distributionUrl=file:///D:/gradle-3.5-bin.zip
 ```
-解决运行时jdk path文件名过长问题
+> 解决运行时jdk path文件名过长问题
 ```
 //解决运行时提示path文件名过长的问题
 ext {
@@ -45,8 +45,9 @@ ext {
         pathingJar = true
     }
 }
-
-//打包为指定名称
+```
+> 打包为指定名称
+```
 war {
     archiveName 'test.war'
 }
