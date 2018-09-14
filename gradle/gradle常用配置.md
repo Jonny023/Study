@@ -45,4 +45,9 @@ ext {
         pathingJar = true
     }
 }
+
+//打包为指定名称
+war {
+    archiveName 'test.war'
+}
 ```
