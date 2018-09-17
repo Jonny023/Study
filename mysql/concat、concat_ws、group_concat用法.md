@@ -1,4 +1,4 @@
-> concat函数
+## concat函数
 * 数据拼接，拼接字符
 * 可以有N多个参数
 * 可以配合like使用
@@ -20,7 +20,7 @@ select * from user where nickname like concat("%","李","%");
 select * from user where nickname like "%李%";
 ```
 
-> concat_ws()函数
+## concat_ws()函数
 * 分隔多个字符
 * 第一个参数指定分隔符。需要注意的是分隔符不能为null，如果为null，则返回结果为null。
 * 可以有N多个参数
@@ -38,7 +38,7 @@ select concat_ws("|",1,2,3,4);
 1|2|3|4
 ```
 
-> group_concat函数
+## group_concat函数
 功能：将group by产生的同一个分组中的值连接起来，返回一个字符串结果。
 语法：group_concat( [distinct] 要连接的字段 [order by 排序字段 asc/desc  ] [separator '分隔符'] )
 
@@ -55,7 +55,7 @@ GROUP BY
   
 结果：
 |config_attribute|GROUP_CONCAT(id)|
-|----------------|----------------|
+|:----------------|----------------:|
 |permitAll|2,3,4,5,6,7,8,9,10,11,1|
 |ROLE_ADMIN|19,20,25,26,27,28,29,3|
 ```
