@@ -53,7 +53,9 @@ FROM
 GROUP BY
 	config_attribute
 ```
-结果：
+
+> 结果：
+
 | config_attribute | GROUP_CONCAT(id) |
 | :----------------: | :---------------- |
 | permitAll | 2,3,4,5,6,7,8,9,10,11,1 |
