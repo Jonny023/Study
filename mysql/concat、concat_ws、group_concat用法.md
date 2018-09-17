@@ -52,10 +52,9 @@ FROM
 	`requestmap` 
 GROUP BY
 	config_attribute
-  
+```
 结果：
 | config_attribute | GROUP_CONCAT(id) |
 | :----------------: | :---------------- |
 | permitAll | 2,3,4,5,6,7,8,9,10,11,1 |
 | ROLE_ADMIN | 19,20,25,26,27,28,29,3 |
-```
