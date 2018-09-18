@@ -4,8 +4,10 @@
 allprojects {
     repositories {
         mavenLocal()
+        maven { url "https://repo.huaweicloud.com/repository/maven/" }
         maven { url "http://maven.aliyun.com/nexus/content/groups/public" }
         maven { url "https://repo.grails.org/grails/core" }
+        maven { url "http://jasperreports.sourceforge.net/maven2/" }
     }
 }
 
