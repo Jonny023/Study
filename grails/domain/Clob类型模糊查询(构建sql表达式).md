@@ -1,3 +1,13 @@
+> 域类字段为clob类型
+```
+class Test {
+    Clob newsContent
+    
+    static mapping = {
+        newsContent sqlType: "text"
+    }
+}
+```
 > 通过createCriteria()来实现
 ```
 Test.createCriteria().list {
