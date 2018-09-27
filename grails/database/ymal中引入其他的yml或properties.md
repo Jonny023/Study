@@ -14,7 +14,7 @@
 ```
 ### 注意，不能换行，include:下面的test,api,jdbc，多个用英文逗号分隔
 
-* 然后再程序中就同时可以访问test,prod,dev中的东西了
+* 然后在程序中就同时可以访问test,prod,dev中的东西了
 ```
   @Value('${qq.key}')
   private String qq
