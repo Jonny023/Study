@@ -5,24 +5,25 @@
   application-dev.yml
   
 * 然后再在application.yml中添加配置
-  
+```  
   spring:
     profiles:
         include:
             test,api,jdbc
-            
+```
 ### 注意，不能换行，include:下面的test,api,jdbc，多个用英文逗号分隔
 
 * 然后再程序中就同时可以访问test,prod,dev中的东西了
-  
-    @Value('${qq.key}')
-    private String qq
+```
+  @Value('${qq.key}')
+  private String qq
 
-    @Value('${weixin.key}')
-    private String weixin
+  @Value('${weixin.key}')
+  private String weixin
 
-    @Value('${a.b.c}')
-    private String t
+  @Value('${a.b.c}')
+  private String t
 
-    @Value('${aa.bb}')
-    private String tt
+  @Value('${aa.bb}')
+  private String tt
+```
