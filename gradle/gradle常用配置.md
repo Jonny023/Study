@@ -54,3 +54,19 @@ war {
     archiveName 'test.war'
 }
 ```
+
+* 加载application.properties文件，但只能加载application.properties，其他名字的properties不能加载
+```
+bootRun {
+    systemProperties = System.properties
+}
+```
+
+* 加载properties文件的另一种写法，没测试
+```
+bootRun {
+  doFirst {
+    bootRun.systemProperties = localBootRunProperties()
+  }
+}
+```
