@@ -5,7 +5,7 @@ var obj = document.getElementById('sel');
 var elem = obj.options[obj.selectedIndex];
 ```
 
-* 隐藏选中的option
+* 隐藏当前选中的option，显示之前隐藏的
 
 ```
 <select id="sel">
@@ -18,11 +18,12 @@ var elem = obj.options[obj.selectedIndex];
 
 <script>
   document.getElementById('sel').onchange=function(){
-    var elem = this.options[this.selectedIndex];
-    console.log(elem);
-    if(elem.value !=''){
-      elem.style = "display:none";
+    var ops = this.children,len = ops.length;
+    for(var i=0;i<len;i++) {
+      ops[i].style = "display:block";
     }
+    var elem = this.options[this.selectedIndex];								
+    elem.style = "display:none";
 
   };
 </script>
