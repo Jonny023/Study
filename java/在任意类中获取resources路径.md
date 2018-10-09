@@ -40,5 +40,3 @@ Resource resource = new ClassPathResource("/file");
         e.printStackTrace();
     }
 ```
-
-```
