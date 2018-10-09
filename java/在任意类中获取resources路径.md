@@ -24,7 +24,7 @@ public class T {
 }
 ```
 
-### 通过spring获取resources路径
+### 通过spring获取resources路径(需要spring-core核心包)
 
 ```
 Resource resource = new ClassPathResource("/file");
