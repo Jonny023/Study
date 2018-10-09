@@ -1,10 +1,10 @@
-* 获取resources路径
+### 通过jdk自带方法获取resources路径
 
 ```
 this.getClass().getResource("/").getPath();
 ```
 
-#### 例子
+* 例子
 
 ```
 package a;
@@ -22,5 +22,22 @@ public class T {
         System.out.println(file.exists());
     }
 }
+
+### 通过spring获取resources路径
+
+```
+Resource resource = new ClassPathResource("/file");
+```
+
+* 例子
+
+```
+    Resource resource = new ClassPathResource("/file");
+    try {
+        System.out.println(resource.getFile().getPath());
+    } catch (IOException e) {
+        e.printStackTrace();
+    }
+```
 
 ```
