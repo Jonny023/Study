@@ -1,4 +1,13 @@
-### 常用命令行
+# 常用命令行
+
+### 配置全局用户名和邮箱
+
+```
+git config user.name --global "Jonny"
+git config user.email --global "342418262@qq.com"
+```
+
+### 上传到git服务器
 
 ```
 echo "# demo" >> README.md
