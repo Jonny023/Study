@@ -79,3 +79,9 @@ git fetch
 ```
 git pull
 ```
+
+### 合并分支
+
+```
+git merge branchName
+```
