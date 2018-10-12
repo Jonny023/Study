@@ -41,7 +41,7 @@ cnpm -v
   + 如：:\Program Files\nodejs\node_global下，则将此路径追加到path中
 
 
-* 常用命令
+### 常用命令
 
 ```
 # install dependencies
