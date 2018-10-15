@@ -26,4 +26,4 @@ Test.createCriteria().list {
 }
 ```
 
-### `newsContent sqlType: "text" `仅适用于mysql数据库，若是oracle数据库，字需用"CLOB"
+### `newsContent sqlType: "text" `仅适用于mysql数据库，若是oracle数据库，则需用"CLOB"
