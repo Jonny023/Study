@@ -13,22 +13,22 @@
 ```
 http {
 	
-	upstream local {
+    upstream local {
         server 127.0.0.1:8889;
         server 127.0.0.1:8880;
         ip_hash;  # 解决session共享问题
-  }
+    }
 	
-	server {
+    server {
 	
         listen       80;
         server_name  localhost;
 			
-		location / {
-			charset utf-8,gbk;  #解决中文乱码问题。
-			proxy_pass http://local;
-		}
+	location / {
+	    charset utf-8,gbk;  # 解决中文乱码问题。
+	    proxy_pass http://local;
 	}
+    }
   
 }
 ```
