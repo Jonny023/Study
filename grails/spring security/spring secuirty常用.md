@@ -160,3 +160,27 @@ new Requestmap(url: '/admin/user/**', configAttribute: 'ROLE_ADMIN,ROLE_SUPERVIS
 new Requestmap(url: '/j_spring_security_switch_user',
                configAttribute: 'ROLE_SWITCH_USER,isFullyAuthenticated()').save()
 ```
+
+### Annotation和InterceptUrlMap可以配合注解使用
+
+#### 常用注解
+
+```
+@Secured(['ROLE_ADMIN'])
+
+@Secured(['ROLE_ADMIN', 'ROLE_SUPERUSER'])
+
+@Secured(closure = {
+   assert request
+   assert ctx
+   authentication.name == 'admin1'
+})
+
+@Secured(value = ['ROLE_ADMIN'], httpMethod = 'GET')
+
+@Secured(["hasRole('ROLE_ADMIN')"])
+
+@Secured(["authentication.name == 'admin'"])
+
+```
+
