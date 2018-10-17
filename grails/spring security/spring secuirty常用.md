@@ -75,7 +75,7 @@ springSecurityService.clearCachedRequestmaps()
 authentication.name=='admin'
 ```
 
-*表达式对照
+* 表达式对照
 
 | 标识 | 表达式 |
 | ------ | ------ |
