@@ -1,8 +1,10 @@
 * 注入服务
+
 ```
 def springSecurityService
 
 ```
+
 * 获取登录用户
 
 ```
@@ -16,6 +18,7 @@ def roles = springSecurityService.getPrincipal().getAuthorities()
 //or springSecurityService.authentication.authorities //or springSecurityService?.principal?.authorities
 
 ```
+
 * 清理requestmap缓存
 
 ```
