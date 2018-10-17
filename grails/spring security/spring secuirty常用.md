@@ -1,29 +1,29 @@
-注入服务
+* 注入服务
 ```
 def springSecurityService
 
 ```
-获取登录用户
+* 获取登录用户
 
 ```
 def username = springSecurityService?.principal?.username
 
 ```
-获取登录用户角色(集合)
+* 获取登录用户角色(集合)
 
 ```
 def roles = springSecurityService.getPrincipal().getAuthorities() 
 //or springSecurityService.authentication.authorities //or springSecurityService?.principal?.authorities
 
 ```
-清理requestmap缓存
+* 清理requestmap缓存
 
 ```
 springSecurityService.clearCachedRequestmaps()
 
 ```
 
-gsp页面标签
+* gsp页面标签
 
 ```
 //未登录
@@ -65,3 +65,11 @@ gsp页面标签
 </sec:access>
 
 ```
+
+* 只允许账号为admin的访问
+
+```
+authentication.name=='admin'
+```
+
+
