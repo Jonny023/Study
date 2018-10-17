@@ -78,7 +78,7 @@ authentication.name=='admin'
 *表达式对照
 
 | 标识 | 表达式 |
-| ------ | ------ | ------ |
+| ------ | ------ |
 | ROLE_ADMIN | hasRole('ROLE_ADMIN') |
 | ROLE_USER,ROLE_ADMIN | hasAnyRole('ROLE_USER','ROLE_ADMIN') |
 | ROLE_ADMIN,IS_AUTHENTICATED_FULLY | hasRole('ROLE_ADMIN') and isFullyAuthenticated() |
