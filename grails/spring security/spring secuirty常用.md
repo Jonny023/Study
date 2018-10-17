@@ -86,7 +86,7 @@ authentication.name=='admin'
 | IS_AUTHENTICATED_REMEMBERED | isAuthenticated() or isRememberMe() |
 | IS_AUTHENTICATED_FULLY | isFullyAuthenticated() |
 
-### 集中配置方式
+### 几种配置方式
 
 * 默认配置Annotation
 
