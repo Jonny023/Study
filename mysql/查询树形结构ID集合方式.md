@@ -2,7 +2,7 @@
   * 写的返回长度为1000 可自定义
   * 记得替换你的表名及id pid
   
-1 1、查询子集
+1. 查询子集
 
 ```
 CREATE FUNCTION `getChildLst`(rootId INT) RETURNS varchar(1000) CHARSET gbk
@@ -20,7 +20,7 @@ SELECT GROUP_CONCAT(id) INTO sTempChd FROM 表名 WHERE FIND_IN_SET(pid,sTempChd
 END
 ```
 
-2 2、查询父集
+2. 查询父集
 
 ```
 CREATE FUNCTION `getFatherLst`(rootId INT) RETURNS varchar(1000) CHARSET gbk
@@ -45,6 +45,6 @@ END
 
 |参数|说明|
 |--|--|
-| rootId |	传入参数，变量（无需修改）|
+| rootId |	传入参数，变量（无需修改），调用时传入需查询的id|
 | id |	需要查询的id |
 | pid	| 需要查询记录的父id |
