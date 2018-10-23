@@ -23,7 +23,7 @@ npm -v
 
 * 新建系统变量`NODE_PATH`,值`C\Program Files\nodejs\node_global\node_modules`
 
-* 安装cnpm
+### 安装cnpm
   + 用淘宝镜像代替（速度快）[前往查看](https://npm.taobao.org/)
   + 执行cmd命令
   
