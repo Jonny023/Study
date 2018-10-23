@@ -4,7 +4,7 @@
   + [nodejs官网](https://nodejs.org/en/)
   
   
-* 安装完成，测试
+* 安装完成，在dos中分别输入如下指令测试
 
 ```
 node -v
