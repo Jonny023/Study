@@ -45,18 +45,18 @@ cnpm -v
 ### 常用命令
 
 ```
-# install dependencies
+# 安装依赖
 npm install
 
-# is error?
+# 出现错误?
 npm install webpack-dev-server -g
 
-# serve with hot reload at localhost:8080
+# 开发环境热部署 localhost:8080
 npm run dev
 
-# build for production with minification
+# 生产环境编译打包
 npm run build
 
-# build for production and view the bundle analyzer report
+# 生产环境编译打包并且生成报告
 npm run build --report
 ```
