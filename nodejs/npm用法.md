@@ -39,7 +39,7 @@ cnpm -v
 
 #### 注意
   + 若是提示没有版本，则需要将cnpm命令所在文件夹加入环境变量的path中
-  + 如：:\Program Files\nodejs\node_global下，则将此路径追加到path中
+  + 如：c:\Program Files\nodejs\node_global下，则将此路径追加到path中
 
 
 ### 常用命令
