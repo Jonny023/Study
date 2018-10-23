@@ -184,3 +184,12 @@ new Requestmap(url: '/j_spring_security_switch_user',
 
 ```
 
+### 访问控制台权限
+
+```
+grails.plugin.springsecurity.controllerAnnotations.staticRules = [
+    "/console/**":          ["hasRole('ROLE_ADMIN') && (hasIpAddress('127.0.0.1') || hasIpAddress('::1'))"],
+    "/plugins/console*/**": ["hasRole('ROLE_ADMIN') && (hasIpAddress('127.0.0.1') || hasIpAddress('::1'))"], // Grails 2.x
+    "/static/console/**":   ["hasRole('ROLE_ADMIN') && (hasIpAddress('127.0.0.1') || hasIpAddress('::1'))"], // Grails 3.x
+]
+```
