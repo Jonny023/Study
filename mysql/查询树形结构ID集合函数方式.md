@@ -50,4 +50,4 @@ END
 | id |	需要查询的id |
 | pid	| 需要查询记录的父id |
 
-+ 调用的时候用select getChildLst(20)及select getFatherLst(20)
++ 调用的时候用`select getChildLst(20)`及`select getFatherLst(20)`
