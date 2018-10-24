@@ -1,4 +1,5 @@
 ## 注意
+
   * 写的返回长度为1000 可自定义
   * 记得替换你的表名及id pid
   
@@ -48,3 +49,5 @@ END
 | rootId |	传入参数，变量（无需修改），调用时传入需查询的id|
 | id |	需要查询的id |
 | pid	| 需要查询记录的父id |
+
++ 调用的时候用select getChildLst(20)及select getFatherLst(20)
