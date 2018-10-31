@@ -66,3 +66,15 @@ update user set authentication_string = password("root") where user="root";
 net stop mysql
 net start mysql
 ```
+9、查看权限
+
+```
+show grants;
+```
+
+10、修改用户权限及密码
+
+```
+GRANT ALL ON *.* TO 'root'@'%' IDENTIFIED BY 'root';
+FLUSH PRIVILEGES;
+```
