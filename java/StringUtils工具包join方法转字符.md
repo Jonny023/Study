@@ -41,3 +41,6 @@ public static void main(String[] args) {
 > 执行结果
 
 ![](https://javaweb-community.oss-cn-beijing.aliyuncs.com/2018/1101/70907dcdf5b84e589bfe9b6b8a33fb46.png)
+
+## 注意
+* StringUtils转数组的时候，只能是Object类型的数组
