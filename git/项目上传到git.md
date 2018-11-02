@@ -94,3 +94,9 @@ git pull
 ```
 git merge branchName
 ```
+
+### 强制使用本地代码覆盖git仓库代码
+
+```
+git push -f
+```
