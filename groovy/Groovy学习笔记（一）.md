@@ -48,7 +48,7 @@ println ars - ars[-1]
 
 ***二、动态性***
 
-*groovy每个对象都有一个原类metaClass，可以通过metaClass访问该原类，动态删减方法，如下，通过调用metaClass给String添加了一个名为say的方法，在该方法中对字母进行转换，所有字母转为大写*
+*`groovy`每个对象都有一个原类`metaClass`，可以通过`metaClass`访问该原类，动态删减方法，如下，通过调用`metaClass`给`String`添加了一个名为`say`的方法，在该方法中对字母进行转换，所有字母转为大写*
 
 ~~~groovy
 def strs = "hello"
