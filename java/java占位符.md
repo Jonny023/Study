@@ -4,7 +4,7 @@
   * %d 数字型
   * %f 浮点型
   
-```
+```java
 String str = "%s或%s不能为空";
 System.out.println(String.format(str,"用户名","密码")); 
 // username或password不能为空
@@ -21,7 +21,7 @@ System.out.println(String.format(f,0f,0.1f));
 ### MessageFormat.format()
   * {0}xxx{1}xxx  {0}占位符号
 
-```
+```java
 String message = "{0}或{1}不能为空";
 System.out.println(MessageFormat.format(message,"username","password"));
 // 用户名或密码不能为空
