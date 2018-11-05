@@ -5,7 +5,7 @@
   
 1. 查询子集
 
-```
+```sql
 CREATE FUNCTION `getChildLst`(rootId INT) RETURNS varchar(1000) CHARSET gbk
     DETERMINISTIC
 BEGIN
@@ -23,7 +23,7 @@ END
 
 2. 查询父集
 
-```
+```sql
 CREATE FUNCTION `getFatherLst`(rootId INT) RETURNS varchar(1000) CHARSET gbk
     DETERMINISTIC
 BEGIN 
