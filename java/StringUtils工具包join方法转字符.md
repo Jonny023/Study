@@ -6,7 +6,7 @@
 
 ### 依赖
 
-```
+```xml
 <dependency>
 	<groupId>commons-lang</groupId>
 	<artifactId>commons-lang</artifactId>
@@ -17,7 +17,7 @@
 
 ### 具体代码
 
-```
+```java
 public static void main(String[] args) {
 
 	List list = new ArrayList();
