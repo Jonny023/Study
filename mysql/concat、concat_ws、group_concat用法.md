@@ -4,17 +4,17 @@
 * 可以配合like使用
 
 语法
-```
+```sql
 concat(str1, str2,...)
 ```
 
 > 简单用法
-```
+```sql
 select concat("123");
 ```
 
 > 例子
-```
+```sql
 select * from user where nickname like concat("%","李","%");
 等同于
 select * from user where nickname like "%李%";
@@ -26,12 +26,12 @@ select * from user where nickname like "%李%";
 * 可以有N多个参数
 
 > 语法
-```
+```sql
 concat_ws(separator, str1, str2, ...)
 ```
 
 > 例子
-```
+```sql
 select concat_ws("|",1,2,3,4);
 
 结果:
@@ -43,7 +43,7 @@ select concat_ws("|",1,2,3,4);
 语法：group_concat( [distinct] 要连接的字段 [order by 排序字段 asc/desc  ] [separator '分隔符'] )
 
 > 例子
-```
+```sql
 找出相同角色标识的id
 SELECT
 	config_attribute,
