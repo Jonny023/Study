@@ -1,5 +1,5 @@
 > resources本来为资源目录，目录上应该有个特殊的标识，如果没有就需要在pom中添加如下配置
-```
+```xml
 <build>
         <finalName>Strike</finalName>
         <resources>
