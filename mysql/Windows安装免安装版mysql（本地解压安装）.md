@@ -43,11 +43,11 @@ mysqld remove
 net start mysql
 ```
 5、输入mysql -u root -p，第一次没密码，直接回车
-```
+```sql
 mysql -u root -p
 ```
 6、修改root密码
-```
+```sql
 //查看数据库
 show databases;
 
@@ -68,13 +68,13 @@ net start mysql
 ```
 9、查看权限
 
-```
+```sql
 show grants;
 ```
 
 10、修改用户权限及密码
 
-```
+```sql
 GRANT ALL ON *.* TO 'root'@'%' IDENTIFIED BY 'root';
 FLUSH PRIVILEGES;
 ```
