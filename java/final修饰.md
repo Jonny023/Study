@@ -15,7 +15,7 @@
   
 ## static和final容易混淆？
 
-```
+```java
 public class T {
 
     public final double a = Math.random();
