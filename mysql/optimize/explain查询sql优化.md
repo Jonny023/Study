@@ -1,6 +1,6 @@
 * 通过如下sql查看条件扫描情况
 
-```
+```sql
 explain SELECT * FROM `jc_department` where id not in (1,24,25);
 ```
 
