@@ -20,7 +20,7 @@ lists.add([id: 3,name: "小飞"])
 println lists[-1]
 ~~~
 
-~~~
+~~~groovy
 //获取指定条件元素
 println lists.find {it.id>1}
 
@@ -50,7 +50,7 @@ println ars - ars[-1]
 
 *groovy每个对象都有一个原类metaClass，可以通过metaClass访问该原类，动态删减方法，如下，通过调用metaClass给String添加了一个名为say的方法，在该方法中对字母进行转换，所有字母转为大写*
 
-~~~
+~~~groovy
 def strs = "hello"
 def abc = "abcdef"
 println strs.metaClass
@@ -64,7 +64,7 @@ ABCDEF
 
 ***三、将对象转为json字符串***
 
-~~~
+~~~groovy
 def jsonString = JsonOutput.toJson([name:"张三",age:20])
 
 //将json字符串转换为json对象
