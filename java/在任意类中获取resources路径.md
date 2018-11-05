@@ -1,12 +1,12 @@
 ### 通过jdk自带方法获取resources路径
 
-```
+```java
 this.getClass().getResource("/").getPath();
 ```
 
 * 例子
 
-```
+```java
 package a;
 
 import java.io.File;
@@ -26,13 +26,13 @@ public class T {
 
 ### 通过spring获取resources路径(需要spring-core核心包)
 
-```
+```java
 Resource resource = new ClassPathResource("/file");
 ```
 
 * 例子
 
-```
+```java
     Resource resource = new ClassPathResource("/file");
     try {
         System.out.println(resource.getFile().getPath());
