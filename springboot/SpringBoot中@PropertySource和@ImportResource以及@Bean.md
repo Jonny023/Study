@@ -122,7 +122,7 @@ public class HelloServiceApplicationTests {
 
 ## 请注意
 
-> 方法名不能跟类名一样，也就是上面的Hello类中不能定义hello()的方法，否则报错
+> 若配置类已经加了@Bean注解，此时配置类中的方法名不能跟类名一样，也就是上面的Hello类中不能定义hello()的方法，否则报错
 
 
 
