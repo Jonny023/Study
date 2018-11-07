@@ -22,7 +22,7 @@
 - `user.firstName`  标准方式
 - `user.first-name`  第二个大写字母用-
 - `user.first_name`  第二个大写字母用_
-- `USER_FIRST_NAME`
+- `user.FIRST_NAME`
 
 ### JSR303数据校验
 
