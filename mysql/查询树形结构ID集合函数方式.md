@@ -4,7 +4,7 @@
   * 记得替换你的表名及id pid
   
 1. 查询子集
-
+> 1.1 前面带了一个逗号",1,5,9,20"
 ```sql
 CREATE FUNCTION `getChildLst`(rootId INT) RETURNS varchar(1000) CHARSET gbk
     DETERMINISTIC
@@ -18,6 +18,79 @@ SET sTemp = CONCAT(sTemp,',',sTempChd);
 SELECT GROUP_CONCAT(id) INTO sTempChd FROM 表名 WHERE FIND_IN_SET(pid,sTempChd)>0;
    END WHILE;
    RETURN sTemp;
+END
+```
+
+> 1.2 不带逗号"1,5,9,20"
+```sql
+CREATE DEFINER=`root`@`%` FUNCTION `getChildLst`( rootId INT ) RETURNS varchar(1000) CHARSET gbk
+    DETERMINISTIC
+BEGIN
+	DECLARE
+		sTemp VARCHAR ( 1000 );
+	DECLARE
+		sTempChd VARCHAR ( 1000 );
+	
+	SET sTemp = '';
+	
+	SET sTempChd = CAST( rootId AS CHAR );
+	WHILE
+			sTempChd IS NOT NULL DO
+		IF
+			( sTemp = '' ) THEN
+				
+				SET sTemp = sTempChd;
+			ELSE 
+				SET sTemp = CONCAT( sTemp, ',', sTempChd );
+			
+		END IF;
+		SELECT
+			GROUP_CONCAT( id ) INTO sTempChd 
+		FROM
+			tableName 
+		WHERE
+			FIND_IN_SET( pid, sTempChd ) > 0;
+		
+	END WHILE;
+	RETURN sTemp;
+
+END
+```
+
+> 1.3 不包含当前节点
+
+```sql
+CREATE DEFINER=`root`@`%` FUNCTION `getChildLst_`( rootId INT ) RETURNS varchar(1000) CHARSET gbk
+    DETERMINISTIC
+BEGIN
+	DECLARE
+		sTemp VARCHAR ( 1000 );
+	DECLARE
+		sTempChd VARCHAR ( 1000 );
+	
+	SET sTemp = '';
+	
+	SET sTempChd = CAST( rootId AS CHAR );
+	WHILE
+			sTempChd IS NOT NULL DO
+		IF(sTempChd = rootId) THEN
+	   SET sTemp = '' ;
+	 ELSEIF(sTemp='' && sTempChd != rootId) THEN
+            SET sTemp = sTempChd ;
+          ELSE
+	    SET sTemp = CONCAT(sTemp,',',sTempChd);
+	 END IF;
+
+		SELECT
+			GROUP_CONCAT( id ) INTO sTempChd 
+		FROM
+			jc_department 
+		WHERE
+			FIND_IN_SET( pid, sTempChd ) > 0;
+		
+	END WHILE;
+	RETURN sTemp;
+
 END
 ```
 
