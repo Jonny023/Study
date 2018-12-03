@@ -36,6 +36,14 @@ select concat_ws("|",1,2,3,4);
 
 结果:
 1|2|3|4
+
+-- 查询，类似or
+SELECT
+	* 
+FROM
+	menu
+WHERE
+	menu_name REGEXP concat_ws( "|", "菜单管理", "系统工具", "用户管理" );
 ```
 
 ## group_concat函数
