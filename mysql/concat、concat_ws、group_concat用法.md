@@ -37,7 +37,9 @@ select concat_ws("|",1,2,3,4);
 结果:
 1|2|3|4
 
--- 查询，类似or
+-- 优化前
+select * from menu where 'menu_name' like '%菜单管理%' or 'menu_name' like '%系统工具%' .....
+-- 优化后
 SELECT
 	* 
 FROM
