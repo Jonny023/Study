@@ -1,8 +1,10 @@
 在build.gradle中加入excel的依赖
 
-compile 'org.grails.plugins:excel-import:3.0.0.RC4'
-新建一个域类User
 ```
+compile 'org.grails.plugins:excel-import:3.0.0.RC4'
+```
+新建一个域类User
+```groovy
 package com.lee
 
 class User {
@@ -25,12 +27,12 @@ class User {
 创建控制器UserController
 
 注入excelImportService
-```
+```groovy
 def excelImportService
 ```
 
 创建文件导入方法
-```
+```groovy
 def excelImport = {
         InputStream inputStream = null
         try {
