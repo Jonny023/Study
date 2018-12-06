@@ -1,9 +1,10 @@
 build.gradle
-```
+
+```groovy
 compile 'mysql:mysql-connector-java:5.1.38'
 ```
 
-```
+```yaml
 dataSource:
     pooled: true
     jmxExport: true
