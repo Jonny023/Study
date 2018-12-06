@@ -1,10 +1,13 @@
 在build.gradle中加入bootRun，这是加在最后面的，这里随意，貌似会加载application开头的properties的配置文件。
-```
+
+```groovy
 bootRun {
     systemProperties = System.properties
 }
 ```
+
 在grails-app/conf下面新建application.properties，定义好数据库信息
+
 ```
 jdbc.username=root
 jdbc.password=root
@@ -12,8 +15,10 @@ jdbc.created=update
 jdbc.driver=com.mysql.jdbc.Driver
 jdbc.url=jdbc:mysql://localhost:3306/test?useUnicode=true&amp;characterEncoding=UTF-8
 ```
+
 接下来就是在grails-app/conf/application.yml中动态调用application.properties配置
-```
+
+```yaml
 ---
 hibernate:
     cache:
@@ -137,8 +142,10 @@ endpoints:
     jmx:
         unique-names: true
 ```
+
 用了这种方式加载配置文件，如果要在后台获取配置文件中定义的数据可以用grailsApplication来获取。
-```
+
+```groovy
 grailsApplication.config.getProperty('jdbc.url')
 ```
 over!
