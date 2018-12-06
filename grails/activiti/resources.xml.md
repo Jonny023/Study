@@ -1,4 +1,4 @@
-```
+```xml
 <?xml version="1.0" encoding="gbk"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
