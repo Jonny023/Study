@@ -1,5 +1,5 @@
 配置application.yml
-```
+```yaml
 ---
 hibernate:
     cache:
@@ -196,8 +196,10 @@ endpoints:
     jmx:
         unique-names: true
 ```
+
 > 使用数据源的时候请注意，官网文档还有网上很多解释都是用def dataSource_one这样来注入数据源，经过几番测试，事实并不是这样，默认的数据源def > dataSource可以在service和controller这样来注入，但是如果定义了多数据源，比如在service或者controller中注入数据源，必须以"dataSource_"开头来注入，> 其他方式注入都为null，注入方式如下：
-```
+
+```groovy
 package grails_multi_datasource
 
 import groovy.sql.Sql
@@ -215,8 +217,10 @@ class TestService {
 
 }
 ```
+
 在domain中指定单个数据源：
-```
+
+```groovy
 package com.test
 
 class Test {
@@ -234,7 +238,9 @@ class Test {
     }
 }
 ```
+
 在domain中指定多个数据源：
+
 ```
 package com.test
 
@@ -273,8 +279,10 @@ class ZipCode {
    }
 }
 ```
+
 在程序中应用指定的数据源：(一)
-```
+
+```groovy
 class DatabaseService {
 
     static datasource = 'raw'
@@ -285,8 +293,10 @@ class DatabaseService {
 
 }
 ```
+
 (二)
-```
+
+```groovy
 class DatabaseService {
 
     @Autowired 
@@ -299,8 +309,10 @@ class DatabaseService {
 
 }
 ```
+
 (三)
-```
+
+```groovy
 class DatabaseService {
 
     @Resource(name = "dataSource_raw")
@@ -308,10 +320,12 @@ class DatabaseService {
 
 }
 ```
+
 在controller和service的使用：
 
 1、def dataSource这种方式注入他是按照domain mapping里面datasource ["one","two"]这个顺序来的，如果注入dataSource，则访问的数据源为one,如需访问two这个数据源的数据，使用如下：
-```
+
+```groovy
 class TestController{
 
    def index() {
