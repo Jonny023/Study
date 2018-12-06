@@ -1,10 +1,11 @@
 build.gradle
-```
+
+```java
 compile group: 'com.oracle', name: 'ojdbc6', version: '11.2.0.3'
 ```
 
 
-```
+```yaml
 dataSource:
     pooled: true
     jmxExport: true
