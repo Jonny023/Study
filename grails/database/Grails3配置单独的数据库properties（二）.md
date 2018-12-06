@@ -1,6 +1,6 @@
 * 在grails-app/conf下创建application-jdbc.properties
 
-```bash
+```xml
 username=root
 password=password
 driver=com.mysql.jdbc.Driver
