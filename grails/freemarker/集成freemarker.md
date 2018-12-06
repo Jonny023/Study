@@ -4,7 +4,7 @@ build.gradle的dependencies中引入依赖
 runtime "org.freemarker:freemarker:latest.release"
 ```
 3、在grails-app/conf/spring/resources.groovy中注入dsl
-```
+```groovy
 import org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer
 import org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver
 
@@ -25,7 +25,7 @@ beans = {
 4、在src/main/weapp下创建test目录，目录下创建index.ftl
 
 index.ftl
-```
+```html
 <!DOCTYPE html>
 <html class="loginHtml">
 <head>
@@ -44,7 +44,7 @@ Tomcat版本：${tomcat_version!}
 </html>
 ```
 5、在controller下创建TestController
-```
+```groovy
 package test
 
 import org.apache.catalina.util.ServerInfo
