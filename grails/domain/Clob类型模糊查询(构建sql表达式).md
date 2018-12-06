@@ -1,5 +1,5 @@
 > 域类字段为clob类型
-```
+```groovy
 class Test {
     Clob newsContent
     
@@ -8,8 +8,10 @@ class Test {
     }
 }
 ```
+
 > 通过createCriteria()来实现
-```
+
+```groovy
 Test.createCriteria().list {
     if (params.name){
         ilike("newsName","%"+params.name+"%")
