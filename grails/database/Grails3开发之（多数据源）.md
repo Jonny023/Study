@@ -241,7 +241,7 @@ class Test {
 
 在domain中指定多个数据源：
 
-```
+```groovy
 package com.test
 
 class Test {
