@@ -1,6 +1,6 @@
 ### 创建Filter
 
-```
+```groovy
 package com.context
 
 import grails.core.GrailsApplication
@@ -119,12 +119,12 @@ class ContextFilter implements Filter {
 
 ### 在resources.groovy中注入
 
-```
+```groovy
 contextFilter(ContextFilter)
 ```
 
 ### 访问方式
 
-```
+```bash
 http://localhost:808/test/hack
 ```
