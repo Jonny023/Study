@@ -1,4 +1,4 @@
-```
+```yaml
 hibernate:
     cache:
         queries: false
