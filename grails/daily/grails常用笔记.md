@@ -1,21 +1,21 @@
 * html转义：
 
 不进行任何操作：
-```
+```html
    <%@page defaultCodec="none" %>
    <%@ defaultCodec="none" %>
 ```
 
 转义：
 
-```
+```html
    expression为需要转义的html
     ${raw(expression)}
 ```
 
 转为html:
 
-```
+```html
    <%@page defaultCodec="HTML" %>
    <%@ defaultCodec="HTML" %>
    
@@ -23,7 +23,7 @@
  
 * grails中转换json字符串
 
-```
+```groovy
 def json = net.minidev.json.JSONObject.toJSONString(map)
 def json = new JsonBuilder(map).toPrettyString()
 def json = JsonOutput.toJson(map)
@@ -32,7 +32,7 @@ def json = JsonOutput.toJson(map)
 
 * grails用render map as JSON转换Date类型的值，在init/BootStrap.groovy的init中加入
 
-```
+```groovy
 //Date类型转JSON格式
 JSON.registerObjectMarshaller(java.util.Date) {
     return it?.format("yyyy-MM-dd HH:mm:ss")
@@ -45,7 +45,7 @@ JSON.registerObjectMarshaller(Date) {
 
 * 域类绑定数据类型
 
-```
+```groovy
 import org.grails.databinding.BindingFormat
 
 class DomainClass {
@@ -63,14 +63,14 @@ class DomainClass {
 
 * 浮点类型精度丢失，需要先转换
 
-```
+```groovy
 double finalScore = 2.33302
 new BigDecimal(finalScore).setScale(2, BigDecimal.ROUND_HALF_UP)
 ```
 
 * groovy中执行shell命令
 
-```
+```groovy
 class T {
 
     static void main(args) {
@@ -81,7 +81,7 @@ class T {
 
 * groovy可以实现多继承，这是java没有的
 
-```
+```groovy
 package com.system.aaa
 
 class TestA {
@@ -92,7 +92,7 @@ class TestA {
 
 TestC类
 
-```
+```groovy
 package com.system.aaa
 
 class TestC {
@@ -105,7 +105,7 @@ class TestC {
 
 TestB类，通过注解@Mixin来继承父类
 
-```
+```groovy
 package com.system.aaa
 
 import org.junit.Test
@@ -126,7 +126,7 @@ class TestB {
 > 金额验证（至多2位小数）
 > 表达式：/^([1-9][\d]{0,7}|0)(\.[\d]{1,2})?$/
 
-```
+```groovy
 public static void main(String[] args) {
     Pattern pattern = Pattern.compile(/^([1-9][\d]{0,7}|0)(\.[\d]{1,2})?$/)
     println pattern.matcher("+10.02").matches()
@@ -142,7 +142,7 @@ public static void main(String[] args) {
 
 * quartz禁用并发作业
 
-```
+```groovy
 class TestJob {
 
   //禁用并发
@@ -164,7 +164,7 @@ class TestJob {
 
 > 只一个sql中多次是用聚合函数count()的用法，postgreSql、mysql不用加from,但是oracle需要用from dual虚表才不会报错
 
-```
+```sql
 //mysql数据库
 SELECT
 	(select count(colName) from tab)
@@ -181,7 +181,7 @@ SELECT
 
 * grails数据绑定方式
 
-```
+```groovy
 //参数绑定方式
 def bind = {
 
