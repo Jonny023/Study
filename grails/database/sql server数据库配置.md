@@ -1,10 +1,12 @@
 > 依赖
-```
+
+```java
 compile group: 'com.microsoft.sqlserver', name: 'sqljdbc4', version: '4.0'
 ```
 
 > 数据库配置
-```
+
+```yaml
 dataSource:
     pooled: true
     jmxExport: true
