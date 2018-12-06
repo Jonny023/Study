@@ -1,12 +1,15 @@
 * 在grails-app/conf下创建application-jdbc.properties
-```
+
+```bash
 username=root
 password=password
 driver=com.mysql.jdbc.Driver
 url=jdbc:mysql://localhost:3306/test?characterEncoding=UTF-8&useSSL=false
 ```
+
 * 然后在application.yml中添加配置
-```
+
+```yaml
 spring:
     profiles:
         include:
