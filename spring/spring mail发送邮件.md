@@ -1,5 +1,6 @@
 > 主要依赖(spring自行百度)
-```
+
+```xml
 <dependency>
     <groupId>javax.mail</groupId>
     <artifactId>mail</artifactId>
@@ -8,7 +9,8 @@
 ```
 
 > mail.properties
-```
+
+```xml
 host=smtp.exmail.qq.com
 port=587
 username=mail@first-blood.cn
@@ -16,7 +18,7 @@ password=123456
 ```
 
 > spring-mail.xml邮件配置文件
-```
+```xml
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -50,7 +52,7 @@ password=123456
 ```
 
 > MailBean类
-```
+```java
 package com.mail;
 
 import org.springframework.mail.MailSender;
@@ -82,7 +84,7 @@ public class MailBean {
 ```
 
 > 测试类
-```
+```java
 package com.test;
 
 import com.mail.MailBean;
