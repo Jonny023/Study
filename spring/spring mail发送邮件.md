@@ -10,7 +10,7 @@
 
 > mail.properties
 
-```xml
+```properties
 host=smtp.exmail.qq.com
 port=587
 username=mail@first-blood.cn
