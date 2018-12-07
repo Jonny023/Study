@@ -1,6 +1,6 @@
 ## 依赖导入
 
-```
+```xml
 <dependency>
     <groupId>org.springframework.boot</groupId>
     <artifactId>spring-boot-starter-websocket</artifactId>
@@ -9,7 +9,7 @@
 
 ## @Configuration 配置
 
-```
+```java
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.socket.server.standard.ServerEndpointExporter;
@@ -25,7 +25,7 @@ public class WebSocketConfiguration {
 
 ## 端点创建
 
-```
+```java
 import java.io.IOException;
 import javax.websocket.CloseReason;
 import javax.websocket.EndpointConfig;
