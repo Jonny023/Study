@@ -15,7 +15,8 @@ var obj_bak = JSON.parse(JSON.stringify(obj));
 // obj_bak为{id: 1, age: 20}
 ```
 
-### 注意不能过`=`直接赋值
+### 注意
+* 不能过`=`直接赋值
 
 > 例如
 
