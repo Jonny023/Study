@@ -2,7 +2,7 @@
 ---
 
 *一、我们想要调用创建好的函数，传统调用是定义好函数，然后再调用一次，如果需要页面加载就调用函数，可以用如下方式进行调用*
-```
+```javascript
 !function() {/*代码块*/}()
 
 +function() {/*代码块*/}()
@@ -13,7 +13,7 @@
 ```
 
 *二、多种取整方法*
-```
+```javascript
 1. Math.floor()  向下取整
 2. parseInt()    取整
 3. ~~()
@@ -31,7 +31,7 @@ a>0&&hello()  若a大于0，则调用函数hello
 ```
 
 *四、自己封装的方法如何回调*
-```
+```javascript
 function hello(opt) {
 	//如果有callback，那么执行回调，并把参数传入回调函数
 	opt["callback"]&&opt["callback"](opt.msg);
@@ -47,7 +47,7 @@ hello({
 ```
 
 *五、函数自执行，不用手动调用函数*
-```
+```javascript
 ~~() //IIFE
 ()()
 
@@ -67,7 +67,7 @@ hello({
 
 *六、递归*
 
-```
+```javascript
 var data = [{
     	name: "小峰",
     	age: 20
@@ -112,7 +112,7 @@ function loadData(data) {
 
 *七、获取数组最小值和最大值*
 
-```
+```javascript
 var arr = [10,2,100,80,1000,200];
 //获取数组最小值
 arr.sort(function(a,b){return a-b});
@@ -130,7 +130,7 @@ console.log(arr.indexOf(Math.min(...arr)));
 
 八、数组去重
 
-```
+```javascript
 // ES6
 function unique (arr) {
   const seen = new Map()
@@ -144,7 +144,7 @@ function unique (arr) {
 ```
 九、判断元素是否存在与数组中
 
-```
+```javascript
 //判断是否存在于数组中
   function contains(arr, value) {
       if(arr.indexOf&&typeof(arr.indexOf)=='function'){
@@ -159,7 +159,7 @@ function unique (arr) {
 十、获取对象的key
 
 
-```
+```javascript
 var object = {id:1,name:"张三",sex:"男"}
 Object.keys(object);
 Object.values(object);
