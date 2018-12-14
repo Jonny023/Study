@@ -1,10 +1,11 @@
 > 问题分析
 
-* 项目编译后没有编译properties
+* `maven`项目在`idea`中不会自动编译`properties`文件，需手动配置
+* 通过`XxxUtils.class.getResourceAsStream("/com/test/abc.properties")`加载不到`abc.properties`，但是第二次调用方法可以加载
 
 ```xml
 <build>
-    <finalName>egov</finalName>
+    <finalName>test</finalName>
     <defaultGoal>compile</defaultGoal>
     <resources>
         <!--编译之后包含xml-->
