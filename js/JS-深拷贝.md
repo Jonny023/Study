@@ -7,7 +7,7 @@ obj_back.id = 20;
 // 输出{id: 20, age: 20}
 ```
 
-> 通过JSON.parse(JSON.stringify())
+> 通过`JSON.parse(JSON.stringify())`
 
 ```javascript
 var obj = {id: 1, age: 20};
