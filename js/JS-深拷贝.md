@@ -1,4 +1,6 @@
 > 通过`Object.assign()`深拷贝
+* 拷贝数组的时候需要注意
+  * 如：`Object.assign([1,2],[11])`，他是将前一个对应位置的值用后面的覆盖
 
 ```javascript
 var obj = {id: 1, age: 20};
