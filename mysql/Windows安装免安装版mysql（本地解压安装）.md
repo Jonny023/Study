@@ -78,3 +78,6 @@ show grants;
 GRANT ALL ON *.* TO 'root'@'%' IDENTIFIED BY 'root';
 FLUSH PRIVILEGES;
 ```
+
+# 远程连接不上的原因
+* 防火墙
