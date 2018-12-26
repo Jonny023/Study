@@ -66,22 +66,22 @@ public static void main(String[] args) {
 > `try catch`
 
 ```java
-  public static void main(String[] args) {
-		
-		String username = "admin";
-		try {
-			check(username);
-		} catch (MyException e) {
-			e.printStackTrace();
-			System.out.println(e.getErrorMsg());
-		}
+public static void main(String[] args) {
 
+	String username = "admin";
+	try {
+		check(username);
+	} catch (MyException e) {
+		e.printStackTrace();
+		System.out.println(e.getErrorMsg());
 	}
 
-	private static boolean check(String username) throws MyException {
-		if(username=="admin") {
-			throw new MyException(username+"已经存在");
-		}
-		return true;
+}
+
+private static boolean check(String username) throws MyException {
+	if(username=="admin") {
+		throw new MyException(username+"已经存在");
 	}
+	return true;
+}
 ```
