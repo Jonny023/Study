@@ -85,3 +85,11 @@ private static boolean check(String username) throws MyException {
 	return true;
 }
 ```
+
+> 打印效果
+```bash
+demo.MyException: admin已经存在
+	at demo.test.check(test.java:38)
+	at demo.test.main(test.java:28)
+admin已经存在
+```
