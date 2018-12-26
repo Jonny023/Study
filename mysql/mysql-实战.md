@@ -1,4 +1,4 @@
-### 表及数据sql语句
+### 例一
 
 ```sql
 DROP TABLE IF EXISTS `score`;
@@ -44,4 +44,42 @@ FROM
 	AND b.`score` > 60 
 WHERE
 	b.`id` IS NULL
+```
+
+### 例二
+
+```sql
+SET NAMES utf8mb4;
+SET FOREIGN_KEY_CHECKS = 0;
+
+-- ----------------------------
+-- Table structure for stu_score
+-- ----------------------------
+DROP TABLE IF EXISTS `stu_score`;
+CREATE TABLE `stu_score`  (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `class` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `score` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 7 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of stu_score
+-- ----------------------------
+INSERT INTO `stu_score` VALUES (1, '张三', '1', '80');
+INSERT INTO `stu_score` VALUES (2, '李四', '1', '50');
+INSERT INTO `stu_score` VALUES (3, '王五', '1', '77');
+INSERT INTO `stu_score` VALUES (4, '周武', '1', '72');
+INSERT INTO `stu_score` VALUES (5, '郑王', '2', '72');
+INSERT INTO `stu_score` VALUES (6, '赵六', '2', '78');
+
+SET FOREIGN_KEY_CHECKS = 1;
+
+```
+
+> 求70分以上并且人数大于2的班级
+
+```sql
+SELECT class FROM `stu_score` where score>70 having count(1)>2
 ```
