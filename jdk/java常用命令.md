@@ -16,7 +16,7 @@ java -XshowSettings:properties -version
 
 > 编译java文件
 *  错误: 编码GBK的不可映射字符
-  `javac -encoding UTF-8 Hello.java`
+  `javac -encoding UTF-8 Test.java`
 
 ```bash
 javac Test.java
