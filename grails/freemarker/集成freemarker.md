@@ -122,4 +122,4 @@ class TestController {
     ```
     
 * 直接存放在`src/main/webapp/`有安全问题，经测试，若直接存放于`webapp`下，可以通过直接访问`http://localhost:8080/xxx/index.ftl`得到源文件，可能造成安全隐患
-* 控制器中`render view: "/view"`，若原项目存在`grails-app/views/index.gsp`文件，则访问的是这个`index.gsp`文件，需要删除后才能访问`index.ftl`模板文件
+* 控制器中`render view: "/index"`，若原项目存在`grails-app/views/index.gsp`文件，则访问的是这个`index.gsp`文件，需要删除后才能访问`index.ftl`模板文件
