@@ -9,17 +9,17 @@ Grails3集成freemarker模板引擎
     
 ```
 
-1、创建grails项目
+1、创建`grails`项目
     
 
-2、在build.gradle的dependencies中引入依赖
+2、在`build.gradle`的`dependencies`中引入依赖
 
 ```bash
 runtime "org.freemarker:freemarker:latest.release"
     
 ```
     
-3、在grails-app/conf/spring/resources.groovy中注入dsl
+3、在`grails-app/conf/spring/resources.groovy`中注入`dsl`
 
 ```groovy
 import org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer
@@ -44,7 +44,7 @@ beans = {
 }
 ```     
     
-4、在src/main/weapp/WEB-INF/templates下创建test目录，目录下创建index.ftl
+4、在`src/main/weapp/WEB-INF/templates`下创建`test`目录，目录下创建`index.ftl`
 
 ```html
 index.ftl
@@ -66,7 +66,7 @@ Tomcat版本：${tomcat_version!}
 </html>
 ```
  
-5、在controller下创建TestController
+5、在`controller`下创建`TestController`
 
 ```
 package test
