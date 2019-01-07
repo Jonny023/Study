@@ -42,8 +42,10 @@ map.forEach((k, v) -> {
 ```java
 List list = Arrays.asList("语文", "数学", "英语");
 long count = list.stream().filter(o -> o.toString().indexOf("语") != -1).count();
-System.out.println(count);
+
 // 输出2
+System.out.println(count);
+
 ```
 
 > 条件过滤
@@ -51,5 +53,7 @@ System.out.println(count);
 ```java
 List list = Arrays.asList("语文", "数学", "英语");
 Stream stream = list.stream().filter(o -> o.toString().indexOf("语") != -1);
+
+// 输出 语文 英语
 stream.forEach(o-> System.out.println(o));
 ```
