@@ -32,6 +32,11 @@ public static void main(String[] args) {
 
     // 降序
     // list.sort((o1, o2) -> Integer.valueOf(String.valueOf(o2)).compareTo(Integer.valueOf(String.valueOf(o1))));
+    
+    // 可以包含负整数
+    List list2 = Arrays.asList("2", "1", "3","20","10000","500","-1","800");
+    list2.sort(Comparator.<String,Integer>comparing(Integer::valueOf).reversed());
+    System.out.println(list2);
 
     System.out.println(list);
 }
