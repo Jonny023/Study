@@ -21,7 +21,10 @@ map.put("name","张三");
 map.put("age",20);
 map.put("sex",'男');
 map.forEach((k, v) -> System.out.println("键：" + k + "，值：" + v));
+
 System.out.println("");
+
+
 map.forEach((k, v) -> {
     System.out.println("键：" + k + "，值：" + v);
 });
