@@ -16,3 +16,23 @@ public static void main(String[] args) {
     // 输出[-100, 0, 1, 2, 3, 100, 200]
 }
 ```
+
+> Lambda表达式
+
+```java
+public static void main(String[] args) {
+    List list = Arrays.asList("2", "1", "3","20","10000","0");
+
+    // 升序
+    // list.sort((o1, o2) -> Integer.valueOf(String.valueOf(o1)).compareTo(Integer.valueOf(String.valueOf(o2))));
+    // list.sort((o1, o2) -> Integer.valueOf(String.valueOf(o1)) - Integer.valueOf(String.valueOf(o2)));
+
+    // 不能对负数排序
+    list.sort(Comparator.comparing(String::hashCode));
+
+    // 降序
+    // list.sort((o1, o2) -> Integer.valueOf(String.valueOf(o2)).compareTo(Integer.valueOf(String.valueOf(o1))));
+
+    System.out.println(list);
+}
+```
