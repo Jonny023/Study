@@ -11,6 +11,9 @@ list.forEach(obj-> {
         System.out.println("今天有数学课。");
     }
 });
+
+// 直接打印结果
+list.forEach(System.out::println);
 ```
 
 > 键值对（Map）
