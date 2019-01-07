@@ -36,10 +36,20 @@ map.forEach((k, v) -> {
 ```
 
 ## stream()方法
+* filter() 根据条件过滤
 
+> 基本用法
 ```java
 List list = Arrays.asList("语文", "数学", "英语");
 long count = list.stream().filter(o -> o.toString().indexOf("语") != -1).count();
 System.out.println(count);
 // 输出2
+```
+
+> 条件过滤
+
+```java
+List list = Arrays.asList("语文", "数学", "英语");
+Stream stream = list.stream().filter(o -> o.toString().indexOf("语") != -1);
+stream.forEach(o-> System.out.println(o));
 ```
