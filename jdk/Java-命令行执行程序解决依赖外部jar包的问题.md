@@ -12,7 +12,7 @@ javac -cp D:\yy\yy.jar,D\xx\xx.jar test.java
 
 ```bash
 java -cp D:\yy\yy.jar,D\xx\xx.jar test
-```bash
+```
 
 * 但是往往我们依赖的包很多，要一个个填写估计就疯了。所有我们一般会把所有的外部依赖包都放在一个文件夹里，比如在`D:\lib`
 
@@ -20,7 +20,7 @@ java -cp D:\yy\yy.jar,D\xx\xx.jar test
 
 ```bash
 javac -Djava.ext.dirs=D:\lib test.java
-```bash
+```
 
 ### 执行
 
