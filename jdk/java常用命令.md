@@ -30,12 +30,6 @@ java Test
 
 > 运行时指定编译之后`.class`文件所在位置
 
-|命令|
-|java -classpath d:\test com.custom.Hello|
-|--|--|--|
-|运行命令|此参数指明class文件所在位置  ||
-||||
-
 <table>
   <tr>
     <td colspan="4">java -classpath d:\test com.custom.Hello</td>
