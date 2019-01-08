@@ -35,3 +35,21 @@ java Test
 |--|--|--|
 |运行命令|此参数指明class文件所在位置  ||
 ||||
+
+<table>
+  <tr>
+    <td colspan="4">java -classpath d:\test com.custom.Hello</td>
+  </tr>
+  <tr>
+    <td>java</td>
+    <td>-classpath</td>
+    <td>d:\test</td>
+    <td>com.custom.Hello</td>
+  </tr>
+  <tr>
+    <td>运行类</td>
+    <td>指定-classpath后，后面跟绝对路径</td>
+    <td>d:\test为类所在路径（非package）</td>
+    <td>类名（若有package，则需加上包名，如：com.custom.Hello）</td>
+  </tr>
+</table>
