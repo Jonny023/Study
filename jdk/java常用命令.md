@@ -26,6 +26,7 @@ javac Test.java
 
 ```bash
 java Test
+java com.custom.Hello
 ```
 
 ### 指定路径运行
