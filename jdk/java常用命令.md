@@ -32,7 +32,7 @@ java Test
 
 <table>
   <tr>
-    <td colspan="4">`java -classpath d:\test com.custom.Hello`</td>
+    <td colspan="4">java -classpath d:\test com.custom.Hello</td>
   </tr>
   <tr>
     <td>java</td>
