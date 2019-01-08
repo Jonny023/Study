@@ -35,6 +35,13 @@ map.forEach((k, v) -> {
 });
 ```
 
+> 数组（Array）
+
+```java
+String[] words = new String[]{"lianggzone", "spring", "summer", "autumn", "winter"};
+Arrays.sort(words, (x, y) -> x.compareToIgnoreCase(y));
+```
+
 ## stream()方法
 * filter() 根据条件过滤
 
