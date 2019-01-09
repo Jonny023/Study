@@ -24,6 +24,25 @@ println lists[-1]
 //获取指定条件元素
 println lists.find {it.id>1}
 
+def list = [[name: "zhangsan", age: 20, sex: '男'], [name: "lisi", age: 20, sex: '男'], [name: "liwu", age: 20, sex: '男']]
+
+// 判断相等
+if (list.find { it.name == "zhangsan" }) {
+    println "张三"
+}
+
+// 包含，返回第一个
+if (list.find { it.name.toString().contains("li") }) {
+    println "包含李四 contains"
+}
+// 包含，返回第一个
+if (list.find { it.name.toString().indexOf("li") != -1 }) {
+    println "包含李四 indexOf"
+}
+
+// 返回满足条件的集合
+println list.findAll { it.name.toString().contains("li") }
+
 def arr = [10,8,5,100,20,40]
 
 //通过jdk自带方法获取数组最大值和最小值
