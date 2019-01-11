@@ -3,7 +3,7 @@
 * 属性设置`slot-scope="scope"`
 * 下面可通过`scope.row.xxx`获取到其中的值
   如：
- ```
+ ```vue
  <span v-for="(item,index) in scope.row.xxx">{{item.age}}</span>
  ```
 
