@@ -12,7 +12,7 @@ compile group: 'com.alibaba', name: 'fastjson', version: '1.2.44'
 Maven仓库地址添加阿里的仓库地址：
 //配置全局仓库
 
-```
+```gradle
 allprojects {
     repositories {
         mavenLocal()
@@ -24,7 +24,7 @@ allprojects {
 ```
 JsoupUtils
 
-```
+```groovy
 package com.filter
 
 import com.alibaba.fastjson.JSON
@@ -129,7 +129,7 @@ public class JsoupUtils {
 ```
 2、在grails-app/controllers下面新建拦截器XssInterceptor,在before方法中调用刚才的xss过滤方法
 
-```
+```groovy
 package com.interceptor
 
 import com.filter.JsoupUtils
@@ -165,7 +165,7 @@ class XssInterceptor {
 
 xss-white.json内容:
 
-```
+```json
 {
   "allow_tags": [
     "a","abbr","acronym","address","area","article","aside","audio",
@@ -224,7 +224,7 @@ xss-white.json内容:
 
 此处的网址必须添加上，任意http://打头的都可以不管能不能访问，去掉或者换成普通字符就不行，切记！！！
 
-```
+```java
 return content == null ? null : Jsoup.clean(content,"http://www.baidu.com",XSS_LIST.preserveRelativeLinks(true));
 
 ```
@@ -232,7 +232,7 @@ return content == null ? null : Jsoup.clean(content,"http://www.baidu.com",XSS_L
 
 Java通用版
 
-```
+```java
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
@@ -354,7 +354,7 @@ public class JsoupUtils {
 ```
 Java版实现过滤所有请求方法：继承HttpServletRequestWrapper类，重写getParameter、getParameterValues、getParameterNames方法
 
-```
+```java
 package com.filter;
 
 import com.wemall.core.tools.JsoupUtils;
