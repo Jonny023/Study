@@ -27,7 +27,12 @@ public abstract class Animal {
             this.s = s;
         }
     }
+    
+    void hi() {
+        System.out.println("hello");
+    }
 }
+
 ```
 
 > 继承抽象类实现抽象方法
