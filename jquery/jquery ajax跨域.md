@@ -4,7 +4,7 @@
 
 ### 使用例子
 
-```
+```javascript
 
 function test() {
     $.ajax({
