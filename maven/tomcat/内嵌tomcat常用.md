@@ -9,7 +9,8 @@
 # 解决方案
 
 * 下载当前目录下的`tomcat7-maven-plugin-2.2.jar.zip`文件，解压并覆盖本地仓库中的`tomcat7-maven-plugin-2.2.jar`，
-比如我的本地仓库在：`D:\M2REPO\org\apache\tomcat\maven\tomcat7-maven-plugin\2.2`下，那么我们只需要解压并覆盖此文件就ok.
+比如我的本地仓库在：`D:\M2REPO\org\apache\tomcat\maven\tomcat7-maven-plugin\2.2`下，那么我们只需要解压并此目录下的
+`tomcat7-maven-plugin-2.2.jar`覆盖此文件就ok.
 
   
 
