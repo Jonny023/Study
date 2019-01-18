@@ -31,7 +31,7 @@ def personPush() {
 }
 ```
 
-## 停止定时任务
+## 暂停定时任务
 
 ```groovy 
 def quartzScheduler
@@ -41,6 +41,12 @@ def index() {
     quartzScheduler.pauseAll()
     render "Stop all Job."
 }
+```
+
+## 恢复定时任务
+
+```groovy
+quartzScheduler.resumeAll()
 ```
 
 
