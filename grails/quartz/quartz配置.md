@@ -23,13 +23,27 @@ static triggers = {}
     }
 }
 ```
-控制器中动态调用：
+## 控制器中动态调用：
 ```groovy
 def personPush() {
     println "xxxxx"
     TestJob.schedule(new Date(),[tip: "执行了定时器。。。"])
 }
 ```
+
+## 停止定时任务
+
+```groovy 
+def quartzScheduler
+
+def index() {
+    // 停止所有定时任务
+    quartzScheduler.pauseAll()
+    render "Stop all Job."
+}
+```
+
+
 
 方法：
 ```groovy
