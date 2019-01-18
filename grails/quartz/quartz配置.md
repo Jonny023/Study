@@ -34,11 +34,11 @@ def personPush() {
 ## 暂停定时任务
 
 ```groovy 
-def quartzScheduler
+def jobManagerService
 
 def index() {
     // 停止所有定时任务
-    quartzScheduler.pauseAll()
+    jobManagerService.pauseAll()
     render "Stop all Job."
 }
 ```
@@ -46,9 +46,46 @@ def index() {
 ## 恢复定时任务
 
 ```groovy
-quartzScheduler.resumeAll()
+jobManagerService.resumeAll()
 ```
 
+## `JobManagerService`服务中常用方法
+
+```groovy
+Map <String , List<JobDescriptor>> getAllJobs() {}
+
+List<JobDescriptor> getJobs(String group) {}
+
+def getRunningJobs() {}
+
+def pauseJob(String group, String name) {}
+
+def resumeJob(String group, String name) {}
+
+def pauseTrigger(String group, String name) {}
+
+def resumeTrigger(String group, String name) {}
+
+def pauseTriggerGroup(String group) {}
+
+def resumeTriggerGroup(String group) {}
+
+def pauseJobGroup(String group) {}
+
+def resumeJobGroup(String group) {}
+
+def pauseAll() {}
+
+def resumeAll() {}
+
+def removeJob(String group, String name) {}
+
+def unscheduleJob(String group, String name) {}
+
+def interruptJob(String group, String name) {}
+
+```
+* 可自行查看`grails.plugins.quartz.JobManagerService`类
 
 
 方法：
