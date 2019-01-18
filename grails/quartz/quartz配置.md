@@ -1,11 +1,11 @@
-build.gradle依赖：
+## `build.gradle`依赖：
 ```
 //定时器
 compile 'org.grails.plugins:quartz:2.0.0.M4'
 ```
 
 创建一个job，执行命令：
-```
+```bash
 create-job com.test.Test
 ```
 修改TestJob：
@@ -19,7 +19,10 @@ static triggers = {}
     def execute(context) {
         // execute job
         println "执行..."
-        println context.mergedJobDataMap.get("tip")
+        
+        // 获取传递过来的参数
+        def msg = context.mergedJobDataMap.get("tip")
+        println msg
     }
 }
 ```
@@ -27,6 +30,8 @@ static triggers = {}
 ```groovy
 def personPush() {
     println "xxxxx"
+    
+    // 传参到job中
     TestJob.schedule(new Date(),[tip: "执行了定时器。。。"])
 }
 ```
