@@ -97,7 +97,7 @@ println jsonObject.name
 * 返回`true`或者`false`
 
 ```groovy
-def list = ["hello","world"]
+def lists = ["hello","world"]
 def result = lists.any { it == "hello" }
 ```
 
