@@ -27,7 +27,7 @@ grails:
 
 ### 在`application.yml`中加入配置使其生效
 
-```
+```yaml
 spring:
     profiles:
         include: redis
