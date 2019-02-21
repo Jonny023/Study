@@ -91,3 +91,13 @@ JsonSlurper jsonSlurper = new JsonSlurper()
 def jsonObject = jsonSlurper.parseText(jsonString)
 println jsonObject.name
 ~~~
+
+*** 四、对结果集进行条件判断是否包含某数据 ***
+* `any` - 对结果集进行二次处理
+* 返回`true`或者`false`
+
+```groovy
+def list = ["hello","world"]
+def result = lists.any { it == "hello" }
+```
+
