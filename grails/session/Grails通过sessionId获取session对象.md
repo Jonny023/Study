@@ -41,7 +41,7 @@ class SessionTracker implements HttpSessionListener, ApplicationContextAware {
 }
 ```
 
-## 在 `grails-app/conf/resoures.groovy` 中注册
+## 在 `grails-app/conf/resources.groovy` 中注册
 
 ```groovy
 import com.session.SessionTracker
