@@ -6,6 +6,12 @@
 netstat -ano|findstr 8100
 ```
 
+> 通过进程名查看
+
+```bash
+tasklist | findstr java.exe
+```
+
 > 查看指定端口的进程
 
 ```bash
