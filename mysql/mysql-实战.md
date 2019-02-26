@@ -105,8 +105,8 @@ INSERT INTO `mt_rvok` VALUES (444, 'FAIL', '2019-02-26 12:55:11');
 > 题目：按账号、发送日期（`yyyyMMdd`）分组统计`errorcode`值分别为`SUCC`及`FAIL`值的数量，最终结果如下
 
 |账号|日期|SUCC数量|FAIL数量|
+|--|--|--|--|
 |||||
-||
 
 >  方式一
 
