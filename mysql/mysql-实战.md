@@ -83,3 +83,43 @@ SET FOREIGN_KEY_CHECKS = 1;
 ```sql
 SELECT class FROM `stu_score` where score>70 having count(1)>2
 ```
+
+### 例三
+
+> 数据库
+
+```sql
+DROP TABLE IF EXISTS `mt_rvok`;
+CREATE TABLE `mt_rvok`  (
+  `userid` int(11) NOT NULL,
+  `errorcode` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `sendtime` datetime(0) NULL DEFAULT NULL
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+
+INSERT INTO `mt_rvok` VALUES (111, 'FAIL', '2019-02-26 12:53:56');
+INSERT INTO `mt_rvok` VALUES (111, 'FAIL', '2019-02-26 12:54:10');
+INSERT INTO `mt_rvok` VALUES (222, 'SUCC', '2019-02-26 12:54:51');
+INSERT INTO `mt_rvok` VALUES (444, 'FAIL', '2019-02-26 12:55:11');
+```
+
+> 题目：按账号、发送日期（`yyyyMMdd`）分组统计`errorcode`值分别为`SUCC`及`FAIL`值的数量，最终结果如下
+
+|账号|日期|SUCC数量|FAIL数量|
+|||||
+||
+
+>  方式一
+
+```sql
+SELECT userid as 账号,date_format(sendtime, '%Y%m%d') as 日期,count(case errorcode when 'FAIL' then 1 end) as FAIL数量,count(case errorcode when 'SUCC' then 1 end) as SUCC数量 FROM `mt_rvok` group by userid
+```
+
+* 为啥不用`sum`？
+	* 这里的`case when then end`没做处理，当`sun(null)`返回的是`null`，所以改成了`count`
+
+> 方式二
+
+```sql
+select userid, date_format(sendtime, '%Y%m%d'), SUM(IF(errorcode='SUCC', 1, 0)) AS SUCC数量, SUM(IF(errorcode='FAIL', 1, 0)) AS FAIL数量 from mt_rvok group by userid, date_format(sendtime, '%Y%m%d')
+```
+
