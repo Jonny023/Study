@@ -141,7 +141,7 @@ export default {
         filterText(val) {
           this.$refs["channelTree"].filter(val);
         }
-  	}
+    }
 }
 ```
 
