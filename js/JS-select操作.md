@@ -1,13 +1,13 @@
 * 获取select选中对象
 
-```
+```javascript
 var obj = document.getElementById('sel');
 var elem = obj.options[obj.selectedIndex];
 ```
 
 * 隐藏当前选中的option，显示之前隐藏的
 
-```
+```html
 <select id="sel">
   <option value=''>请选择...</option>
   <option>Java</option>
