@@ -1,4 +1,4 @@
-```
+```javascript
 loadAllDatas({curr: 1});
 function loadAllDatas(c) {
     var index = layer.load(1);
