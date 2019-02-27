@@ -10,7 +10,7 @@
 
 > JS
 
-```
+```javascript
 function change(obj) {
   console.log(obj.options.selectedIndex);
   console.log(obj.options[obj.options.selectedIndex].innerHTML);
