@@ -4,13 +4,13 @@
 
 * html代码
 
-```
+```html
 <p data-name="张三" data-age="20" data-sex="男">Hello World!</p>
 ```
 
 * javascript
 
-```
+```javascript
 let elem = document.querySelector("p");
 console.log(elem.dataset);
 
