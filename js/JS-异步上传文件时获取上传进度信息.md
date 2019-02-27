@@ -3,7 +3,7 @@
 
 #### 原生上传
 
-```
+```javascript
 //获取文件筐的文件集合
 let files = document.getElementById("file").files;
 //创建FormData对象
@@ -38,7 +38,7 @@ function progressHandlingFunction(event) {
 
 #### Jquery
 
-```
+```javascript
 //获取文件框的文件集合
 let files = $('#file')[0].files;
 //创建FormData对象
