@@ -49,3 +49,31 @@ void addResourceHandlers(ResourceHandlerRegistry registry);
 /** 默认静态资源处理器 **/
 void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer);
 ```
+
+## 控制器`@RequestMapping("/index")`仍然404
+
+### 错误提示
+
+```
+Whitelabel Error Page
+This application has no explicit mapping for /error, so you are seeing this as a fallback.
+
+Thu Feb 28 22:43:01 CST 2019
+There was an unexpected error (type=Not Found, status=404).
+No message available
+```
+
+### 解决方法
+
+> 添加依赖，刷新maven并重启，注意确定libraries里面jar是否下载
+
+```xml
+<dependency>
+    <groupId>org.apache.tomcat.embed</groupId>
+    <artifactId>tomcat-embed-jasper</artifactId>
+</dependency>
+<dependency>
+    <groupId>javax.servlet</groupId>
+    <artifactId>jstl</artifactId>
+</dependency>
+```
