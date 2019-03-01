@@ -63,3 +63,30 @@ No message available
 * 重启并访问`localhost:8080`
 
 ![](https://javaweb-community.oss-cn-beijing.aliyuncs.com/2019/0228/6fb719894d184feeb19fa280e6c38e22.png)
+
+# 打包为`jar`运行仍然出现`404`
+
+* 打包插件版本设置为`1.4.2.RELEASE`，并且配置好资源目录
+
+```xml
+<build>
+	<resources>
+		<resource>
+			<directory>src/main/webapp</directory>
+			<!--这里必须是META-INF/resources-->
+			<targetPath>META-INF/resources</targetPath>
+			<includes>
+				<include>**/**</include>
+			</includes>
+			<filtering>false</filtering>
+		</resource>
+	</resources>
+	<plugins>
+		<plugin>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-maven-plugin</artifactId>
+			<version>1.4.2.RELEASE</version>
+		</plugin>
+	</plugins>
+</build>
+```
