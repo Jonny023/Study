@@ -1,6 +1,7 @@
 > 通过插件创建api文档
 
 * 配置gradle
+* [参数](https://docs.gradle.org/current/dsl/org.gradle.api.tasks.javadoc.Groovydoc.html)
 ```
 apply plugin: "org.grails.grails-doc"
 
