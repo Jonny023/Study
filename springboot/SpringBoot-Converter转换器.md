@@ -67,7 +67,7 @@ public class TrimConfig {
 
 > 测试
 
-```
+```java
 package com.example.demo.controller;
 
 import org.springframework.stereotype.Controller;
