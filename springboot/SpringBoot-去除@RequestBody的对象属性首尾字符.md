@@ -7,9 +7,9 @@
 
 ```json
 {
-	"username": "   zhangsan   ",
-	"nickname": "  龙飞凤舞  ",
-	"age": "20    "
+    "username": "   zhangsan   ",
+    "nickname": "  龙飞凤舞  ",
+    "age": "20    "
 }
 ```
 
@@ -24,6 +24,7 @@ public User get(@RequestBody User user) {
 ```
 
 ## 解决方法
+
 * 重写`SimpleModule`
 
 > 若项目没`Jackson`，则需引入依赖
