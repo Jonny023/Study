@@ -18,11 +18,12 @@
 ```java
 @ResponseBody
 @RequestMapping("/user/get")
-public User get(@Valid @RequestBody User user) {
-    return user;
+public User get(@RequestBody User user) {
+		return user;
 }
 ```
 
+## 解决方法
 * 重写`SimpleModule`
 
 > 若项目没`Jackson`，则需引入依赖
