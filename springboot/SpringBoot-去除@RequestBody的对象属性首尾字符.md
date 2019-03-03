@@ -37,3 +37,5 @@ public class StringTrimModule extends SimpleModule {
     }
 }
 ```
+
+[参考地址](https://stackoverflow.com/questions/6852213/can-jackson-be-configured-to-trim-leading-trailing-whitespace-from-all-string-pr/24077444)
