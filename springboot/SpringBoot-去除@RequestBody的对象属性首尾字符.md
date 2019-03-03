@@ -19,7 +19,7 @@
 @ResponseBody
 @RequestMapping("/user/get")
 public User get(@RequestBody User user) {
-		return user;
+    return user;
 }
 ```
 
