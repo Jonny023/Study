@@ -6,7 +6,7 @@
 
 * 重写类
 
-```
+```java
 package com.example.demo.config;
 
 import com.fasterxml.jackson.core.JsonParser;
