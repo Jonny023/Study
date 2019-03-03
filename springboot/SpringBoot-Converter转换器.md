@@ -96,4 +96,4 @@ public class Index {
 
 # 注意
 
-* 此方式只对控制器方法单个传参方式有效，对`User bean`这种对象参数无效
+* 此方式对控制器方法使用`@RequestBody`标注的参数无效
