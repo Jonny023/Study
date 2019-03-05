@@ -5,6 +5,8 @@
   如：
  ```vue
  <span v-for="(item,index) in scope.row.xxx">{{item.age}}</span>
+ 
+ <span v-key="index" v-for="(item,index) in scope.row.xxx">{{item.age}}</span>
  ```
 
 ```vue
