@@ -4,7 +4,7 @@
 * `@Resource` 按名称装配
 
 ## 区别
-* `@Autowired`会自动装配`bean`，若声明`@Autowired(required = false)`，则`按名称装配`，表示若找不到`bean`,注入的`bean`为`null`，默认值为`true`，为`true`
+* `@Autowired`会自动装配`bean`，默认按类型装配，若声明`@Autowired(required = false)`，表示若找不到`bean`,注入的`bean`为`null`，默认值为`true`，为`true`
 时若找不到`bean`，会抛出异常。与`@Qualifier`搭配使用，如：
 
 ```java
