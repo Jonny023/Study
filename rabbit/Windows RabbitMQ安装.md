@@ -20,7 +20,7 @@
 * [RabbitMQ云盘下载地址](https://pan.baidu.com/s/1cqpG0u) 
 * [官网](http://www.rabbitmq.com/download.html)
 
-> 默认端口为`5672`
+> 默认端口为`15672`
 
 ### 配置环境
 
