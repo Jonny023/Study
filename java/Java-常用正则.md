@@ -1,5 +1,21 @@
 ## 常用
 
+### 去掉“*”星号
+
+```java
+ @Test
+public void hello() {
+    String str = "你这个怎么这样啊***...";
+    String str1 = "你这个怎么这样啊*/**.../**";
+    System.out.println(str.replace("\\*",""));
+    System.out.println(str.replaceAll("\\*",""));
+
+    System.out.println(str1.replaceAll("/\\*\\*",""));
+
+}
+
+```
+
 ```java
 
 import java.util.regex.Pattern;
