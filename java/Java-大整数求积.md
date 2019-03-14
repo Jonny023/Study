@@ -1,8 +1,8 @@
-## 大整数求和,不能用`BigInteger`
+## 大整数求积，不能用`BigInteger`
 
 > 原理
 
-* 小学草稿列出式子的方式 
+* 小学草稿列出式子求积的方式 
 
 ```java
 public class BigIntMulti {
