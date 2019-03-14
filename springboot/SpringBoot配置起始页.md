@@ -13,6 +13,9 @@ public String index() {
 * 重写`WebMvcConfigurerAdapter`类
 * `2.0`用`WebMvcConfigurationSupport `或`WebMvcConfigurer `代替`WebMvcConfigurerAdapter`
 
+# 注意！！！注意！！！
+* `WebMvcConfigurationSupport`类会使原有配置失效，而`WebMvcConfigurer `和`WebMvcConfigurerAdapter`不会
+
 ```java
 @Configuration
 public class DefaultView extends WebMvcConfigurerAdapter {
