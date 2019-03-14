@@ -6,7 +6,7 @@
  @Test
 public void hello() {
     String str = "你这个怎么这样啊***...";
-    String str1 = "你这个怎么这样啊*/**.../**";
+    String str1 = "你这个怎么这样啊/**.../**";
     System.out.println(str.replace("\\*",""));
     System.out.println(str.replaceAll("\\*",""));
 
