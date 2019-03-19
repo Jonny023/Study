@@ -17,3 +17,21 @@ public class ESConfig {
     }
 }
 ```
+
+# 整合
+
+> 依赖
+
+```xml
+<!--ElasticSearch-->
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-data-elasticsearch</artifactId>
+</dependency>
+<!--需要引入transport-netty3-client，否则会启动报错-->
+<dependency>
+    <groupId>org.elasticsearch.plugin</groupId>
+    <artifactId>transport-netty3-client</artifactId>
+    <version>5.6.10</version>
+</dependency>
+```
