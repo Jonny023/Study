@@ -1,19 +1,19 @@
 * 注入服务
 
-```
+```groovy
 def springSecurityService
 
 ```
 
 * 获取登录用户
 
-```
+```groovy
 def username = springSecurityService?.principal?.username
 
 ```
 * 获取登录用户角色(集合)
 
-```
+```groovy
 def roles = springSecurityService.getPrincipal().getAuthorities() 
 //or springSecurityService.authentication.authorities //or springSecurityService?.principal?.authorities
 
@@ -21,14 +21,14 @@ def roles = springSecurityService.getPrincipal().getAuthorities()
 
 * 清理requestmap缓存
 
-```
+```groovy
 springSecurityService.clearCachedRequestmaps()
 
 ```
 
 * gsp页面标签
 
-```
+```java
 //未登录
 <sec:ifNotLoggedIn>
     登录
@@ -71,7 +71,7 @@ springSecurityService.clearCachedRequestmaps()
 
 * 只允许账号为admin的访问
 
-```
+```groovy
 authentication.name=='admin'
 ```
 
@@ -90,11 +90,11 @@ authentication.name=='admin'
 
 * 默认配置Annotation
 
-```
+```groovy
 grails.plugin.springsecurity.securityConfigType = "Annotation"
 ```
 
-```
+```groovy
 grails.plugin.springsecurity.controllerAnnotations.staticRules = [
 	[pattern: '/',               access: ['permitAll']],
 	[pattern: '/error',          access: ['permitAll']],
@@ -113,11 +113,11 @@ grails.plugin.springsecurity.controllerAnnotations.staticRules = [
 
 * interceptUrlMap方式
 
-```
+```groovy
 grails.plugin.springsecurity.securityConfigType = "InterceptUrlMap"
 ```
 
-```
+```groovy
 grails.plugin.springsecurity.interceptUrlMap = [
    '/secure/someAction':      ["hasRole('ROLE_ADMIN')"],
    '/secure/someOtherAction': ["authentication.name == 'admin'"]
@@ -141,11 +141,11 @@ grails.plugin.springsecurity.interceptUrlMap = [
 
 * Requestmap方式（保存在数据库中）
 
-```
+```groovy
 grails.plugin.springsecurity.securityConfigType = "Requestmap"
 ```
 
-```
+```groovy
 for (String url in [
       '/', '/index', '/index.gsp', '/**/favicon.ico',
       '/assets/**', '/**/js/**', '/**/css/**', '/**/images/**',
@@ -165,7 +165,7 @@ new Requestmap(url: '/j_spring_security_switch_user',
 
 #### 常用注解
 
-```
+```groovy
 @Secured(['ROLE_ADMIN'])
 
 @Secured(['ROLE_ADMIN', 'ROLE_SUPERUSER'])
@@ -186,7 +186,7 @@ new Requestmap(url: '/j_spring_security_switch_user',
 
 ### 访问控制台权限
 
-```
+```groovy
 grails.plugin.springsecurity.controllerAnnotations.staticRules = [
     "/console/**":          ["hasRole('ROLE_ADMIN') && (hasIpAddress('127.0.0.1') || hasIpAddress('::1'))"],
     "/plugins/console*/**": ["hasRole('ROLE_ADMIN') && (hasIpAddress('127.0.0.1') || hasIpAddress('::1'))"], // Grails 2.x
