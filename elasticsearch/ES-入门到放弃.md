@@ -309,6 +309,14 @@ public class ESConfig {
 }
 ```
 
+## 要点
+
+* 原生
+  ```java
+    @Autowired
+    private ElasticsearchTemplate elasticsearchTemplate;
+  ```
+
 ## 遇到的错误
 
 * 序列化为json字符串时报错
