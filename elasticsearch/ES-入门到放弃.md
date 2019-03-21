@@ -127,7 +127,95 @@ public interface FileEsService {
 * service实现
 
 ```java
+package com.service.es;
 
+import com.alibaba.fastjson.JSON;
+import com.common.utils.PageUtils;
+import com.dao.es.FileEsDao;
+import com.entity.es.FileEs;
+import com.google.common.collect.Lists;
+import org.elasticsearch.index.query.QueryBuilder;
+import org.elasticsearch.index.query.QueryBuilders;
+import org.elasticsearch.search.sort.SortBuilders;
+import org.elasticsearch.search.sort.SortOrder;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.elasticsearch.core.query.NativeSearchQueryBuilder;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+
+@Service("fileEsService")
+public class FileEsServiceImpl implements FileEsService {
+
+    @Autowired
+    private FileEsDao fileEsDao;
+
+    @Override
+    public FileEs save(FileEs bean) {
+        return fileEsDao.save(bean);
+    }
+
+    @Override
+    public void saveAll(List<FileEs> fileEsList) {
+        fileEsDao.saveAll(fileEsList);
+    }
+
+//    @Override
+//    public PageUtils search(Integer currPage, Integer pageSize, String resName) {
+//        List<FileEs> list = null;
+//
+//        Pageable p = new PageRequest(currPage, pageSize);
+//
+//        //按标题进行搜索
+//        QueryBuilder queryBuilder = QueryBuilders.matchQuery("resName", resName);
+//
+//        //如果实体和数据的名称对应就会自动封装，pageable分页参数
+//        Page<FileEs> pageList = fileEsDao.search(queryBuilder, p);
+//
+//        System.out.println(pageList.getTotalElements());
+//        System.out.println(pageList.getNumber());
+//        System.out.println(pageList.getTotalPages());
+//        //Iterable转list
+//        list = Lists.newArrayList(pageList);
+//        System.out.println(JSON.toJSONString(list));
+//
+//        PageUtils page = new PageUtils(list, (int) pageList.getTotalElements(), pageSize, currPage);
+//
+//        return page;
+//    }
+
+    @Override
+    public PageUtils search(Integer currPage, Integer pageSize, String resName) {
+
+        List<FileEs> list = null;
+
+        // 构建查询条件
+        NativeSearchQueryBuilder queryBuilder = new NativeSearchQueryBuilder();
+        // 添加基本分词查询
+        queryBuilder.withQuery(QueryBuilders.termQuery("resName", resName));
+        // 分页：
+        queryBuilder.withPageable(PageRequest.of(currPage, pageSize));
+
+        // 排序
+        queryBuilder.withSort(SortBuilders.fieldSort("id").order(SortOrder.DESC));
+
+        // 搜索，获取结果
+        Page<FileEs> items = fileEsDao.search(queryBuilder.build());
+        // 总条数
+        long total = items.getTotalElements();
+
+        //Iterable转list
+        list = Lists.newArrayList(items);
+
+        PageUtils page = new PageUtils(list, (int) total, pageSize, currPage);
+
+        return page;
+    }
+
+}
 ```
 
 ## 你也可以通过配置类来实现
