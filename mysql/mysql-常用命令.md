@@ -10,3 +10,15 @@ select database();
 ```mysql
 show create table table_name;
 ```
+
+> 查看所有数据库
+
+```mysql
+show databases
+```
+
+> 查看当前库所有表
+
+```mysql
+show tables
+```
