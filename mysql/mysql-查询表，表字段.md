@@ -1,7 +1,7 @@
 # 查询指定库拥有某字段的表
 
 ```mysql
-AND TABLE_NAME NOT LIKE 'vw%'   注释：排除视图
+-- AND TABLE_NAME NOT LIKE 'vw%'   注释：排除视图
 SELECT DISTINCT TABLE_NAME FROM information_schema.COLUMNS WHERE COLUMN_NAME = 'columnName' AND TABLE_SCHEMA='dbName' AND TABLE_NAME NOT LIKE 'vw%';
 ```
 
