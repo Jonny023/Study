@@ -98,3 +98,13 @@ class Book {
     }
 }
 ```
+
+8、domain返回json时只返回指定字段
+
+```groovy
+JSON.registerObjectMarshaller(User) { 
+     def returnArray = [:] 
+     returnArray['username'] = it.username    
+     return returnArray 
+} 
+```
