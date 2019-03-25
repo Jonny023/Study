@@ -36,7 +36,7 @@
 * `@Around` 在方法执行之前与之后执行（方法上）
 * `@PointCut` 声明切点
 
-** 在java配置类中使用@EnableAspectJAutoProxy注解开启Spring对AspectJ代理的支持（类上）**
+* 在java配置类中使用@EnableAspectJAutoProxy注解开启Spring对AspectJ代理的支持（类上）*
 
 ### 5.@Bean的属性支持
 
