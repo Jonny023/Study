@@ -168,16 +168,14 @@ book.name=《三体》
 
 * `@EnableTransactionManagement` 开启注解式事务的支持
 
-* `@EnableTransactionManagement` 开启注解式事务的支持
-
 * `@EnableCaching` 开启注解式的缓存支持
 
 ### 11.测试相关注解
 
 * `@RunWith` 运行器，`Spring`中通常用于对`JUnit`的支持
-* `@RunWith(SpringJUnit4ClassRunner.class)`
+  * `@RunWith(SpringJUnit4ClassRunner.class)`
 * `@ContextConfiguration` 用来加载配置`ApplicationContext`，其中`classes`属性用来加载配置类
-* `@ContextConfiguration(classes={TestConfig.class})`
+  * `@ContextConfiguration(classes={TestConfig.class})`
 
 #### SpringMVC部分
 
@@ -185,7 +183,7 @@ book.name=《三体》
 
 * `@Controller` 声明该类为`SpringMVC`中的`Controller`
 
-* `@RequestMapping` 用于映射Web请求，包括访问路径和参数（类或方法上）
+* `@RequestMapping` 用于映射`Web`请求，包括访问路径和参数（类或方法上）
 
 * `@ResponseBody` 支持将返回值放在`response`内，而不是一个页面，通常用户返回`json`数据（返回值旁或方法上）
 
@@ -200,6 +198,6 @@ book.name=《三体》
 
 * `@ExceptionHandler` 用于全局处理控制器里的异常
 
-* `@InitBinder` 用来设置`WebDataBinder，WebDataBinder`用来自动绑定前台请求参数到Model中。
+* `@InitBinder` 用来设置`WebDataBinder，WebDataBinder`用来自动绑定前台请求参数到`Model`中。
 
 * `@ModelAttribute` 本来的作用是绑定键值对到`Model`里，在`@ControllerAdvice`中是让全局的`@RequestMapping`都能获得在此处设置的键值对。
