@@ -15,6 +15,16 @@ def someMethod(){
 } 
 
 ```
+
+* 重新认证
+
+> `reauthenticate`方法更新与实例的·UserDetails`当前安全上下文，不执行任何验证。它还会将用户从用户缓存中移除，下次登录时强制刷新。
+因此，如果您不传密码参数，它将使用UserDetails实例中的密码并使用这些详细信息设置认证上下文
+
+```groovy
+springSecurityService.reauthenticate(userid, password) 
+```
+
 * 获取登录用户角色(集合)
 
 ```groovy
