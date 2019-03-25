@@ -207,3 +207,24 @@ grails.plugin.springsecurity.controllerAnnotations.staticRules = [
     "/static/console/**":   ["hasRole('ROLE_ADMIN') && (hasIpAddress('127.0.0.1') || hasIpAddress('::1'))"], // Grails 3.x
 ]
 ```
+
+* 域类中获取当前用户
+
+```groovy
+class Person {
+
+   def securityService
+
+   String firstName
+   String lastName
+   String lastUpdatedBy
+
+   static constraints = {
+      lastUpdatedBy nullable: true
+   }
+
+   def beforeUpdate() {
+      lastUpdatedBy = securityService.currentAuthenticatedUsername()
+   }
+}
+```
