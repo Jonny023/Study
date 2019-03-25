@@ -1,4 +1,4 @@
-在开发过程中，好多东西可以交给域类（domain）来进行处理，这样就不需要再业务层再次进行处理了，从而简化业务。
+> 在开发过程中，有的东西可以交给域类（domain）来进行处理，这样就不需要再业务层再次进行处理了，从而简化业务。
 
 1、如果想要domain中的属性不生成数据库字段，可以用transients进行声明
 
@@ -143,4 +143,13 @@ class DomainWithVersion {
 DomainWithVersion.executeQuery('select versionNumber from DomainWithVersion dwv order by dwv.versionMajor, dwv.versionMinor, dwv.versionBuild', [], [max: 1]) 
 ```
 
+10、判断域类是否被修改
+
+* `isDirty()`方法
+
+```groovy
+if(clients instanceof PersistentCollection && clients.isDirty()) { 
+     ...
+}
+```
 
