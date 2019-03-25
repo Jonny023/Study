@@ -107,6 +107,19 @@ JSON.registerObjectMarshaller(User) {
      returnArray['username'] = it.username    
      return returnArray 
 } 
+
+JSON.registerObjectMarshaller(Author) { Author author ->
+    return [
+        id: author.id,
+        name: author.name,
+        books: author.books.collect { Book book ->
+            [
+                id: book.id,
+                title: book.title
+            ]
+        }
+    ]
+}
 ```
 
 9、版本比较`4.4.1 > 4.21.3`
