@@ -1,6 +1,6 @@
 * 加载xml配置
 
-```
+```java
 //装载单个配置文件实例化ApplicationContext容器
 ApplicationContext cxt = new ClassPathXmlApplicationContext("applicationContext.xml");
 
