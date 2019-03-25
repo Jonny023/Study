@@ -10,6 +10,10 @@ def springSecurityService
 ```groovy
 def username = springSecurityService?.principal?.username
 
+def someMethod(){ 
+    SecurityContextHolder.context.authentication?.principal?.username
+} 
+
 ```
 * 获取登录用户角色(集合)
 
