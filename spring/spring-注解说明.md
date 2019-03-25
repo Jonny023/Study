@@ -48,8 +48,8 @@
   * `Session` （web项目中，给每个http session新建一个bean）,
   * `GlobalSession`（给每一个 global http session新建一个Bean实例）
   * `@StepScope` 在`Spring Batch`中还有涉及
-  * `@PostConstruct` 由`JSR-250`提供，在构造函数执行完之后执行，等价于xml配置文件中bean的initMethod
-  * `@PreDestory` 由JSR-250提供，在Bean销毁之前执行，等价于xml配置文件中bean的destroyMethod
+  * `@PostConstruct` 由`JSR-250`提供，在构造函数执行完之后执行，等价于xml配置文件中`bean`的`initMethod`
+  * `@PreDestory` 由`JSR-250`提供，在`Bean`销毁之前执行，等价于`xml`配置文件中`bean`的`destroyMethod`
 
 ### 6.@Value注解
 
@@ -127,7 +127,7 @@ book.name=《三体》
 
 ```
 
-* 还需配置一个`PropertySourcesPlaceholderConfigure`r的`bean`。
+* 还需配置一个`PropertySourcesPlaceholderConfigurer`的`bean`。
 
 ### 7.环境切换
 
