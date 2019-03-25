@@ -108,3 +108,26 @@ JSON.registerObjectMarshaller(User) {
      return returnArray 
 } 
 ```
+
+9、版本比较`4.4.1 > 4.21.3`
+
+```groovy
+class DomainWithVersion { 
+    String version; 
+
+    Integer versionMajor; 
+    Integer versionMinor; 
+    Integer versionBuild; 
+
+    static mapping = { 
+     // SUBSTRING_INDEX is a MySQL function 
+     versionMajor(formula: 'SUBSTRING_INDEX(version, '.', 1)') 
+     versionMinor(formula: 'SUBSTRING_INDEX(SUBSTRING_INDEX(version, '.', 2), '.', -1)') 
+     versionBuild(formula: 'SUBSTRING_INDEX(version, '.', -1)') 
+    } 
+} 
+
+DomainWithVersion.executeQuery('select versionNumber from DomainWithVersion dwv order by dwv.versionMajor, dwv.versionMinor, dwv.versionBuild', [], [max: 1]) 
+```
+
+
