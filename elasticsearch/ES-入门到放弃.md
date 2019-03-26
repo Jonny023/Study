@@ -30,6 +30,33 @@ spring:
           data: d:/elasticsearch/data #elasticsearch数据存储目录
 ```
 
+* 添加配置类防止netty报错`java.lang.IllegalStateException: availableProcessors is already set to [4], rejecting [4]`
+
+```java
+package com.common.config;
+
+import org.springframework.context.annotation.Configuration;
+
+import javax.annotation.PostConstruct;
+
+/**
+ *  ElasticSearch配置
+ */
+@Configuration
+public class EsConfig {
+
+    /**
+     * 防止netty的bug
+     * java.lang.IllegalStateException: availableProcessors is already set to [4], rejecting [4]
+     */
+    @PostConstruct
+    void init() {
+        System.setProperty("es.set.netty.runtime.available.processors", "false");
+    }
+}
+
+```
+
 ## 具体代码
 
 * 实体类
