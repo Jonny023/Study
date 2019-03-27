@@ -2,6 +2,17 @@
 
 [参考](https://blog.csdn.net/weixin_41301898/article/details/79959433?utm_source=blogxgwz3)
 
+* java
+```java
+Map paramter = new HashMap();
+paramter.put("imgUrl","d:\\file\\test.jpg");
+
+String printFileName = JasperFillManager.fillReportFile(realPath,paramter,dataSource);
+if(printFileName!=null) {
+  JasperPrintManager.printReport(printFileName, true);
+}
+```
+
 * 图片
 
 ```xml
