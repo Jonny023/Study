@@ -1,4 +1,4 @@
-# 将 footer 保持在底部的最好方法
+# 将 footer 保持在底部
 
 ```html
 <body>
