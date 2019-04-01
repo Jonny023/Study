@@ -1,4 +1,4 @@
-通过createCriteria可以构建比较复杂的查询条件，包括分页参数的传递、构建left join、right join、inner join等等
+通过`createCriteria`可以构建比较复杂的查询条件，包括分页参数的传递、构建`left join`、`right join`、`inner join`等等
 
 新建两个domain类，一个Student和StudentGroup
 
@@ -40,15 +40,21 @@ class StudentGroup {
 }
 ```
 
-（1）通过学生与学生组进行联表查询，测试left join，此处通过collect闭包对查询结果集进行了封装，在开发过程中可以用它来传递需要的参数，从而优化接口，避免数据量过大。这里只写了left join还有inner join等参数，可自行测试。
+（1）通过学生与学生组进行联表查询，测试`left join`，此处通过`collect`闭包对查询结果集进行了封装，在开发过程中可以用它来传递需要的参数，从而优化接口，避免数据量过大。这里只写了`left join`还有`inner join`等参数，可自行测试。
 
-注：CriteriaSpecification.LEFT_JOIN已被弃用。可以使用JoinType.LEFT_OUTER_JOIN来获取最新版本。
+注：`CriteriaSpecification.LEFT_JOIN`已被弃用。可以使用`JoinType.LEFT_OUTER_JOIN`来获取最新版本。
 
 ```groovy
 def test() {
     def students = Student.createCriteria().list({
         createAlias("stuGroup","g", CriteriaSpecification.LEFT_JOIN)
         eq("g.groupName",'音乐')
+	// 或使用
+	// eq("stuGroup.groupName",'音乐')
+	
+	// stuGroup {
+	    // eq("g.groupName",'音乐')
+	//}
     }).collect{[
             id:it.id,
             stuName: it.stuName,
