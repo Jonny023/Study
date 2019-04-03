@@ -5,3 +5,10 @@
 
 * `Domain.withTransaction`和`@Transactional`的区别
   * `withTransaction`将创建会话，`@Transactional`不会
+
+# 打包命令
+
+* 针对不同环境打包
+  * `grails war` - 普通打包
+  * `grails test war` - 指定测试环境打包
+  * `grails -Dgrails.env=staging war` - 指定自定义staging环境打包
