@@ -17,7 +17,7 @@
 
 * 普通参数
   * `params.name`
-  * `params[name]`
+  * `params["name"]`
   * `params.get("name")`
  
 * 数组/集合
