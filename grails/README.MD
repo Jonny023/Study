@@ -12,3 +12,16 @@
   * `grails war` - 普通打包
   * `grails test war` - 指定测试环境打包
   * `grails -Dgrails.env=staging war` - 指定自定义staging环境打包
+
+# 参数获取
+
+* 普通参数
+ * `params.name`
+ * `params[name]`
+ * `params.get("name")`
+ 
+* 数组/集合
+ * `params["ids[]"]`
+ * `params.get("ids[]")`
+ * 转换为集合/数组
+  * `Long[] ids = params["ids[]"].collect {it as Long}`
