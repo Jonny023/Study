@@ -16,12 +16,15 @@
 # 参数获取
 
 * 普通参数
- * `params.name`
- * `params[name]`
- * `params.get("name")`
+  * `params.name`
+  * `params[name]`
+  * `params.get("name")`
  
 * 数组/集合
   * `params["ids[]"]`
   * `params.get("ids[]")`
   * 转换为集合/数组
     * `Long[] ids = params["ids[]"].collect {it as Long}`
+    
+* json数据
+  * `request.JSON`
