@@ -21,7 +21,7 @@
  * `params.get("name")`
  
 * 数组/集合
- * `params["ids[]"]`
- * `params.get("ids[]")`
- * 转换为集合/数组
-  * `Long[] ids = params["ids[]"].collect {it as Long}`
+  * `params["ids[]"]`
+  * `params.get("ids[]")`
+  * 转换为集合/数组
+    * `Long[] ids = params["ids[]"].collect {it as Long}`
