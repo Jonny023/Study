@@ -13,7 +13,8 @@ public static void main(String[] args) {
 }
 ```
 
-> 查找满足条件的数据集合
+> 通过正则查找满足条件的数据集合
+* `(?i)`忽略大小写
 
 ```groovy
 def list = ["abc","cdf","ccc"]
