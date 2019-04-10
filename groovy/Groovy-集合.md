@@ -12,3 +12,13 @@ public static void main(String[] args) {
   println a.intersect(b)
 }
 ```
+
+> 查找满足条件的数据集合
+
+```groovy
+def list = ["abc","cdf","ccc"]
+def lists = list.findAll {c->
+    c ==~ /(?i).*c.*/
+}
+println lists // [abc, cdf, ccc]
+```
