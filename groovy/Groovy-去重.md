@@ -17,6 +17,7 @@ println arr as Set
 ```groovy
 def list = [[id: 1,name: '张三'],[id:2,name: '张三'],[id:3, name: '李四']]
 println list.unique {it.name}
+println list.unique {a,b -> a.name <=> b.name}
 
 // 输出[[id:1, name:张三], [id:3, name:李四]]
 ```
