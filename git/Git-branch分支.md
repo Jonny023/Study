@@ -1,7 +1,7 @@
 # 切换分支，拉取文件
 
 ```bash
-# 通过git branch查看当所在前分支，当前在master分支上
+# 通过git branch查看当所在前分支（本地分支），当前在master分支上
 $ git branch
 * master
 
