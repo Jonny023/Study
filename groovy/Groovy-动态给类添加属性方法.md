@@ -14,5 +14,9 @@ public static void main(String[] args) {
     def jsonString1 = JsonOutput.toJson(t)
     println (jsonString1)
 
+    // 输出
+    
+    // {"a":"hello"}
+    // {"age":20,"a":"hello"}
 }
 ```
