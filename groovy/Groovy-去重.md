@@ -2,8 +2,13 @@
 
 * 简单集合
 ```groovy
+// 方式一
 def list = [1, 2, 3, 2, 4, 1, 5]
 println list.unique()  // [1, 2, 3, 4, 5]
+
+// 方式二
+def arr = [1,2,1,3,4,4,9]
+println arr as Set
 ```
 
 * 对象集合
