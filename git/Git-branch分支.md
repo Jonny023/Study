@@ -12,7 +12,7 @@ $ git branch -a
   remotes/origin/dev
   remotes/origin/master
 
-# git checkout -b dev origin/dev切换到dev分支
+# git checkout -b dev origin/dev拉取远程分支dev到本地
 $ git checkout -b dev origin/dev
 Switched to a new branch 'dev'
 Branch 'dev' set up to track remote branch 'dev' from 'origin'.
