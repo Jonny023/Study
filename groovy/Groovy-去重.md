@@ -8,6 +8,7 @@ println list.unique()  // [1, 2, 3, 4, 5]
 
 // 方式二
 def arr = [1,2,1,3,4,4,9]
+println arr.unique {a,b -> a <=> b}
 println arr as Set
 ```
 
