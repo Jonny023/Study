@@ -1,4 +1,4 @@
-> 通过`Object.assign()`深拷贝
+> 通过`Object.assign()`浅拷贝
 * 拷贝数组的时候需要注意
   * 如：`Object.assign([1,2],[11])`，他是将前一个对应位置的值用后面的覆盖，结果是：`[11, 2]`
 
@@ -9,7 +9,7 @@ obj_back.id = 20;
 // 输出{id: 20, age: 20}
 ```
 
-> 通过`JSON.parse(JSON.stringify())`
+> 通过`JSON.parse(JSON.stringify())深拷贝`
 
 ```javascript
 var obj = {id: 1, age: 20};
