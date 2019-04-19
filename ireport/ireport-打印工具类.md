@@ -47,13 +47,13 @@ class ExpeortReportService {
             JRDataSource source = new JRBeanCollectionDataSource(dataList)
             jasperPrint = JasperFillManager.fillReport(jasperReport, parameterMap, source)
 
-            if (request.getHeader("User-Agent").toLowerCase().indexOf("firefox") > 0)
-                downloadFileName = new String(downloadFileName.getBytes("UTF-8"), "ISO8859-1")// firefox浏览器
-            else if (request.getHeader("User-Agent").toUpperCase().indexOf("MSIE") > 0)
-                downloadFileName = new String(downloadFileName.getBytes("gb2312"), "ISO8859-1")// IE浏览器
-            else
-                downloadFileName = new String(downloadFileName.getBytes("UTF-8"), "ISO8859-1")// firefox浏览器
-
+//            if (request.getHeader("User-Agent").toLowerCase().indexOf("firefox") > 0) {
+//                downloadFileName = new String(downloadFileName.getBytes("UTF-8"), "ISO8859-1")// firefox浏览器
+//            } else if (request.getHeader("User-Agent").toUpperCase().indexOf("MSIE") > 0) {
+//                downloadFileName = new String(downloadFileName.getBytes("GBK"), "ISO8859-1")// IE浏览器
+//            } else {
+//                downloadFileName = new String(downloadFileName.getBytes("UTF-8"), "ISO8859-1")// firefox浏览器
+//            }
             if (ReportExportMode.EXP_PDF_MODE.equalsIgnoreCase(exportMode)) {
                 exportPdf(request,response, jasperPrint, downloadFileName)
             } else if (ReportExportMode.EXP_EXCEL_MODE.equalsIgnoreCase(exportMode)) {
@@ -90,9 +90,8 @@ class ExpeortReportService {
             response.setContentType("application/pdf;charset=utf-8")
 //            response.setHeader("Content-Disposition", "attachment;filename=" + downloadFileName + ".pdf")
             String disposition = FileBrowserUtil.getContentDisposition(downloadFileName+".pdf",request);
-            println disposition
             response.setHeader("Content-Disposition", disposition)
-            response.setContentType("multipart/form-data");
+            response.setHeader("Connection", "close");
             response.setCharacterEncoding("utf-8")
             exporter.exportReport()
             ouputStream.flush()
@@ -118,6 +117,7 @@ class ExpeortReportService {
             response.setContentType("application/vnd.ms-excel;charset=utf-8")
 //            response.setHeader("Content-Disposition", "attachment;filename=" + downloadFileName + ".xls")
             response.setHeader("Content-Disposition", FileBrowserUtil.getContentDisposition(downloadFileName+".xls",request))
+            response.setHeader("Connection", "close");
             // 删除记录最下面的空行
             exporter.setParameter(JRXlsExporterParameter.IS_REMOVE_EMPTY_SPACE_BETWEEN_ROWS,Boolean.TRUE)
             // 删除多余的ColumnHeader
@@ -149,6 +149,7 @@ class ExpeortReportService {
             response.setContentType("application/msword;charset=utf-8")
 //            response.setHeader("Content-Disposition", "attachment;filename=" + downloadFileName + ".doc")
             response.setHeader("Content-Disposition", FileBrowserUtil.getContentDisposition(downloadFileName+".doc",request))
+            response.setHeader("Connection", "close");
             exporter.exportReport()
             ouputStream.flush()
         } finally {
@@ -174,6 +175,7 @@ class ExpeortReportService {
             response.setContentType("application/rtf;charset=utf-8")
 //            response.setHeader("Content-Disposition", "attachment;filename=" + downloadFileName + ".rtf")
             response.setHeader("Content-Disposition", FileBrowserUtil.getContentDisposition(downloadFileName+".pdf",request))
+            response.setHeader("Connection", "close");
             exporter.exportReport()
             ouputStream.flush()
         } finally {
@@ -206,6 +208,7 @@ class ExpeortReportService {
             exporter.setParameter(JRHtmlExporterParameter.FRAMES_AS_NESTED_TABLES,Boolean.FALSE)
             exporter.setParameter(JRHtmlExporterParameter.IS_USING_IMAGES_TO_ALIGN, Boolean.FALSE)
             response.setContentType("text/html;charset=utf-8")
+            response.setHeader("Connection", "close");
             exporter.exportReport()
             ouputStream.flush()
         } finally {
@@ -243,6 +246,7 @@ class ExpeortReportService {
             exporter.setParameter(JRHtmlExporterParameter.FRAMES_AS_NESTED_TABLES,Boolean.FALSE)
             exporter.setParameter(JRHtmlExporterParameter.IS_USING_IMAGES_TO_ALIGN, Boolean.FALSE)
             response.setContentType("text/html;charset=utf-8")
+            response.setHeader("Connection", "close");
 
             //直接调用本地打印机打印
             JasperPrintManager.printReport(jasperPrint, false)
