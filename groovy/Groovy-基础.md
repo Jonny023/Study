@@ -3,6 +3,25 @@
 * 分支
 
 ```groovy
+def person = Expando()
+person.name = "Fred"
+person.age = 45
+def child = 0..16 // inclusive range
+def adult = 17.<66 // exclusive range
+def senior = 66..120 //
+switch(fred.age) {
+ case child:
+  println "You're too young ${fred.name}!"
+  break
+ case adult:
+  println "Welcome ${fred.name}!"
+  break
+ case senior:
+  println "Welcome ${fred.name}! Take a look at our senior citizen rates!"
+  break
+}
+
+
 switch (x) {
  case 'Graeme':
    println "yes it's me"
