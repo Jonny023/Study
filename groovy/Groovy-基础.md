@@ -49,3 +49,11 @@ def pattern = ~/foo/
 ```groovy
 list << 'Chinese' << 'English' << 'Math'
 ```
+
+* 用指定字符分隔
+
+```groovy
+def list = [1,22,10]
+list.join(",")
+// 1,22,10
+```
