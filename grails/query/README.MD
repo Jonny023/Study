@@ -31,7 +31,7 @@ def somethingElse = Bookmark.findByTitleNotEqual('Grails')
 |说明|方法|参数个数|用法|
 |--|--|--|--|
 |两者之间|Between| 2| Bookmark.findByDateCreatedBetween(today-10,today)|
-|等于|Equals| 1| Bookmark.findByTitleEquals('Grails')|
+|等于字符|Equals| 1| Bookmark.findByTitleEquals('Grails')|
 |大于|GreaterThan| 1| Bookmark.findByDateCreatedGreaterThan(lastMonth)|
 |大于等于|GreaterThanOrEqual| 1| Bookmark.findByDateCreatedGreaterThanOrEqual(lastMonth)|
 |等于空|IsNull| 0| Bookmark.findByNotesIsNull()|
@@ -39,4 +39,4 @@ def somethingElse = Bookmark.findByTitleNotEqual('Grails')
 |小于|LessThan| 1| Bookmark.findByDateCreatedLessThan(lastMonth)|
 |小于等于|LessThanOrEqual| 1| Bookmark.findByDateCreatedLessThanOrEqual(lastMonth)|
 |模糊|Like| 1| Bookmark.findByTitleLike('Grails%')|
-|不等于|NotEqual| 1| Bookmark.findByTitleNotEqual('Grails')|
+|不等于字符|NotEqual| 1| Bookmark.findByTitleNotEqual('Grails')|
