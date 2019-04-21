@@ -19,6 +19,23 @@ class User {
 }
 ```
 
+* 自定义约束验证
+
+```groovy
+class User {
+     ...
+     static constraints = {
+         password(unique:true,length:5..15, validator: { val, obj ->
+             if(val?.equalsIgnoreCase(obj.firstName)) {
+                return false
+             }
+         }
+     }
+ }
+ 
+ 
+```
+
 ## 约束属性说明
 
 |属性|用法|说明|
