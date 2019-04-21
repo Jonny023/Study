@@ -22,7 +22,7 @@ class User {
 ## 约束属性说明
 
 |属性|用法|说明|
-|--|--|--|--|
+|--|--|--|
 |blank| login(blank:false)  |非空字符|
 |email| email(email:true) |邮箱|
 |inList| login(inList:["Joe", "Fred"] )| 只能为集合中的某个值 |
