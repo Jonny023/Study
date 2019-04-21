@@ -1,6 +1,18 @@
 # Grails查询使用注意事项
 * `findByXxx`这种格式不支持太多字段，比如：`findAllByUserAndAgeAndSexAndNickName()`，长度太长会报错
 
+* 查询所有
+
+```groovy
+def allBookmarks = Bookmark.findAll('from Bookmark')
+```
+
+* 查询标题等于Grails的单个对象
+
+```groovy
+def grailsBookmark = Bookmark.find('from Bookmark as b where b.title = ?',['Grails'])
+```
+
 * 查询最新的10条记录
 
 ```groovy
@@ -40,3 +52,26 @@ def somethingElse = Bookmark.findByTitleNotEqual('Grails')
 |小于等于|LessThanOrEqual| 1| Bookmark.findByDateCreatedLessThanOrEqual(lastMonth)|
 |模糊|Like| 1| Bookmark.findByTitleLike('Grails%')|
 |不等于字符|NotEqual| 1| Bookmark.findByTitleNotEqual('Grails')|
+
+## 通过`createCriteria()`构建查询
+
+```groovy
+def c = Bookmark.createCriteria()
+def results = c.list {
+ like('title', 'Grails%')
+ between('dateCreated', new Date()-10, new Date())
+}
+```
+
+* 只返回指定列，下例只返回`url`
+```groovy
+def criteria = Bookmark.createCriteria()
+def results = criteria.list {
+   projections {
+      countDistinct('url')
+   }
+   tags {
+      ilike('name', 'Grails')
+   }
+}
+```
