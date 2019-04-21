@@ -19,6 +19,14 @@ def grailsBookmark = Bookmark.find('from Bookmark as b where b.title = ?',['Grai
 def lastTen = Bookmark.list(offset:Bookmark.count()-10, sort:'dateCreated', order:'desc')
 ```
 
+* 抓取策略
+
+> 查询的时候多表自动join
+
+```groovy
+def bookmarks = Bookmark.findAllByTitle("Grails",[fetch:[tags:"eager"]])
+```
+
 * 模糊查询
 
 ```groovy
@@ -73,5 +81,17 @@ def results = criteria.list {
    tags {
       ilike('name', 'Grails')
    }
+}
+```
+
+* 抓取策略
+
+```groovy 
+import org.hibernate.FetchMode as FM
+
+def criteria = Bookmark.createCritera()
+def bookmarks = criteria.list {
+  eq("title","Grails")
+  fetchMode("tags", FM.EAGER)
 }
 ```
