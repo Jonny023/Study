@@ -28,3 +28,20 @@
     
 * json数据
   * `request.JSON`
+
+
+### 日志提示
+
+```
+19:47:23.983 [main] WARN  grails.dev.Support 63 - Reloading is disabled. Development time reloading requires disabling the Java verifier. Please pass the argument '-Xverify:none' to the JVM
+```
+
+* 设置开关
+
+```
+grails {
+    agent {
+        enabled = false
+    }
+}
+```
