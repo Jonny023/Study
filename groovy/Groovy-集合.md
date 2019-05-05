@@ -266,3 +266,26 @@ def range1 = 1..5    // range1 长度是5，包含数字5
 def range2 = 1..<5   // range2 长度是4，不包含数字5
 ```
 
+* 分组合并
+
+```groovy
+def cartoons = [    
+                    'Regular Show',    
+                    'The Amazing World of Gumball',    
+                    'Adventure Time',    
+                    'Uncle Grandpa',    
+                    'Batman'    
+                ]    
+ 
+//两两合并
+def cartoonsSplitListWithTwoCartoonEach = cartoons.collate(2)    
+println cartoonsSplitListWithTwoCartoonEach // [[Regular Show, The Amazing World of Gumball], [Adventure Time, Uncle Grandpa], [Batman]]    
+ 
+//三个一组合并
+def cartoonsSplitListWithThreeCartoonEach = cartoons.collate(3)    
+println cartoonsSplitListWithThreeCartoonEach // [[Regular Show, The Amazing World of Gumball, Adventure Time], [Uncle Grandpa, Batman]]
+ 
+//两个一组合并，舍弃孤立不成组的元素
+def cartoonsSplitListWithoutRemainder = cartoons.collate(2, false)    
+println cartoonsSplitListWithoutRemainder // [[Regular Show, The Amazing World of Gumball], [Adventure Time, Uncle Grandpa]]
+```
