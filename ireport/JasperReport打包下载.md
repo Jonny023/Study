@@ -1,5 +1,7 @@
 ## JasperReport工具类
 
+> 打印pdf，如果数据量过大或导致GC，需要分批处理，生成多个pdf打为zip包下载
+
 * 工具类
 
 ```java
