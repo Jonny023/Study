@@ -24,4 +24,15 @@ $(function(){
         }
    });
 });
+
+// 二
+
+$(document).ajaxComplete(function(ev, xhr, settings) {
+    var res = xhr.responseText;
+    try {
+        if (res == 'Unauthorized') {
+           layer.msg("登录超时，请刷新登录");
+        }
+    } catch (e) {}
+});
 ```
