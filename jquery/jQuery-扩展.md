@@ -7,3 +7,14 @@ $.fn.kevin = function() {
 
 $("a").kevin();
 ```
+
+* 获取新对象
+
+> 类似浅复制
+
+```javascript
+var a = {"id":1}
+var b = {"name":"张三"};
+
+console.log($.extend({},a,b));
+```
