@@ -3,6 +3,8 @@
 
 ### 父页面向子页面传参
 
+[参考地址](http://layer.layui.com/api.html#layer.getChildFrame)
+
 * 父窗体
 
 ```javascript
