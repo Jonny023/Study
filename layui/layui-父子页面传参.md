@@ -7,19 +7,14 @@
 
 ```javascript
 layer.open({
-  title: this.text,
-  type: 2,
-  skin: 'layui-layer-rim', //加上边框
-  area: [window.screen.width / 2 + 'px', window.screen.height / 2 + 'px'], //宽高
-  maxmin: true, //开启最大化最小化按钮
-  content: "taskDetail.html",
-  success: function (layero, index) {
-      // 获取子页面的iframe
-      var iframe = window['layui-layer-iframe' + index];
-      // 向子页面的全局函数child传参
-      iframe.child("hello");
+  type: 2
+  ,content: ''
+  ,success: function(layero, index){
+    var iframe = window['layui-layer-iframe'+index];
+    //调用子页面的全局函数
+    iframe.child("hello");
   }
-});
+})
 ```
 
 * 子窗体
