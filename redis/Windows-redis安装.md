@@ -49,3 +49,12 @@ get key
 ```
 flushall
 ```
+
+* 查看版本
+
+```
+redis-cli
+auth 123456
+info
+
+```
