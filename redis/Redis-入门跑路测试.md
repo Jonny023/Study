@@ -80,3 +80,39 @@ public class DemoApplicationTests {
 
 }
 ```
+
+* 测试类跟`Application`类不在同一包或子包下需要配置`classes ={DemoApplication.class,RedisUtil.class}`
+
+```java
+package com.genee;
+
+import com.example.test.DemoApplication;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringRunner;
+
+import java.nio.charset.StandardCharsets;
+
+@RunWith(SpringRunner.class)
+@SpringBootTest(classes ={DemoApplication.class,RedisUtil.class})
+public class DemoApplicationTests {
+
+    @Autowired
+    private RedisUtil redisUtil;
+
+    @Test
+    public void v() {
+        redisUtil.objScan("*", item -> {
+            //符合条件的key
+            String key = new String(item,StandardCharsets.UTF_8);
+            String[]  ary=key.split("_");
+            System.out.println(key);
+        });
+
+    }
+
+}
+
+```
