@@ -8,7 +8,7 @@
 redis-cli --raw 
 ```
 
-* 代码乱码
+> 代码乱码
 
 ```java
 public void set(String key, String value, long expiredTime) throws Exception {
