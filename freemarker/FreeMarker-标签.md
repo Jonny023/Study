@@ -2,7 +2,7 @@
 
 * 判断非空
 
-```freemarker
+```html
 <#if user?? && user.price > 200>
 
 </#if>
