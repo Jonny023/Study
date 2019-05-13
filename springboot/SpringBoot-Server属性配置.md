@@ -30,6 +30,7 @@ server.session.cookie.secure设定session cookie的“Secure” flag.
 server.session.persistent重启时是否持久化session，默认false
 server.session.timeoutsession的超时时间
 server.session.tracking-modes设定Session的追踪模式(cookie, url, ssl)
+```
 
 #### `tomcat`
 
