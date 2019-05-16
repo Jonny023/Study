@@ -18,7 +18,7 @@ form.on('select(area)',function(data) {
 <select name="area" lay-filter="area" lay-verify="required"></select>
 
 // 单击input输入框时触发
-$('select[name="bioa"]').next().find('.layui-select-title input').click(function () {
+$('select[name="area"]').next().find('.layui-select-title input').click(function () {
     alert();
 });
 
