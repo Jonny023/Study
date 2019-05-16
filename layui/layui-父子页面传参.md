@@ -28,3 +28,27 @@ layer.open({
     }
 </script>
 ```
+
+### 父窗口获取子页面回调方法
+
+* 父窗体
+
+```javascript
+layer.open({
+    type: 2,
+    content: '/user/info',
+    btn: function(index,layero) {
+        var iframeWin1 = window[layero.find('iframe')[0]['name']];
+        var iframeWin2 = window["layui-layer-iframe" + index];
+        iframeWin1.getValue();
+    }
+});
+```
+
+* 子页面
+
+```javascript
+window.getValue = function () {
+    alert(123456);
+}
+```
