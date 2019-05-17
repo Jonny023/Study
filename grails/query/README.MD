@@ -7,6 +7,17 @@
 def allBookmarks = Bookmark.findAll('from Bookmark')
 ```
 
+* 正则查询
+
+```groovy
+def payBase = PayBasic.withCriteria {
+    projections {
+        max("payOrderNo")
+    }
+    rlike("payOrderNo",/^${creditCard}/)
+}
+```
+
 * 查询标题等于Grails的单个对象
 
 ```groovy
