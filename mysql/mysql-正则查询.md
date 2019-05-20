@@ -8,5 +8,5 @@ SELECT
 FROM
 	`tel` 
 WHERE
-	phone REGEXP '^[A-Z]{4}.[0-9]+.([A-Z]{1})([0-9]+$)|^[A-Z]{4}.[0-9]+$'
+	phone REGEXP '^[A-Z]{4}.[0-9]+.([A-Z]{,1})([0-9]+$)|^[A-Z]{4}.[0-9]+$'
 ```
