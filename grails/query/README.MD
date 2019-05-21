@@ -18,6 +18,21 @@ def payBase = PayBasic.withCriteria {
 }
 ```
 
+* 查询关联对象的属性
+
+```groovy
+def users = User.createCriteria().list {
+    role {
+        projections {
+            property("id")
+        }
+    }
+    addr {
+        eq("id", (params.id?:'0') as long)
+    }
+}
+```
+
 * 查询标题等于Grails的单个对象
 
 ```groovy
