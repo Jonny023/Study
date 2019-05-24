@@ -22,31 +22,6 @@ def users = User.createCriteria().list {
 }
 ```
 
-* 正则查询
-
-```groovy
-def payBase = PayBasic.withCriteria {
-    projections {
-        max("payOrderNo")
-    }
-    rlike("payOrderNo",/^${creditCard}/)
-}
-```
-
-* 查询关联对象的属性
-
-```groovy
-def users = User.createCriteria().list {
-    role {
-        projections {
-            property("id")
-        }
-    }
-    addr {
-        eq("id", (params.id?:'0') as long)
-    }
-}
-```
 
 * 查询标题等于Grails的单个对象
 
@@ -147,6 +122,32 @@ def user = UserInfo.createCriteria().get {
     projections {
         // property第一个参数为domain属性，第二个参数为返回键值对的键名，类似数据库as username
         property("username", "username")
+    }
+}
+```
+
+* 正则查询
+
+```groovy
+def payBase = PayBasic.withCriteria {
+    projections {
+        max("payOrderNo")
+    }
+    rlike("payOrderNo",/^${creditCard}/)
+}
+```
+
+* 查询关联对象的属性
+
+```groovy
+def users = User.createCriteria().list {
+    role {
+        projections {
+            property("id")
+        }
+    }
+    addr {
+        eq("id", (params.id?:'0') as long)
     }
 }
 ```
