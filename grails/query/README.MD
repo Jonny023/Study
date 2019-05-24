@@ -13,6 +13,9 @@ def allBookmarks = Bookmark.findAll('from Bookmark')
 // 多字段排序
 def users = User.findAllByUsername('张三', [sort: ['dateCreated':'desc', 'xx': 'asc']])
 
+// 单字段排序
+def users = User.list([sort: 'dateCreated', order: 'desc'])
+
 def users = User.createCriteria().list {
     order("dateCreated", "desc")
     order("xxx", "asc")
