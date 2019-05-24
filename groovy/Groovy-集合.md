@@ -13,6 +13,25 @@ public static void main(String[] args) {
 }
 ```
 
+> 分组
+
+```groovy
+def lists = [[no: 1, name: '第一'], [no: 1, name: '第一'],[no: 2, name: '第二']]
+println "原集合：$lists"
+
+def list = lists.groupBy { it.no }
+
+list.eachWithIndex { l, index ->
+    println "分组后：$l.value"
+}
+
+// 输出
+原集合：[[no:1, name:第一], [no:1, name:第一], [no:2, name:第二]]
+分组后：[[no:1, name:第一], [no:1, name:第一]]
+分组后：[[no:2, name:第二]]
+```
+
+
 > 通过正则查找满足条件的数据集合
 * `(?i)`忽略大小写
 
