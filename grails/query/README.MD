@@ -151,3 +151,5 @@ def users = User.createCriteria().list {
     }
 }
 ```
+
+## [更多详情](http://gorm.grails.org/6.1.x/hibernate/manual/index.html)
