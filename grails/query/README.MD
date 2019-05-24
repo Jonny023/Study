@@ -136,3 +136,17 @@ def bookmarks = criteria.list {
   fetchMode("tags", FM.EAGER)
 }
 ```
+
+* 映射返回数据类型
+
+```groovy
+def user = UserInfo.createCriteria().get {
+    // 映射返回数据类型为map键值对
+    resultTransformer(CriteriaSpecification.ALIAS_TO_ENTITY_MAP)
+    eq("username", "admin")
+    projections {
+        // property第一个参数为domain属性，第二个参数为返回键值对的键名，类似数据库as username
+        property("username", "username")
+    }
+}
+```
