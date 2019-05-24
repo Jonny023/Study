@@ -152,4 +152,20 @@ def users = User.createCriteria().list {
 }
 ```
 
+* 子查询
+
+```groovy
+def subQuery = Page.where({
+   components {
+      eqProperty("id", "this.id") //this: is the root alias which refers to the Component
+   }
+   setAlias("page")
+})
+
+
+Component.createCriteria().list {
+  exists(subQuery.id())
+}
+```
+
 ## [更多详情](http://gorm.grails.org/6.1.x/hibernate/manual/index.html)
