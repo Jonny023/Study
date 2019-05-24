@@ -7,6 +7,18 @@
 def allBookmarks = Bookmark.findAll('from Bookmark')
 ```
 
+* 排序
+
+```groovy
+// 多字段排序
+def users = User.findAllByUsername('张三', [sort: ['dateCreated':'desc', 'xx': 'asc']])
+
+def users = User.createCriteria().list {
+    order("dateCreated", "desc")
+    order("xxx", "asc")
+}
+```
+
 * 正则查询
 
 ```groovy
