@@ -20,3 +20,5 @@ if(/Android (\d+\.\d+)/.test(navigator.userAgent)){
 }
 
 ```
+
+# [更多详情](https://juejin.im/entry/59ca3c6df265da064f2024af)
