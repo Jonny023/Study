@@ -1,5 +1,6 @@
 # 移动端适配
 
+* 根据不同客户端设置meta
 ```javascript
 if(/Android (\d+\.\d+)/.test(navigator.userAgent)){
     var version = parseFloat(RegExp.$1);
