@@ -21,4 +21,22 @@ if(/Android (\d+\.\d+)/.test(navigator.userAgent)){
 
 ```
 
+* 自动调整容器宽度
+
+```javascript
+<script>
+    var width = $(window).width();
+    var px2rem = $('#content *');
+    for (var i = 0; i < px2rem.length; i++) {
+        var element = px2rem[i];
+        var widthPx = element.style.width;
+        if (!widthPx) continue;
+        var widthSize = widthPx.substr(0, widthPx.length - 2);
+        if(widthSize > width) {
+            element.style.width = (width / 15) + 'rem';
+        }
+    }
+</script>
+```
+
 # [更多详情](https://juejin.im/entry/59ca3c6df265da064f2024af)
