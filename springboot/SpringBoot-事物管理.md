@@ -1,5 +1,8 @@
 # Spring事物管理
 
+> `JPA`不支持默认回滚（一个方法调用多个服务类进行保存，无法保证一个保存失败全部回滚），但是可通过`@Transactional(propagation = Propagation.MANDATORY)`实现回滚，
+> `JdbcTemplate`默认事物也能够回滚
+
 * 强制回滚
 
 ```java
