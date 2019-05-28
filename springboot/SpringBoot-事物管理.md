@@ -8,6 +8,9 @@ package com.atgenee.base;
 import com.atgenee.base.entity.SysPermission;
 import com.atgenee.base.entity.SysRole;
 import com.atgenee.base.entity.SysUser;
+import com.atgenee.base.service.IPermissionService;
+import com.atgenee.base.service.IRoleService;
+import com.atgenee.base.service.IUserService;
 import com.atgenee.base.service.impl.PermissionService;
 import com.atgenee.base.service.impl.RoleService;
 import com.atgenee.base.service.impl.UserService;
@@ -18,6 +21,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
@@ -31,20 +36,20 @@ import java.util.Date;
 public class BaseApplicationTests {
 
     @Autowired
-    private UserService userService;
+    private IUserService userService;
 
     @Autowired
-    private RoleService roleService;
+    private IRoleService roleService;
 
     @Autowired
-    private PermissionService permissionService;
+    private IPermissionService permissionService;
 
     /**
      *  初始化用户信息
      */
     @Test
-    @Transactional
-    @Rollback(true)
+    @Transactional(propagation = Propagation.MANDATORY)
+    @Rollback(false)
     public void contextLoads() {
 
         SysRole role = new SysRole();
@@ -64,6 +69,10 @@ public class BaseApplicationTests {
         user.setExpiredDate(LocalDateTime.of(2099, 01, 10, 00, 00, 00).toLocalDate());
         user.setRoleList(Arrays.asList(role));
         userService.addUser(user);
+
+        if(true) {
+            throw new RuntimeException("运行时异常");
+        }
 
         // 权限
         SysPermission permission = new SysPermission();
