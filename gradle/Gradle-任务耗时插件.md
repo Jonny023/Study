@@ -1,5 +1,5 @@
 > build.gradle配置
-```
+```groovy
 buildscript {
     repositories {
         jcenter()
