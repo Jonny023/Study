@@ -61,4 +61,11 @@ beans = {
 
 ```
 
+* 启动项目查看日志
+
+```java
+17:55:02.779 [main] INFO  com.zaxxer.hikari.HikariDataSource (HikariDataSource.java:80) - HikariPool-1 - Starting...
+17:55:02.827 [main] INFO  com.zaxxer.hikari.HikariDataSource (HikariDataSource.java:82) - HikariPool-1 - Start completed.
+```
+
 ### 用了`HikariCP`连接池还能实现自动重连，比如：数据库宕了，重启数据库，程序也能自动连接上数据库
