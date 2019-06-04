@@ -21,6 +21,7 @@ INSERT INTO `parts` VALUES (4, '轮胎', '制动器');
 ```
 
 > sql语句
+
 ```sql
 SELECT
 	parts_type,
@@ -32,6 +33,7 @@ GROUP BY
 ```
 
 > 运行结果
+
 |parts_type|parts_name|
 |--|--|
 |制动器|轮胎|
