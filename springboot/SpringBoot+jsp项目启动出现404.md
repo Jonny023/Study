@@ -45,7 +45,7 @@ No message available
 
 * `pom.xml`添加依赖
 
-```
+```xml
 <dependency>
 	<groupId>org.apache.tomcat.embed</groupId>
 	<artifactId>tomcat-embed-jasper</artifactId>
