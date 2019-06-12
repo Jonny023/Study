@@ -22,3 +22,13 @@ mui.init();
 })(mui);
 </script>
 ```
+
+或
+
+```html
+<div class="mui-scroll-wrapper">
+    <div class="mui-scroll">
+        ...
+    </div>
+</div>
+```
