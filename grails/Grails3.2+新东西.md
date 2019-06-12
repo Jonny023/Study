@@ -2,7 +2,7 @@
 
 > 记录一下一些坑
 
-* `Grails3.2-`版可以直接在`domain`中注入`service`，在`Grails3.2+`中默认关闭了自动注入功能
+##  `Grails3.2-`版可以直接在`domain`中注入`service`，在`Grails3.2+`中默认关闭了自动注入功能
 
 ### 开启方式
 
