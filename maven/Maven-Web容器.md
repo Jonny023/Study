@@ -2,7 +2,7 @@
 
 * tomcat7
 
-> 运行命令：`tomcat:run`
+> 启动命令：`tomcat:run`
 
 ```xml
 <build>
@@ -124,5 +124,33 @@ Stacktrace:
         </plugin>
       </plugins>
     </pluginManagement>
+</build>
+```
+
+* jetty配置
+
+> 启动命令：`jetty:run`
+
+```xml
+<build>
+    <finalName>demo</finalName>
+      <plugins>
+        <plugin>
+          <groupId>org.mortbay.jetty</groupId>
+          <artifactId>jetty-maven-plugin</artifactId>
+          <version>7.4.4.v20110707</version>
+          <configuration>
+            <scanIntervalSeconds>5</scanIntervalSeconds>
+            <webAppConfig>
+              <contextPath>/demo</contextPath>
+            </webAppConfig>
+            <connectors>
+              <connector implementation="org.eclipse.jetty.server.nio.SelectChannelConnector">
+                <port>80</port>
+              </connector>
+            </connectors>
+          </configuration>
+        </plugin>
+      </plugins>
 </build>
 ```
