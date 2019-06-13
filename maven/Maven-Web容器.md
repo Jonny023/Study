@@ -103,6 +103,8 @@ Stacktrace:
 
 * `tomcat6`配置
 
+> 启动命令：`tomcat:run`
+
 ```xml
 <build>
     <finalName>demo</finalName>
