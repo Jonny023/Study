@@ -23,5 +23,5 @@
         </plugin>
       </plugins>
     </pluginManagement>
-  </build>
+</build>
 ```
