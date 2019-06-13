@@ -14,12 +14,12 @@
   * `grails -Dgrails.env=staging war` - 指定自定义staging环境打包
   * 若需打包为`jar`，则需注释`build.gradle`中的如下代码：
   ```groovy
-  	apply plugin: "eclipse"
-	apply plugin: "idea"
-	//apply plugin: "war"
-	apply plugin: "org.grails.grails-web"
-	apply plugin: "org.grails.grails-gsp"
-	apply plugin: "asset-pipeline"
+apply plugin: "eclipse"
+apply plugin: "idea"
+//apply plugin: "war"
+apply plugin: "org.grails.grails-web"
+apply plugin: "org.grails.grails-gsp"
+apply plugin: "asset-pipeline"
   ```
 
 # 参数获取
