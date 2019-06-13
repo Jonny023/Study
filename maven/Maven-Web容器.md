@@ -2,7 +2,7 @@
 
 * tomcat7
 
-> 运行命令：tomcat:run
+> 运行命令：`tomcat:run`
 
 ```xml
 <build>
