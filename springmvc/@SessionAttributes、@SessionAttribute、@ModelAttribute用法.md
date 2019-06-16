@@ -37,6 +37,13 @@ public String t1(@SessionAttribute("user") User user) {
 @SessionAttributes("user")
 public class IndexController {
 
+    // 这种方法必须是session中对象已经存在，否则会报错
+    // 定义一个空值
+    @ModelAttribute("user")
+    public String populateForm() {
+        return null; // populates form for the first time if its null
+    }
+
     @RequestMapping("/session2")
     @ResponseBody
     public String t(@ModelAttribute("user") User user) {
