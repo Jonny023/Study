@@ -1,8 +1,8 @@
 ## `@SessionAttributes`、`@SessionAttribute`、`@ModelAttribue`用法
 
-* `@SessionAttributes` - 用于控制器类上，需配合`ModelAttribute`使用
+* `@SessionAttributes` - 只能用于控制器类上，需配合`ModelAttribute`使用
 * `@SessionAttribute` - 用于方法参数前
-* `@ModelAttribute` - 用于方法参数前
+* `@ModelAttribute` - 既可以用于方法参数前，也可以用在方法上
 
 ### 保存`session`
 
