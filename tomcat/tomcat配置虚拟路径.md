@@ -3,6 +3,8 @@
 ```xml
 <Host appBase="webapps" autoDeploy="true" name="localhost" unpackWARs="true">
       <Context path="/test01/uploadFiles" docBase="d:\upload"  debug="0"  reloadable="true"></Context> 
+      <!-- 若不行docBase后面加上\或/ -->
+      <!-- <Context path="/test01/uploadFiles" docBase="d:\upload\"  debug="0"  reloadable="true"></Context> -->
 </Host>
 ```
 
