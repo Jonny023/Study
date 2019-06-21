@@ -176,7 +176,8 @@ between("balance", 500, 1000)                //介于两者之间
 eq("branch", "London")                       //等于
 eq("branch", "london", [ignoreCase: true])   //等于（忽略大小写）
 eqProperty("lastTx", "firstTx")              //两个字段的值相等
-gt("balance",1000)                           //大于等于
+gt("balance",1000)                           //大于
+ge("blance", 1000) 			     //大于等于
 geProperty("balance", "overdraft")           //前者的值大于等于后者的值
 idEq(1)                                      //id等于指定值
 ilike("holderFirstName", "Steph%")           //模糊匹配且不区分大小写
