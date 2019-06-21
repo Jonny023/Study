@@ -235,3 +235,5 @@ min("age")                               //最小值
 sum("balance")                           //求和函数
 rowCount()                               //总行数
 ```
+
+[更多参考](http://docs.grails.org/3.1.1/ref/Domain%20Classes/createCriteria.html)
