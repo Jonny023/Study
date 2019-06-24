@@ -124,6 +124,22 @@ def user = UserInfo.createCriteria().get {
         property("username", "username")
     }
 }
+
+
+class AccountsOverview {
+    Number allBalances
+    Number lastNames
+}
+
+def c = Account.createCriteria()
+
+def accountsOverview = c.get {
+    resultTransformer(Transformers.aliasToBean(AccountsOverview))
+    projections {
+        sum('balance', 'allBalances')
+        countDistinct('holderLastName', 'lastNames')
+    }
+}
 ```
 
 * 正则查询
@@ -168,4 +184,7 @@ Component.createCriteria().list {
 }
 ```
 
-## [更多详情](http://gorm.grails.org/6.1.x/hibernate/manual/index.html)
+
+
+## [参考一](http://gorm.grails.org/6.1.x/hibernate/manual/index.html)
+## [参考二](https://gorm.grails.org/latest/hibernate/manual/)
