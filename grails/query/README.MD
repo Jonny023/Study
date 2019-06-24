@@ -7,6 +7,20 @@
 def allBookmarks = Bookmark.findAll('from Bookmark')
 ```
 
+* `Criteria`常用表达式
+
+|操作符|Criteria方法|描述|
+|--|--|--|
+|==|eq|等于|
+|!=|ne|不等于|
+|>|gt|大于|
+|<|lt|小于|
+|>=|ge|大于等于|
+|<=|le|小于等于|
+|in|inList|包含|
+|==~|like|区分大小写模糊匹配|
+|=~|ilike|不区分大小写模糊匹配|
+
 * 排序
 
 ```groovy
