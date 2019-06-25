@@ -3,7 +3,7 @@
 ```javascript
 
 <div class="mui-table-view-radio mui-radio mui-pull-left mui-col-xs-2">
-    <input name="id" type="radio" value="${d?.id}" class="mui-radio-sel">
+    <input name="id" type="radio" value="1" class="mui-radio-sel">
 </div>
 
 selected("mui-radio-sel");
