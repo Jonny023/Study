@@ -6,7 +6,6 @@
     <input name="id" type="radio" value="${d?.id}" class="mui-radio-sel">
 </div>
 
-<javascript>
 selected("mui-radio-sel");
 
 function selected(className) {
@@ -20,5 +19,4 @@ function selected(className) {
     }
     return chackVal;
 }
-</javascript>
 ```
