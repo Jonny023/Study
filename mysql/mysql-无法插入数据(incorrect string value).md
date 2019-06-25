@@ -1,6 +1,6 @@
 ## 无法插入数据
 
-* 修改mysql安装目录下的
+* 修改mysql安装目录下的`my.ini`，若没有可以新建
 
 > 保存提示`incorrect string value`
 
