@@ -2,15 +2,14 @@
 
 1、配置环境变量
 
-> path中加入mysql所在位置
+> `path`中加入`mysql`所在位置
 ```
 path     F:\dev tools\mysql-5.7.21\bin
 ```
 2、进入mysql解压文件目录创建my.ini文件
-```
-//F:\dev tools\mysql-5.7.21
 
-//my.ini中写入,在当前目录下创建一个data文件夹，存放数据
+> `F:\dev tools\mysql-5.7.21`，在目录下`my.ini`（没有`ini`的文件自己创建）中写入,在当前目录下创建一个`data`文件夹，存放数据
+```
 [mysqld]
 basedir=F:\dev tools\mysql-5.7.21
 datadir=F:\dev tools\mysql-5.7.21\data 
@@ -42,11 +41,11 @@ mysqld remove
 ```
 net start mysql
 ```
-5、输入mysql -u root -p，第一次没密码，直接回车
+5、输入`mysql -u root -p`，第一次没密码，直接回车
 ```sql
 mysql -u root -p
 ```
-6、修改root密码
+6、修改`root`密码
 ```sql
 //查看数据库
 show databases;
@@ -61,7 +60,7 @@ update user set authentication_string = password("root") where user="root";
 ```
 #skip-grant-tables
 ```
-8、重启mysql
+8、重启`mysql`
 ```
 net stop mysql
 net start mysql
