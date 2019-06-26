@@ -216,6 +216,14 @@ def messages = InfoTalent.createCriteria().list {
 }
 ```
 
+* `Oracle`数据库`in`查询限制长度为1000
+
+```groovy
+def result = MyDomain.createCriteria().list {
+    or { idList.collate(1000).each { 'in'('id', it) } }
+}
+```
+
 
 
 ## [参考一](http://gorm.grails.org/6.1.x/hibernate/manual/index.html)
