@@ -2,7 +2,7 @@
 
 1、配置环境变量
 
-//path中加入mysql所在位置
+> path中加入mysql所在位置
 ```
 path     F:\dev tools\mysql-5.7.21\bin
 ```
@@ -82,3 +82,17 @@ FLUSH PRIVILEGES;
 # 远程连接不上的原因
 * 防火墙
 * 权限不足
+
+11、错误提示(提示必须重置密码才能连接)
+
+```
+You must reset your password using ALTER USER statement before executing this statement.
+```
+
+> 解决方法
+
+```bash
+SET PASSWORD = PASSWORD('root');
+ALTER USER 'root'@'localhost' PASSWORD EXPIRE NEVER;
+flush privileges;
+```
