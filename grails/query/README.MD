@@ -198,6 +198,24 @@ Component.createCriteria().list {
 }
 ```
 
+* `sqlProjection`直接查询数据库字段
+
+```groovy
+def messages = InfoTalent.createCriteria().list {
+    resultTransformer(CriteriaSpecification.ALIAS_TO_ENTITY_MAP)
+    projections {
+        property("id", "id")
+        property("infoTheme", "infoTheme")
+        property("infoCreateTime", "infoCreateTime")
+        sqlProjection "CASE WHEN INFO_STATE = 0 THEN '未读' ELSE '已读' END as infoState", 'infoState', org.hibernate.type.StringType.INSTANCE
+        // property("infoState", "infoState")
+    }
+    unitBasic {
+        eq("userInfo", user)
+    }
+}
+```
+
 
 
 ## [参考一](http://gorm.grails.org/6.1.x/hibernate/manual/index.html)
