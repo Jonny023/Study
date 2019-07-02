@@ -9,6 +9,18 @@ def list= User.createCriteria().list(params, {
 })
 ```
 
+* `hql`空值排到最后
+
+```groovy
+// oracle
+User.executeQuery("from User u order by createTime desc nulls last")
+
+// mysql
+//order by -createTime desc  //加上-，将降序的倒转过来就是升序排序，null值的最后了使用降序排序，但null排最前
+// order by -createTime asc //同理，将升序倒转过来就是降序排序，null值最前
+User.executeQuery("from User u order by -createTime desc")
+```
+
 * 查询所有
 
 ```groovy
