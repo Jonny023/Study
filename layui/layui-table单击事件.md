@@ -1,5 +1,7 @@
 # 单击行选中
 
+> 点击或双击行时触发。该事件为 `layui 2.4.0` 开始新增
+
 * html
 
 ```html
@@ -35,4 +37,13 @@ table.on('row(retirement)', function (obj) {
     table.cache["table_demo"][index].LAY_CHECKED = true; // 修改缓存区选中状态
     form.render("checkbox");
 });
+```
+
+### 表格中有工具条的需要特殊处理，不然点击按钮也会触发选中
+
+```javascript
+//监听工具条
+table.on('tool(demo)', function(obj){
+    layui.stope(obj);
+}
 ```
