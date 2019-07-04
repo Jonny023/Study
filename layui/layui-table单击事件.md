@@ -1,5 +1,14 @@
 # 单击行选中
 
+* html
+
+```html
+<table id="table_demo" lay-filter="retirement"></table>
+
+```
+
+* js
+
 ```javascript
 
 table.on('checkbox(retirement)', function (obj) {
