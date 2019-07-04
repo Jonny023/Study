@@ -46,3 +46,47 @@ class MyService{
     }
 }
 ```
+
+## 二
+
+```groovy
+    xmlns aop:"http://www.springframework.org/schema/aop"
+    auditInterceptor(AuditInterceptor)  //This is the sample Interceptor I did 
+    aop.config("proxy-target-class":true) {}
+
+
+
+
+import org.aspectj.lang.JoinPoint
+import org.aspectj.lang.annotation.Aspect
+import org.aspectj.lang.annotation.Before
+
+@Aspect
+class AuditInterceptor {
+    
+
+    @Before("execution(* com.crowdnetic.maven.factory.*.*(..))")
+    public void test() {
+//        String methodName = point.getSignature().getName();
+//        List<Object> args = Arrays.asList(point.getArgs());
+        System.out.println("调用前连接点方法为：Mongodb");
+    }
+
+    @Before("execution(* com.crowdnetic.maven.pos2.merchant.AppliedMerchantDao.insert(..))")
+    public void daoTest(JoinPoint point) {
+        String methodName = point.getSignature().getName();
+        List<Object> args = Arrays.asList(point.getArgs());
+        System.out.println("调用前连接点方法为：AppliedMerchantDao"+ methodName + ",参数为：" + args);
+    }
+
+
+    @Before("execution(* com.crowdnetic.maven.pos2.merchant.GPosM_OnBoardingController.*(..))")
+    public void controllerTest() {
+//        String methodName = point.getSignature().getName();
+//        List<Object> args = Arrays.asList(point.getArgs());
+        System.out.println("调用前连接点方法为：GPosM_OnBoardingController");
+    }
+
+}
+
+```
