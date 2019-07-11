@@ -163,9 +163,30 @@ class ExpeortReportService {
                     exportPdf(request, response, jasperPrint, downloadFileName)
                 }
             } else if (ReportExportMode.EXP_EXCEL_MODE.equalsIgnoreCase(exportMode)) {
-                source = new JRBeanCollectionDataSource(dataList)
-                jasperPrint = JasperFillManager.fillReport(jasperReport, parameterMap, source)
-                exportExcel(request, response, jasperPrint, downloadFileName)
+                // 大于500条数据打包下载
+                if (dataList.size() > 500) {
+                    // 切割集合(分组合并【每500条数据分割为一个集合】)
+                    def allDatas = dataList.collate(500)
+                    String savePath = path + File.separator + "export_excel" + File.separator + System.currentTimeMillis() + File.separator
+                    File dir = new File(savePath)
+                    if (!dir.exists()) {
+                        dir.mkdirs()
+                    }
+                    int index = 1
+                    for (List list : allDatas) {
+                        source = new JRBeanCollectionDataSource(list)
+                        jasperPrint = JasperFillManager.fillReport(jasperReport, parameterMap, source)
+                        // 输出excel到本地
+                        JasperExportManager.exportReportToPdfFile(jasperPrint, savePath + "${downloadFileName}(${index}).xls")
+                        index++
+                    }
+                    // 打包为zip下载
+                    exportZip(response, request, downloadFileName, savePath)
+                } else {
+                    source = new JRBeanCollectionDataSource(dataList)
+                    jasperPrint = JasperFillManager.fillReport(jasperReport, parameterMap, source)
+                    exportExcel(request, response, jasperPrint, downloadFileName)
+                }
             } else if ("WORD".equals(exportMode)) {
                 source = new JRBeanCollectionDataSource(dataList)
                 jasperPrint = JasperFillManager.fillReport(jasperReport, parameterMap, source)
