@@ -67,6 +67,11 @@ import net.sf.jasperreports.engine.export.JRXlsExporter
 import net.sf.jasperreports.engine.export.JRXlsExporterParameter
 import net.sf.jasperreports.engine.export.ooxml.JRXlsxExporter
 import net.sf.jasperreports.engine.util.JRLoader
+import net.sf.jasperreports.export.ExporterInput
+import net.sf.jasperreports.export.SimpleExporterInput
+import net.sf.jasperreports.export.SimpleExporterInputItem
+import net.sf.jasperreports.export.SimpleOutputStreamExporterOutput
+import net.sf.jasperreports.export.SimpleXlsReportConfiguration
 import org.apache.commons.io.IOUtils
 import org.springframework.beans.factory.annotation.Value
 
@@ -112,13 +117,34 @@ class ExpeortReportService {
             JRDataSource source = null
 
             if (ReportExportMode.EXP_PDF_MODE.equalsIgnoreCase(exportMode)) {
+
+                // 处理门贴
+                if ("mt".equalsIgnoreCase(reportId) && dataList.size() > 1) {
+                    def lists = dataList.groupBy { it.kc }
+                    String savePath = path + File.separator + "export_pdf" + File.separator + System.currentTimeMillis() + File.separator
+                    File dir = new File(savePath)
+                    if (!dir.exists()) {
+                        dir.mkdirs()
+                    }
+                    int index = 1
+                    for (def list : lists) {
+                        source = new JRBeanCollectionDataSource(list.value)
+                        jasperPrint = JasperFillManager.fillReport(jasperReport, parameterMap, source)
+                        // 输出pdf到本地
+                        JasperExportManager.exportReportToPdfFile(jasperPrint, savePath + "${downloadFileName}(第${index}考场).pdf")
+                        index++
+                    }
+                    // 打包为zip下载
+                    exportZip(response, request, downloadFileName, savePath)
+                }
+
                 // 大于500条数据打包下载
-                if(dataList.size() > 500) {
+                if (dataList.size() > 500) {
                     // 切割集合(分组合并【每500条数据分割为一个集合】)
                     def allDatas = dataList.collate(500)
                     String savePath = path + File.separator + "export_pdf" + File.separator + System.currentTimeMillis() + File.separator
                     File dir = new File(savePath)
-                    if(!dir.exists()) {
+                    if (!dir.exists()) {
                         dir.mkdirs()
                     }
                     int index = 1
@@ -132,15 +158,25 @@ class ExpeortReportService {
                     // 打包为zip下载
                     exportZip(response, request, downloadFileName, savePath)
                 } else {
-                    exportPdf(request,response, jasperPrint, downloadFileName)
+                    source = new JRBeanCollectionDataSource(dataList)
+                    jasperPrint = JasperFillManager.fillReport(jasperReport, parameterMap, source)
+                    exportPdf(request, response, jasperPrint, downloadFileName)
                 }
             } else if (ReportExportMode.EXP_EXCEL_MODE.equalsIgnoreCase(exportMode)) {
+                source = new JRBeanCollectionDataSource(dataList)
+                jasperPrint = JasperFillManager.fillReport(jasperReport, parameterMap, source)
                 exportExcel(request, response, jasperPrint, downloadFileName)
             } else if ("WORD".equals(exportMode)) {
+                source = new JRBeanCollectionDataSource(dataList)
+                jasperPrint = JasperFillManager.fillReport(jasperReport, parameterMap, source)
                 exportWord(request, response, jasperPrint, downloadFileName)
             } else if ("RTF".equals(exportMode)) {
+                source = new JRBeanCollectionDataSource(dataList)
+                jasperPrint = JasperFillManager.fillReport(jasperReport, parameterMap, source)
                 exportRTF(request, response, jasperPrint, downloadFileName)
             } else if ("HTML".equals(exportMode)) {
+                source = new JRBeanCollectionDataSource(dataList)
+                jasperPrint = JasperFillManager.fillReport(jasperReport, parameterMap, source)
                 exportHtml(request, response, jasperPrint, downloadFileName)
             } else if ("PRINT".equals(exportMode)) {
                 exporPrint(request, response, jasperPrint, downloadFileName)
@@ -175,7 +211,7 @@ class ExpeortReportService {
                 ByteArrayOutputStream out = null
                 dirs.eachFileRecurse { file ->
                     out = FileUtil.E.fileToByteArrayOutPutStream(file)
-                    compressFile(out,zipOut,file.getName())
+                    compressFile(out, zipOut, file.getName())
                 }
             }
             /**zip写入磁盘**/
@@ -228,19 +264,28 @@ class ExpeortReportService {
 
         try {
             JRXlsExporter exporter = new JRXlsExporter()
-            exporter.setParameter(JRXlsExporterParameter.JASPER_PRINT, jasperPrint)
-            exporter.setParameter(JRXlsExporterParameter.OUTPUT_STREAM, outputStream)
+//            exporter.setParameter(JRXlsExporterParameter.JASPER_PRINT, jasperPrint)
+//            exporter.setParameter(JRXlsExporterParameter.OUTPUT_STREAM, outputStream)
+
+            exporter.setExporterInput(new SimpleExporterInput(jasperPrint))
+            exporter.setExporterOutput(new SimpleOutputStreamExporterOutput(outputStream))
+
             response.setContentType("application/vnd.ms-excel;charset=utf-8")
             response.setHeader("Set-Cookie", "fileDownload=true; path=/")
 //            response.setHeader("Content-Disposition", "attachment;filename=" + downloadFileName + ".xls")
             response.setHeader("Content-Disposition", FileBrowserUtil.getContentDisposition(downloadFileName + ".xls", request))
             response.setHeader("Connection", "close")
             // 删除记录最下面的空行
-            exporter.setParameter(JRXlsExporterParameter.IS_REMOVE_EMPTY_SPACE_BETWEEN_ROWS, Boolean.TRUE)
-            // 删除多余的ColumnHeader
-            exporter.setParameter(JRXlsExporterParameter.IS_ONE_PAGE_PER_SHEET, Boolean.FALSE)
-            //禁用白色背景
-            exporter.setParameter(JRXlsExporterParameter.IS_WHITE_PAGE_BACKGROUND, Boolean.FALSE)
+            SimpleXlsReportConfiguration configuration = new SimpleXlsReportConfiguration()
+
+//            exporter.setParameter(JRXlsExporterParameter.IS_REMOVE_EMPTY_SPACE_BETWEEN_ROWS, Boolean.TRUE)
+//            // 删除多余的ColumnHeader
+//            exporter.setParameter(JRXlsExporterParameter.IS_ONE_PAGE_PER_SHEET, Boolean.FALSE)
+//            //禁用白色背景
+//            exporter.setParameter(JRXlsExporterParameter.IS_WHITE_PAGE_BACKGROUND, Boolean.FALSE)
+            configuration.setDetectCellType(true)// 检查单元格格式
+            configuration.setWhitePageBackground(true)//去除白边
+            exporter.setConfiguration(configuration)
             exporter.exportReport()
         } finally {
             try {
