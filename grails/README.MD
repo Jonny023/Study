@@ -193,3 +193,9 @@ dataSources:
         dbCreate: update
 
 ```
+
+* idea项目卡的一批，设置jvm
+
+```
+-XX:MaxPermSize=1g
+```
