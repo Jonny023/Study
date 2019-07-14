@@ -1,9 +1,8 @@
 # Spring生命周期回调的几种方式
 
-```
-<bean id="userService" clas="com.service.UserServiceImpl" initMethod="init"/>
+* `xml`注入`<bean id="userService" clas="com.service.UserServiceImpl" initMethod="init"/>`
 
-实现InitializingBean接口
+* 实现`InitializingBean`接口
 
-类中添加@PostConstruct注解方法
-```
+* 类中添加`@PostConstruct`注解方法
+
