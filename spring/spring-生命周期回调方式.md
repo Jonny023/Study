@@ -1,4 +1,4 @@
-# Spring生命周期回调的几种方式
+# Spring生命周期回调(lifecycle callback)的几种方式
 
 * `xml`注入`<bean id="userService" clas="com.service.UserServiceImpl" initMethod="init"/>`
 
