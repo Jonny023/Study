@@ -23,4 +23,11 @@ No.2
 </dependency>-->
 ```
 
+No.3
+
+> 有时候可能仓库里面没有你需要的依赖jar，我们可以在其他地方将需要的jar下载下来，然后在pom.xml中添加依赖，通过命令添加jar到本地仓库
+
+```bash
+mvn install:install-file -DgroupId=com.google.code -DartifactId=kaptcha -Dversion=2.3.2 -Dfile=d:\libs\kaptcha-2.3.jar -Dpackaging=jar -DgeneratePom=true
+```
 ### 注解：${basedir}项目的更目录
