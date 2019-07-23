@@ -2,10 +2,10 @@
 
 ### 配置
 
-```
+```properties
 server{
    listen 80;
-   server_name static.javaweb.io;
+   server_name static.a.com;
    location / {
        root /usr/local/static;        
        autoindex on;                       # 开启索引    
