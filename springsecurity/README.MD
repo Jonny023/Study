@@ -15,3 +15,4 @@
 		return hasAnyAuthorityName(defaultRolePrefix, roles);
 	}
   ```
+> 当然，可以通过`defaultRolePrefix`的方法修改这个前缀
