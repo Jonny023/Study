@@ -7,6 +7,12 @@ git config user.name --global "Jonny"
 git config user.email --global "342418262@qq.com"
 ```
 
+### 查看本地项目所在的远程仓库地址
+
+```bash
+git config -l
+```
+
 ### 上传到git服务器
 
 ```
