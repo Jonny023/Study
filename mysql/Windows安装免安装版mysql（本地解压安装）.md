@@ -94,4 +94,8 @@ You must reset your password using ALTER USER statement before executing this st
 SET PASSWORD = PASSWORD('root');
 ALTER USER 'root'@'localhost' PASSWORD EXPIRE NEVER;
 flush privileges;
+
+// 或者
+alter user user() identified by "123456";
+flush privileges;
 ```
