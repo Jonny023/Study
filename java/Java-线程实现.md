@@ -180,3 +180,35 @@ public class RunnableTest implements Runnable {
 
 ## 多个线程访问同一个资源的时候需要进行同步，但是过多的同步会产生死锁。
 
+
+# 线程阻塞
+
+> `CountDownLatch`阻塞，所有线程执行完毕之后再执行后续操作 
+
+```java
+package com.jonny;
+
+import java.util.concurrent.CountDownLatch;
+
+/**
+ * @author Jonny
+ * @description
+ * @date 2019年08月09日 23:28
+ */
+public class ThreadDemo {
+
+    public static void main(String[] args) throws InterruptedException {
+        CountDownLatch downLatch = new CountDownLatch(10);
+        for (int i = 0; i < 10; i++) {
+            new Thread(() -> {
+                System.out.println(Thread.currentThread().getName());
+                // 计数减一
+                downLatch.countDown();
+            },"线程：" + String.valueOf(i)).start();
+        }
+        // 计数为0之星后面的操作，说白点就是阻塞
+        downLatch.await();
+        System.out.println("线程执行完成之后执行...");
+    }
+}
+```
