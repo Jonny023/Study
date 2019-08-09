@@ -206,7 +206,7 @@ public class ThreadDemo {
                 downLatch.countDown();
             },"线程：" + String.valueOf(i)).start();
         }
-        // 计数为0之星后面的操作，说白点就是阻塞
+        // 计数为0之后面的操作，说白点就是阻塞
         downLatch.await();
         System.out.println("线程执行完成之后执行...");
     }
