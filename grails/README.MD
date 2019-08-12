@@ -36,7 +36,7 @@ apply plugin: "asset-pipeline"
     * `Long[] ids = params["ids[]"].collect {it as Long}`
     
 * json数据
-  * `request.JSON`
+  * `request.JSON`，对应`application/json`的`raw`
 
 
 ### 日志提示
