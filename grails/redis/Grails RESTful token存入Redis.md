@@ -183,7 +183,7 @@ class RedisKeyService {
 
     RedisService redisService
 
-    static String key = "spring:security:token:"
+    static final String key = "spring:security:token:"
 
     /**
      *  通过用户模糊匹配找到对应的key值
