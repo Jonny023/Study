@@ -56,7 +56,12 @@ flushall
 redis-cli
 auth 123456
 info
+ 
+# 选择库，默认db0-db15
+select 1
 
+# 查看内存信息
+info MEMORY
 ```
 
 * 远程连接
@@ -64,5 +69,4 @@ info
 ```bash
 redis-cli -h 192.168.1.145 -p 6379
 ```
-
 
