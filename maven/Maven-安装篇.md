@@ -25,3 +25,19 @@
 
 ### 8、设置maven当前库
 * 在`User Settings`中选择我们`maven`中的`Strings.xml`配置文件。选择后他的`local Repository`会自动变为我们配置文件中设定的路径。
+
+#### 国内仓库
+
+```xml
+<mirror>
+    <id>nexus-aliyun</id>
+    <name>Nexus aliyun</name>
+    <url>http://maven.aliyun.com/nexus/content/groups/public/</url>
+    <mirrorOf>central</mirrorOf>        
+</mirror>
+<mirror>
+  <id>huaweicloud</id>
+  <mirrorOf>*</mirrorOf>
+  <url>https://mirrors.huaweicloud.com/repository/maven/</url>
+</mirror>
+```
