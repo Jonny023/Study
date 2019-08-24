@@ -22,6 +22,22 @@ apply plugin: "org.grails.grails-gsp"
 apply plugin: "asset-pipeline"
 ```
 
+# 使用`gorm-logical-delete`插件报错
+
+```bash
+Type is null. Most probably you let a transform reuse existing ClassNodes with generics information, that is now used in a wrong context
+```
+* 解决方案：泛型类需要带上具体类型，如：
+
+```groovy
+class A<T> {
+
+} 
+class B extends A<B> {
+
+}
+```
+
 # 参数获取
 
 * 普通参数
