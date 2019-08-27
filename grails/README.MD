@@ -22,6 +22,14 @@ apply plugin: "org.grails.grails-gsp"
 apply plugin: "asset-pipeline"
 ```
 
+# 获取`domain`所有字段
+
+```groovy
+User.gormPersistentEntity.persistentProperties.collect {
+   it.capitilizedName
+}
+```
+
 # 使用`gorm-logical-delete`插件报错
 
 ```bash
