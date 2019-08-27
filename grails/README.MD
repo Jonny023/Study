@@ -28,6 +28,17 @@ apply plugin: "asset-pipeline"
 User.gormPersistentEntity.persistentProperties.collect {
    it.capitilizedName
 }
+
+# 
+import org.codehaus.groovy.grails.commons.ApplicationHolder
+import org.codehaus.groovy.grails.commons.DomainClassArtefactHandler
+
+def grailsApplication = ApplicationHolder.application
+def domainDescriptor = grailsApplication.getArtefact(DomainClassArtefactHandler.TYPE, "PhysicalSiteAssessment")
+
+def property = domainDescriptor.getPropertyByName("site")
+def type = property.getType()
+assert type instanceof Class
 ```
 
 # 使用`gorm-logical-delete`插件报错
