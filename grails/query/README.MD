@@ -7,6 +7,20 @@ def list= User.createCriteria().list(params, {
     order(org.hibernate.criterion.Order.asc('createTime').nulls(org.hibernate.NullPrecedence.LAST))
     order("updateTime", "desc")
 })
+
+def userCriteria = User.createCriteria()
+List results = userCriteria.list(max:limit, offset:offset) {
+    eq("isActive", true)
+    ilike("firstName",text+"%")
+    userCriteria.addOrder(Order.asc("firstName").nulls(NullPrecedence.LAST));
+}
+
+or{
+    userCriteria.addOrder(Order.asc(USERNAME).nulls(NullPrecedence.LAST));
+    userCriteria.addOrder(Order.asc(EMAIL).nulls(NullPrecedence.LAST));
+    userCriteria.addOrder(Order.asc(FIRST_NAME).nulls(NullPrecedence.LAST));
+    userCriteria.addOrder(Order.asc(LAST_NAME).nulls(NullPrecedence.LAST));
+}
 ```
 
 * `hql`空值排到最后
