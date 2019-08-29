@@ -1,6 +1,8 @@
 # Grails查询使用注意事项
 * `findByXxx`这种格式不支持太多字段，比如：`findAllByUserAndAgeAndSexAndNickName()`，长度太长会报错
 
+* [查询封装重用](https://davidojeda.mx/blog/2019/03/12/groovy-delegation-strategy-for-query-re-use-in-grails)
+
 * sql按照日期排序，且空值最后排序
 ```groovy
 def list= User.createCriteria().list(params, {
