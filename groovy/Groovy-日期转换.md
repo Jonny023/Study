@@ -1,0 +1,62 @@
+# 日期转换工具
+
+* 获取指定日期0-23点
+
+```groovy
+/**
+ *  获取指定日期开始时间和结束时间
+ * @param date 指定日期
+ * @return
+ */
+static def dayOfRange(Date date) {
+    Calendar calendar = new GregorianCalendar()
+    calendar.setTime(date)
+    calendar.add(Calendar.DAY_OF_MONTH,0)
+
+    //一天的开始时间 yyyy:MM:dd 00:00:00
+    calendar.set(Calendar.HOUR_OF_DAY,0)
+    calendar.set(Calendar.MINUTE,0)
+    calendar.set(Calendar.SECOND,0)
+    calendar.set(Calendar.MILLISECOND,0)
+    Date dayStart = calendar.getTime()
+
+    //一天的结束时间 yyyy:MM:dd 23:59:59
+    calendar.set(Calendar.HOUR_OF_DAY,23)
+    calendar.set(Calendar.MINUTE,59)
+    calendar.set(Calendar.SECOND,59)
+    calendar.set(Calendar.MILLISECOND,999)
+    Date dayEnd = calendar.getTime()
+
+    return [start: dayStart, end: dayEnd]
+}
+
+/**
+ *  获取指定时间起始和结束
+ * @param start 开始时间
+ * @param end 结束时间
+ * @return
+ */
+static def beginAndEnd(Date start, Date end) {
+    Calendar startCalendar = new GregorianCalendar()
+    startCalendar.setTime(start)
+    startCalendar.add(Calendar.DAY_OF_MONTH,0)
+
+    //一天的开始时间 yyyy:MM:dd 00:00:00
+    startCalendar.set(Calendar.HOUR_OF_DAY,0)
+    startCalendar.set(Calendar.MINUTE,0)
+    startCalendar.set(Calendar.SECOND,0)
+    startCalendar.set(Calendar.MILLISECOND,0)
+    Date dayStart = startCalendar.getTime()
+
+    //一天的结束时间 yyyy:MM:dd 23:59:59
+    startCalendar.setTime(end)
+    startCalendar.add(Calendar.DAY_OF_MONTH,0)
+    startCalendar.set(Calendar.HOUR_OF_DAY,23)
+    startCalendar.set(Calendar.MINUTE,59)
+    startCalendar.set(Calendar.SECOND,59)
+    startCalendar.set(Calendar.MILLISECOND,999)
+    Date dayEnd = startCalendar.getTime()
+
+    return [start: dayStart, end: dayEnd]
+}
+```
