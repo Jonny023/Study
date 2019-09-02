@@ -18,14 +18,14 @@ static def dayOfRange(Date date) {
     calendar.set(Calendar.MINUTE,0)
     calendar.set(Calendar.SECOND,0)
     calendar.set(Calendar.MILLISECOND,0)
-    Date dayStart = calendar.getTime()
+    Date dayStart = DateUtils.round(calendar.getTime(), Calendar.SECOND)
 
     //一天的结束时间 yyyy:MM:dd 23:59:59
     calendar.set(Calendar.HOUR_OF_DAY,23)
     calendar.set(Calendar.MINUTE,59)
     calendar.set(Calendar.SECOND,59)
     calendar.set(Calendar.MILLISECOND,999)
-    Date dayEnd = calendar.getTime()
+    Date dayEnd = DateUtils.round(calendar.getTime(), Calendar.SECOND)
 
     return [start: dayStart, end: dayEnd]
 }
@@ -46,17 +46,29 @@ static def beginAndEnd(Date start, Date end) {
     startCalendar.set(Calendar.MINUTE,0)
     startCalendar.set(Calendar.SECOND,0)
     startCalendar.set(Calendar.MILLISECOND,0)
-    Date dayStart = startCalendar.getTime()
+    Date dayStart = DateUtils.round(startCalendar.getTime(), Calendar.SECOND)
 
     //一天的结束时间 yyyy:MM:dd 23:59:59
     startCalendar.setTime(end)
     startCalendar.add(Calendar.DAY_OF_MONTH,0)
     startCalendar.set(Calendar.HOUR_OF_DAY,23)
     startCalendar.set(Calendar.MINUTE,59)
-    startCalendar.set(Calendar.SECOND,59)
+    startCalendar.set(Calendar.SECOND,58)
     startCalendar.set(Calendar.MILLISECOND,999)
-    Date dayEnd = startCalendar.getTime()
+    // 返回用DateUtils.round，不然会多一秒
+    Date dayEnd = DateUtils.round(startCalendar.getTime(), Calendar.SECOND)
 
     return [start: dayStart, end: dayEnd]
+}
+
+/**
+ *  获取指定日期月份天数
+ * @param date
+ * @return
+ */
+static int getDaysOfMonth(Date date) {
+    Calendar calendar = Calendar.getInstance();
+    calendar.setTime(date);
+    return calendar.getActualMaximum(Calendar.DAY_OF_MONTH);
 }
 ```
