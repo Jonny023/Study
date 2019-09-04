@@ -9,7 +9,7 @@
 
 * 方式一 
 
-> 在`application.groovy`中配置全局映射，若没有此脚本需新建
+> `grails3.3+`在`application.groovy`中配置全局映射，若没有此脚本需新建
 
 ```groovy
 grails.gorm.default.mapping = {
@@ -19,7 +19,7 @@ grails.gorm.default.mapping = {
 
 * 方式二
 
-> 在需要注入`bean`的`domain`中添加映射
+> `grails3.3+`在需要注入`bean`的`domain`中添加映射(单个域类开启自动注入)
 
 ```groovy
 static mapping = {
@@ -29,7 +29,7 @@ static mapping = {
 
 * 方式三
 
-> 在`application.yml`中新增或修改配置
+> `grails3.3.0`以下版本在`application.yml`中新增或修改配置
 
 ```yaml
 ---
