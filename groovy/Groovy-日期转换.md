@@ -72,3 +72,22 @@ static int getDaysOfMonth(Date date) {
     return calendar.getActualMaximum(Calendar.DAY_OF_MONTH);
 }
 ```
+
+# 日期算术运算
+
+> 有两种方法可以对日期对象执行算术运算，使用`plus`和`minus`方法以及使用`+`和`-`运算符。
+> 比如说，日期后`10`天的日期对象。使用`plus`方法和`+`运算符将日期增加`10`天：
+
+```groovy
+def nowString = "2017-Oct-26 11:45:23 PM"
+def nowDate = Date.parse("yyyy-MMM-dd hh:mm:ss a", nowString)
+def addDate = nowDate.plus(10)  // 使用plus方法减去指定天数
+def addDate2 = nowDate + 10     // 使用加号
+```
+
+> 日期前`30`天找出日期对象，我们可以使用`minus`方法或-运算符来减少日期：
+
+```groovy
+def subDate = nowDate.minus(30)  // 使用minus方法减去指定天数
+def subDate2 = nowDate - 30      // 使用减号
+```
