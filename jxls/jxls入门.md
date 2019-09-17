@@ -73,3 +73,8 @@ class ExcelToolService {
 | ${data.xx}                                      | ${data.xxx} | ${data.xxx} |
 |                                                 |             |             |
 
+### 超链接
+
+```html
+${util.hyperlink(data.url,'前往')}
+```
