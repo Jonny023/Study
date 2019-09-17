@@ -9,6 +9,7 @@ compile 'org.jxls:jxls-jexcel:1.0.9'
 ```
 
 * 服务
+  * `try-with-resources`不兼容`groovy`语法，所以只能用`withCloseable`或`withStream`等代替
 
 ```groovy
 package com.jonny
@@ -59,4 +60,16 @@ class ExcelToolService {
     }
 }
 ```
+
+* 模板文件编写
+  * 模板`xls`文件单元格，按`SHIFT+F2`添加批注
+  * `jx:area(lastCell="C3")` - 定义数据范围
+  * `jx:each(items="datas" var="data" lastCell="C3")` - 遍历数据集合
+  * `${${data.xx}}` - 输出指定的值
+
+| jx:area(lastCell="C3")                          |             |             |
+| ----------------------------------------------- | ----------- | ----------- |
+| jx:each(items="datas" var="data" lastCell="C3") |             |             |
+| ${data.xx}                                      | ${data.xxx} | ${data.xxx} |
+|                                                 |             |             |
 
