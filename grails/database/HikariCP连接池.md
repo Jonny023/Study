@@ -69,3 +69,17 @@ beans = {
 ```
 
 ### 用了`HikariCP`连接池还能实现自动重连，比如：数据库宕了，重启数据库，程序也能自动连接上数据库
+
+## 注意
+
+* grails3.2+应该这样用
+
+```ymal
+dataSource:
+    pooled: false
+    jmxExport: true
+    driverClassName: '${jdbc.driver}'
+    username: '${jdbc.username}'
+    password: '${jdbc.password}'
+    type: com.zaxxer.hikari.HikariDataSource
+```
