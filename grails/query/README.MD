@@ -37,6 +37,27 @@ User.executeQuery("from User u order by createTime desc nulls last")
 User.executeQuery("from User u order by -createTime desc")
 ```
 
+* 构建查询条件
+
+```groovy
+def list = {
+    def cls = {
+        eq("deleted", false)
+    }
+    def user = {
+        eq("createdBy", "admin")
+    }
+    def list = PlanAuditLog.createCriteria().list {
+        cls.delegate = delegate
+        cls()
+
+        user.delegate = delegate
+        user()
+    }
+    render ([list:list] as JSON)
+}
+```
+
 * 查询所有
 
 ```groovy
