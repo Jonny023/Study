@@ -82,4 +82,6 @@ dataSource:
     username: '${jdbc.username}'
     password: '${jdbc.password}'
     type: com.zaxxer.hikari.HikariDataSource
+    properties:
+        maximumPoolSize: 20
 ```
