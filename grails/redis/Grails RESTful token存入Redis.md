@@ -194,7 +194,7 @@ class RedisKeyService {
         redisService.withRedis { Jedis jedis ->
             ScanParams scanParams = new ScanParams()
             scanParams.match(key + username + ":*")
-            scanParams.count(5)
+            scanParams.count(Integer.MAX_VALUE)
             List<String> scan = jedis.scan("0", scanParams).getResult()
             return scan
         }
@@ -209,7 +209,7 @@ class RedisKeyService {
         redisService.withRedis { Jedis jedis ->
             ScanParams scanParams = new ScanParams()
             scanParams.match(key + "*:" + token)
-            scanParams.count(5)
+            scanParams.count(Integer.MAX_VALUE)
             List<String> scan = jedis.scan("0", scanParams).getResult()
             return scan
         }
