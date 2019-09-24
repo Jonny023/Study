@@ -13,6 +13,13 @@ public static void main(String[] args) {
 }
 ```
 
+> 集合运算
+
+```groovy
+def list = [[score: 1, name: '王五'], [score: 2, name: '张三'], [score: null, name: 'xx']]
+println  list.sum { it?.score?:0 } // 防止null
+```
+
 > 分组
 
 ```groovy
