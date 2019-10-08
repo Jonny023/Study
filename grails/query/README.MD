@@ -211,6 +211,10 @@ def accountsOverview = c.get {
         countDistinct('holderLastName', 'lastNames')
     }
 }
+
+// 返回map [[nickname:张三], [nickname:李四]]
+def list = User.executeQuery("select new map(name as nickname) from User")
+println list
 ```
 
 * 正则查询
