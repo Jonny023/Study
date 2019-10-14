@@ -48,6 +48,7 @@ public class FileDemo {
             for (boolean first = true, last = (line == null); !last; first = false, line = next) {
                 last = ((next = reader.readLine()) == null);
                 System.out.println(line);
+                // 去除空行
                 if (line != null && line.trim().length() > 0) {
                     if (first) {
                         sons = new ArrayList<String>();
