@@ -23,6 +23,7 @@ d 澳大利亚
 
 ```java
 package com.groovy;
+
 import java.util.*;
 import java.io.*;
 
@@ -46,18 +47,21 @@ public class FileDemo {
             int i = 1;
             for (boolean first = true, last = (line == null); !last; first = false, line = next) {
                 last = ((next = reader.readLine()) == null);
-                if (first) {
-                    sons = new ArrayList<String>();
-                } else if (last) {
-                    sons.add(line);
-                    map.put("unit"+i, sons);
-                } else {
-                    if (line.startsWith("###")) {
-                        map.put("unit"+i, sons);
-                        i++;
+                System.out.println(line);
+                if (line != null && line.trim().length() > 0) {
+                    if (first) {
                         sons = new ArrayList<String>();
-                    } else {
+                    } else if (last) {
                         sons.add(line);
+                        map.put("unit" + i, sons);
+                    } else {
+                        if (line.startsWith("###")) {
+                            map.put("unit" + i, sons);
+                            i++;
+                            sons = new ArrayList<String>();
+                        } else {
+                            sons.add(line);
+                        }
                     }
                 }
             }
@@ -67,7 +71,10 @@ public class FileDemo {
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
-            if (reader != null) try { reader.close(); } catch (IOException logOrIgnore) {}
+            if (reader != null) try {
+                reader.close();
+            } catch (IOException logOrIgnore) {
+            }
         }
     }
 }
