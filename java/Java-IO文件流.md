@@ -12,6 +12,11 @@ c Good even
 a Hello
 b Hello world!
 c Hi
+###unit3###
+a 中国
+b 美国
+c 法国
+d 澳大利亚
 ```
 
 > 代码
@@ -36,8 +41,8 @@ public class FileDemo {
         try {
             reader = new BufferedReader(new FileReader(file));
             String next, line = reader.readLine();
-            List<String> sons = null;
             Map<String, List<String>> map = new HashMap<String, List<String>>();
+            List<String> sons = null;
             int i = 1;
             for (boolean first = true, last = (line == null); !last; first = false, line = next) {
                 last = ((next = reader.readLine()) == null);
@@ -48,9 +53,9 @@ public class FileDemo {
                     map.put("unit"+i, sons);
                 } else {
                     if (line.startsWith("###")) {
-                        sons = new ArrayList<String>();
                         map.put("unit"+i, sons);
                         i++;
+                        sons = new ArrayList<String>();
                     } else {
                         sons.add(line);
                     }
@@ -68,4 +73,4 @@ public class FileDemo {
 }
 ```
 
->结果` {unit1=[a Hello, b Hello world!, c Hi], unit2=[a Hello, b Hello world!, c Hi]}`
+>结果`{unit1=[a Good!, b Good after, c Good even], unit2=[a Hello, b Hello world!, c Hi], unit3=[a 中国, b 美国, c 法国, d 澳大利亚]}`
