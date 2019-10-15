@@ -9,6 +9,39 @@ import java.util.Date;
 public class DateUtil {
 
     /**
+     *  获取指定日期前后多少天日期（如：获取3周内）
+     * @param date
+     * @param day
+     * @return
+     */
+    public static Map<String, Date> getPastDate(Date date, Integer day) {
+        System.out.println("当前日期："+new SimpleDateFormat("yyyy-MM-dd HH:mm").format(date));
+        Map<String, Date> map = new HashMap<String, Date>();
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(new Date());
+        //一天的开始时间 yyyy:MM:dd 00:00:00
+        calendar.add(Calendar.DATE, day);
+        calendar.set(Calendar.HOUR_OF_DAY,0);
+        calendar.set(Calendar.MINUTE,0);
+        calendar.set(Calendar.SECOND,0);
+        calendar.set(Calendar.MILLISECOND,0);
+        Date dayStart = DateUtils.round(calendar.getTime(), Calendar.SECOND);
+
+        //一天的结束时间 yyyy:MM:dd 23:59:59
+        Calendar end = Calendar.getInstance();
+        end.setTime(new Date());
+        end.set(Calendar.HOUR_OF_DAY,23);
+        end.set(Calendar.MINUTE,59);
+        end.set(Calendar.SECOND,59);
+        end.set(Calendar.MILLISECOND,1);
+        Date dayEnd = DateUtils.round(end.getTime(), Calendar.SECOND);
+
+        map.put("start", dayStart);
+        map.put("end", dayEnd);
+        return map;
+    }
+
+    /**
      * 得到某年某周的第一天
      *
      * @param year
