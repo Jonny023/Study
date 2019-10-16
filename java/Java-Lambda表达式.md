@@ -1,5 +1,22 @@
 # Lambda表达式
 
+> 数据类型转换(将`List<Long>`转为`Set<String>`)
+
+```java
+public static void main(String[] args) {
+    List<Long> longs = Arrays.asList(1L, 2L, 2L, 10L, 11L, 1000L, 20L, 10L);
+    System.out.println(longs);
+    Set<Long> sets = longs.stream().collect(Collectors.toSet());
+    // 方式一
+    Set<String> strings = sets.stream().map(v -> String.valueOf(v)).collect(Collectors.toSet());
+    System.out.println(strings);
+
+    // 方式二
+    Set<String> strs = longs.stream().map(v -> String.valueOf(v)).collect(Collectors.toSet());
+    System.out.println(strs);
+}
+```
+
 ```java
 package com.test;
 
