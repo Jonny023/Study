@@ -14,6 +14,10 @@ public static void main(String[] args) {
     // 方式二
     Set<String> strs = longs.stream().map(v -> String.valueOf(v)).collect(Collectors.toSet());
     System.out.println(strs);
+
+    // 方式三
+    Set<String> s = new HashSet(longs);
+    System.out.println(s);
 }
 ```
 
