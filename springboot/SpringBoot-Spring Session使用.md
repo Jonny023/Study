@@ -201,7 +201,7 @@ public class TestController {
 
 `redis`的`session`存储，缓存时间是7天
 
-![](C:\Users\Administrator\AppData\Local\Microsoft\Windows\INetCache\IE\E3Y549G0\1eebb037fd086c7bb3ab92422bb509d4fb62ee88[1].png)
+![](https://springboot.io/uploads/default/original/1X/1eebb037fd086c7bb3ab92422bb509d4fb62ee88.png)
 
 ### 【记住我】×
 
@@ -209,13 +209,13 @@ public class TestController {
 
 响应Cookie，存储时间是：-1，临时会话设置成功，浏览器关闭Cookie删除
 
-![](C:\Users\Administrator\AppData\Local\Microsoft\Windows\INetCache\IE\92IR7S2F\827cc05d7073e530dce781fdf058c76f16bf15e8[1].png)
+![](https://springboot.io/uploads/default/original/1X/827cc05d7073e530dce781fdf058c76f16bf15e8.png)
 
 
 
 `redis`的`session`存储，缓存时间是`30`分钟，超过`30`分钟不活动，自动删除
 
-![](C:\Users\Administrator\AppData\Local\Microsoft\Windows\INetCache\IE\OX3IZJBG\681773fb40a0a9bbc5732cacbaebd5c65a2bfcd8[1].png)
+![](https://springboot.io/uploads/default/original/1X/681773fb40a0a9bbc5732cacbaebd5c65a2bfcd8.png)
 
 
 
