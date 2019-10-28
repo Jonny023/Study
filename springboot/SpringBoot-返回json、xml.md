@@ -38,7 +38,7 @@ public class PostController {
      *  返回xml数据
      * @return
      */
-    @RequestMapping(value = "/list", produces = MediaType.APPLICATION_XML_VALUE)
+    @RequestMapping(value = "/xml", produces = MediaType.APPLICATION_XML_VALUE)
     @ResponseBody
     public List<User> xml() {
         List<User> users = new ArrayList<>();
@@ -53,7 +53,7 @@ public class PostController {
      *  返回json数据
      * @return
      */
-    @RequestMapping(value = "/list", produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "/json", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public List<User> json() {
         List<User> users = new ArrayList<>();
