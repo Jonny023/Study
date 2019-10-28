@@ -37,6 +37,23 @@ User.executeQuery("from User u order by createTime desc nulls last")
 User.executeQuery("from User u order by -createTime desc")
 ```
 
+* 子查询
+
+```groovy
+def post() {
+    def users = User.createCriteria().list {
+        eq("deleted", false)
+        def subQuery = DetachedCriteria.forClass(UserRole, 'ur').with {
+//                setProjection Projections.count('ur.user.id')
+            setProjection Projections.property("ur.user")
+            add Restrictions.conjunction().add(Restrictions.eqProperty('ur.user.id', 'this.id'))
+        }
+        add Subqueries.notExists(subQuery)
+    }
+    render users as JSON
+}
+```
+
 * 构建查询条件
 
 ```groovy
