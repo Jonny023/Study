@@ -66,3 +66,7 @@ public class PostController {
 
 }
 ```
+
+# 总结
+
+> 默认方法上加上`@ResponseBody`注解就能返回`json`，但是`xml`不行，若要返回`xml`，还是需要`jackson-dataformat-xml`这个依赖
