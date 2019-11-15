@@ -3,6 +3,15 @@
 
 * [查询封装重用](https://davidojeda.mx/blog/2019/03/12/groovy-delegation-strategy-for-query-re-use-in-grails)
 
+* 原生sql查询并封装为map
+```groovy
+User.withSession { Session session ->
+    SQLQuery query = session.createSQLQuery("select u.* as uid from t_system_user u limit 4")
+    query.setResultTransformer(Transformers.ALIAS_TO_ENTITY_MAP)
+    render query.list() as JSON
+}
+```
+
 * sql按照日期排序，且空值最后排序
 ```groovy
 def list= User.createCriteria().list(params, {
