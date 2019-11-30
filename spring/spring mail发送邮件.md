@@ -109,3 +109,9 @@ public class MailTest {
 }
 
 ```
+
+# 附件中文名乱码问题解决方案
+
+```java
+javax.mail.internet.MimeUtility.encodeText(fileName, null, "B")
+```
