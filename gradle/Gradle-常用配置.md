@@ -74,6 +74,15 @@ bootRun {
 * 项目多个任务并行执行
 
 ```
+#开启守护线程
+org.gradle.daemon=true
+
+#设置jvm内存大小
 org.gradle.jvmargs=-Xmx2048m -XX:MaxPermSize=512m -XX:+HeapDumpOnOutOfMemoryError -Dfile.encoding=UTF-8
+
+#开启并行编译任务
 org.gradle.parallel=true
+
+#启用新的孵化模式 
+org.gradle.configureondemand=true
 ```
