@@ -70,3 +70,10 @@ bootRun {
   }
 }
 ```
+
+* 项目多个任务并行执行
+
+```
+org.gradle.jvmargs=-Xmx2048m -XX:MaxPermSize=512m -XX:+HeapDumpOnOutOfMemoryError -Dfile.encoding=UTF-8
+org.gradle.parallel=true
+```
