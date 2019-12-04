@@ -234,3 +234,10 @@ dataSources:
 ```
 -XX:MaxPermSize=1g
 ```
+
+* 项目启动报错，异常提示如下：
+> ERROR org.springframework.boot.SpringApplication - Application startup failed
+org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'transactionManagerPostProcessor': Initialization of bean failed; nested exception is org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'hibernateDatastore': Bean instantiation via constructor failed; nested exception is org.springframework.beans.BeanInstantiationException: Failed to instantiate [org.grails.orm.hibernate.HibernateDatastore]: Constructor threw exception; nested exception is java.lang.NullPointerException
+
+### 问题分析
+> 出现此问题一般是`domain`类存在错误，如constraints里面的东西写到了mapping中，原本应该写在mapping中的东西写到了constraints中
