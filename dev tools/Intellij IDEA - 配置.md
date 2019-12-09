@@ -9,3 +9,10 @@ idea.system.path=F:/IDEAConfig/system
 idea.plugins.path=F:/IDEAConfig/plugins
 idea.log.path=F:/IDEAConfig/log
 ```
+
+## idea编译中文出现乱码解决
+> `ctrl+alt+s`--`Build,Exection,Deployedment--Compiler--Additional command line parameters`, 在中加入
+
+```bash
+-encoding utf-8
+```
