@@ -85,4 +85,7 @@ org.gradle.parallel=true
 
 #启用新的孵化模式 
 org.gradle.configureondemand=true
+
+# 解决编译乱码
+org.gradle.jvmargs=-Dfile.encoding=UTF-8
 ```
