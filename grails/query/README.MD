@@ -12,6 +12,17 @@ User.withSession { Session session ->
 }
 ```
 
+* sql存储过程查询返回map
+
+```sql
+Query query = session.createSQLQuery("CALL getSPData()");
+
+List<Map> results = query.with {
+    resultTransformer = AliasToEntityMapResultTransformer.INSTANCE
+    list()
+}
+```
+
 * sql按照日期排序，且空值最后排序
 ```groovy
 def list= User.createCriteria().list(params, {
