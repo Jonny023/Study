@@ -63,4 +63,39 @@ Stream stream = list.stream().filter(o -> o.toString().indexOf("语") != -1);
 
 // 输出 语文 英语
 stream.forEach(o-> System.out.println(o));
+
+List<String> list2 = Arrays.asList("Dubbo", "Zookeeper");
+// 将多个list合并为一个list
+List<String> list3 = Stream.of(list1, list2).flatMap(l-> l.stream()).collect(Collectors.toList());
+System.out.println(list3 );
+
+List<List<String>> list4 = Arrays.asList(Arrays.asList("100", "20"), Arrays.asList("39", "40"));
+// 将List<String>合并为一个list，并转换为Integer类型【将List<String>】转为List<Integer>
+IntStream intStream = list4.stream().flatMapToInt(child-> child.stream().mapToInt(Integer::new));
+List<Integer> ints = intStream.boxed().collect(Collectors.toList());
+System.out.println(ints);
+
+int[] arrays = {100, 101, 88, 92, 44};
+// 数组转换为集合
+List<Integer> arr2List = Arrays.stream(arrays).boxed().collect(Collectors.toList());
+arr2List.stream().forEach(System.out::println);
+
+List<User> users = Arrays.asList(
+	new User(1L, '男', "admin"),
+	new User(2L, '男', "test"),
+	new User(3L, '男', "guest")
+);
+
+// 获取所有用户id集合
+List<Long> ids = users.stream().map(User::getId).collect(Collectors.toList());
+System.out.println(ids);
+
+// 获取用户指定属性封装为Map
+Map<Long, String> map = users.stream().collect(Collectors.toMap(User::getId, User::getUsername));
+
+// 将指定属性封装为VO类
+List<UserVO> userVOList = users.stream().map(user -> {
+	return new UserVO(user.getId(), user.getUsername());
+}).collect(Collectors.toList());
+System.out.println(userVOList);
 ```
