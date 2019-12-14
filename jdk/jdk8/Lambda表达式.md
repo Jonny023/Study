@@ -64,6 +64,7 @@ Stream stream = list.stream().filter(o -> o.toString().indexOf("语") != -1);
 // 输出 语文 英语
 stream.forEach(o-> System.out.println(o));
 
+List<String> list1 = Arrays.asList("Java", "Python", "Php");
 List<String> list2 = Arrays.asList("Dubbo", "Zookeeper");
 // 将多个list合并为一个list
 List<String> list3 = Stream.of(list1, list2).flatMap(l-> l.stream()).collect(Collectors.toList());
