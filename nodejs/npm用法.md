@@ -59,4 +59,6 @@ npm run build
 
 # 生产环境编译打包并且生成报告
 npm run build --report
+
+npm config set registry https://registry.npm.taobao.org
 ```
