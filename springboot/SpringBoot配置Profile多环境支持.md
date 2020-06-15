@@ -66,3 +66,9 @@ spring:
   ```bash
   java -jar -Dspring.profiles.active=test demo-0.0.1-SNAPSHOT.jar
   ```
+
+* 指定启动端口号
+
+```bash
+java -jar xxx.jar --server.port=80
+```
