@@ -82,3 +82,15 @@ public class TestApplicationTests {
 }
 ```
 
+### 若不能运行需要添加注解
+
+> 测试类不能加载`ApplicationContext`可能跟类名有关，我有个类名叫`CreateXxx`就不能运行
+
+```java
+@RunWith(SpringRunner.class)
+@SpringBootTest(classes = GDmainApplication.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+public class DemoTests {
+
+}
+```
+
