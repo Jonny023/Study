@@ -70,3 +70,17 @@ GROUP BY
 | :----------------: | :---------------- |
 | permitAll | 2,3,4,5,6,7,8,9,10,11,1 |
 | ROLE_ADMIN | 19,20,25,26,27,28,29,3 |
+
+#### 返回指定的字符样式
+
+```sql
+select concat("[",group_concat(concat("\"",`name`,"\"")),"]") from sys_dictionary where parent_id = (select p.dictionary_id from sys_dictionary p where p.`code` = 'qjlx');
+
+select concat("[",group_concat("\"",`Name`,"\""),"]") from sys_dictionary where parent_id = (select p.dictionary_id from sys_dictionary p where p.`code` = 'qjlx');
+```
+
+> 返回结果
+
+```bash
+["年假","事假","病假","调休","轮休","婚假","产假","陪产假","哺乳假"]
+```
