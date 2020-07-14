@@ -41,3 +41,12 @@ public static void main(String[] args) {
     System.out.println(list);
 }
 ```
+
+> join前后加字符
+
+```java
+String[] strs = new String[]{ "a", "b", "c"};
+Stream<String> strs1 = Stream.of(strs);
+String collect = strs1.collect(Collectors.joining("\",\"", "\"", "\""));
+System.out.println(collect);
+```
