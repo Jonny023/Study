@@ -50,3 +50,58 @@ Stream<String> strs1 = Stream.of(strs);
 String collect = strs1.collect(Collectors.joining("\",\"", "\"", "\""));
 System.out.println(collect);
 ```
+
+# JSONArray数据筛选求和
+
+> 求时长的和
+
+```java
+@Test
+public void count() {
+    String json = "[\n" +
+            "  [\n" +
+            "    {\n" +
+            "      \"label\": \"时长(天)\",\n" +
+            "      \"required\": true,\n" +
+            "      \"name\": \"DURATION\",\n" +
+            "      \"type\": \"number\",\n" +
+            "      \"value\": \"0.5\",\n" +
+            "      \"dateFormatType\": 0,\n" +
+            "      \"editable\": false\n" +
+            "    },\n" +
+            "    {\n" +
+            "      \"label\": \"同行人员\",\n" +
+            "      \"required\": false,\n" +
+            "      \"name\": \"COLLEAGUES\",\n" +
+            "      \"type\": \"text\",\n" +
+            "      \"editable\": false\n" +
+            "    }\n" +
+            "  ],\n" +
+            "  [\n" +
+            "    {\n" +
+            "      \"label\": \"时长(天)\",\n" +
+            "      \"required\": true,\n" +
+            "      \"name\": \"DURATION\",\n" +
+            "      \"type\": \"number\",\n" +
+            "      \"value\": \"0.9\",\n" +
+            "      \"dateFormatType\": 0,\n" +
+            "      \"editable\": false\n" +
+            "    },\n" +
+            "    {\n" +
+            "      \"label\": \"同行人员\",\n" +
+            "      \"required\": false,\n" +
+            "      \"name\": \"COLLEAGUES\",\n" +
+            "      \"type\": \"text\",\n" +
+            "      \"editable\": false\n" +
+            "    }\n" +
+            "  ]\n" +
+            "]\n" +
+            "\n";
+
+    JSONArray jsonArray = JSON.parseArray(json);
+    Double sum = jsonArray.stream().map(obj -> ((JSONArray) obj).stream().filter(arr -> {
+        return "DURATION".equals(((JSONObject) arr).getString("name"));
+    }).mapToDouble(arr -> Double.parseDouble(((JSONObject) arr).getString("value")))).collect(Collectors.toList()).stream().flatMapToDouble(d -> d).sum();
+    System.out.println(sum);
+}
+```
