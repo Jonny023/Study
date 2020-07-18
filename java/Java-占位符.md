@@ -51,6 +51,9 @@ for (String s : lists) {
 System.out.println("转回前：" + lists);
 System.out.println("转换后：" + returnData);
 
+// 转回前：[2012-11-20, 2020-7-14, 2020-8-9]
+// 转换后：[2012-11-20, 2020-07-14, 2020-08-09]
+
 
 // no.2
 List<String> results = lists.stream().map(s -> {
@@ -61,5 +64,5 @@ List<String> results = lists.stream().map(s -> {
         return s;
     }
 }).collect(Collectors.toList());
-System.out.println(results);
+System.out.println(results); //[2012-11-20, 2020-07-14, 2020-08-09]
 ```
