@@ -26,3 +26,27 @@ String message = "{0}或{1}不能为空";
 System.out.println(MessageFormat.format(message,"username","password"));
 // 用户名或密码不能为空
 ```
+
+### 日期匹配替换
+
+```java
+List<String> lists = Arrays.asList("2012-11-20", "2020-7-14", "2020-8-9");
+List<String> returnData = new ArrayList<>();
+StringBuffer sb = null;
+String[] arr = null;
+for (String s : lists) {
+    if (!s.matches("\\d{4}-\\d{2}-\\d{2}")) {
+        sb = new StringBuffer();
+        arr = s.split("-");
+        sb.append(arr[0]);
+        sb.append("-");
+        sb.append(String.format("%02d", Integer.parseInt(arr[1])));
+        sb.append("-");
+        sb.append(String.format("%02d", Integer.parseInt(arr[2])));
+        s = sb.toString();
+    }
+    returnData.add(s);
+}
+System.out.println("转回前：" + lists);
+System.out.println("转换后：" + returnData);
+```
