@@ -30,6 +30,7 @@ System.out.println(MessageFormat.format(message,"username","password"));
 ### 日期匹配替换
 
 ```java
+// no.1
 List<String> lists = Arrays.asList("2012-11-20", "2020-7-14", "2020-8-9");
 List<String> returnData = new ArrayList<>();
 StringBuffer sb = null;
@@ -49,4 +50,16 @@ for (String s : lists) {
 }
 System.out.println("转回前：" + lists);
 System.out.println("转换后：" + returnData);
+
+
+// no.2
+List<String> results = lists.stream().map(s -> {
+    if (!s.matches("\\d{4}-\\d{2}-\\d{2}")) {
+        String[] strs = s.split("-");
+        return strs[0] + "-" + String.format("%02d", Integer.parseInt(strs[1])) + "-" + String.format("%02d", Integer.parseInt(strs[2]));
+    } else {
+        return s;
+    }
+}).collect(Collectors.toList());
+System.out.println(results);
 ```
