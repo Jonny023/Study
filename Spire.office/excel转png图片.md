@@ -1,4 +1,21 @@
+
 #### 代码
+
+* free版的只支持10页，而商业版又有版权水印，想去掉要对图片进行裁剪，免费版的xls包2.2.0不能用
+
+> 依赖
+
+```xml
+<dependency>
+    <groupId>e-iceblue</groupId>
+    <artifactId>spire.xls</artifactId>
+    <version>3.7.5</version>
+    <systemPath>${project.basedir}/src/main/webapp/WEB-INF/lib/Spire.Xls-3.7.5.jar</systemPath>
+    <scope>system</scope>
+</dependency>
+```
+
+> java代码
 
 ```java
 package com.test1;
