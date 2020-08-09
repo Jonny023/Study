@@ -29,15 +29,34 @@
 #### 国内仓库
 
 ```xml
-<mirror>
-    <id>nexus-aliyun</id>
-    <name>Nexus aliyun</name>
+<mirror>  
+    <id>alimaven</id>  
+    <mirrorOf>central</mirrorOf>
+    <name>aliyun maven</name>  
     <url>http://maven.aliyun.com/nexus/content/groups/public/</url>
-    <mirrorOf>central</mirrorOf>        
 </mirror>
-<mirror>
-  <id>huaweicloud</id>
-  <mirrorOf>*</mirrorOf>
-  <url>https://mirrors.huaweicloud.com/repository/maven/</url>
+<mirror>  
+    <id>huaweicloud</id>  
+    <mirrorOf>central</mirrorOf>
+    <name>huaweiyun maven</name>  
+    <url>http://mirrors.huaweicloud.com/repository/maven/</url>
+</mirror>
+<mirror>  
+    <id>mvnrepository</id>  
+    <mirrorOf>central</mirrorOf>
+    <name>mvnrepository maven</name>  
+    <url>https://mvnrepository.com/artifact/</url>
+</mirror>
+<mirror>    
+    <id>maven2</id> 
+    <mirrorOf>central</mirrorOf>	  
+    <name>Human Readable Name for this Mirror.</name>    
+    <url>http://uk.maven.org/maven2/</url>    
+</mirror>
+<mirror>    
+  <id>ibiblio</id>    
+  <mirrorOf>ibiblio</mirrorOf>    
+  <name>Human Readable Name for this Mirror.</name>    
+  <url>http://mirrors.ibiblio.org/pub/mirrors/maven2/</url>    
 </mirror>
 ```
