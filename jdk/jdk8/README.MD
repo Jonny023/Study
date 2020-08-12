@@ -105,3 +105,23 @@ public void count() {
     System.out.println(sum);
 }
 ```
+
+* 字符串转set
+
+```java
+List<Map<String, Object>> list= new ArrayList<>();
+
+Map<String, Object> map1 = new HashMap<>();
+map1.put("id", 1);
+map1.put("managerName", "1,1,2");
+
+Map map2 = new HashMap<>();
+map2.put("id", 2);
+map2.put("managerName", "2,2,2,3");
+
+list.add(map1);
+list.add(map2);
+
+Set<String> managerName = list.stream().map(map -> (String) map.get("managerName")).map(s -> s.split(",")).flatMap(arr -> Arrays.stream(arr)).collect(Collectors.toSet());
+System.out.println(managerName);
+```
