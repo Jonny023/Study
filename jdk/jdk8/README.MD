@@ -125,3 +125,45 @@ list.add(map2);
 Set<String> managerName = list.stream().map(map -> (String) map.get("managerName")).map(s -> s.split(",")).flatMap(arr -> Arrays.stream(arr)).collect(Collectors.toSet());
 System.out.println(managerName);
 ```
+
+* 集合超过指定长度进行分组
+
+```java
+package com.whalebest.common.utils;
+
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
+/**
+ * @author 李静
+ * @description 集合分批（分割）
+ * @date 2020/8/28 9:42
+ */
+public class ListBatchUtil {
+
+    /**
+     * 计算切分次数
+     * @param size 集合大小
+     * @param max 每max个分为一组
+     * @return
+     */
+    private static Integer countStep(int size, int max) {
+        return (size + max - 1) / max;
+    }
+
+    /**
+     *  集合超过max个，每max个分为一组，如：超过2个，每2个分为一组
+     *  list:[1,2,3,4,5] -> [[1,2], [3,4], [5]]
+     * @param list
+     * @param max 每max个分为一组
+     * @return
+     */
+    public static <T> List<List<T>> group(List<T> list, int max) {
+        int limit = countStep(list.size(), max);
+        List<List<T>> splitList = Stream.iterate(0, n -> n + 1).limit(limit).parallel().map(a -> list.stream().skip(a * max).limit(max).parallel().collect(Collectors.toList())).collect(Collectors.toList());
+        return splitList;
+    }
+}
+
+```
