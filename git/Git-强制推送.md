@@ -14,7 +14,7 @@ git push origin --force
 
 `"Settings" -> "Repository" -> scroll down to "Protected branches".`
 
-### 问题二 
+### No.2
 
 > hint: Updates were rejected because the tip of your current branch is behind
 hint: its remote counterpart. Integrate the remote changes (e.g.
