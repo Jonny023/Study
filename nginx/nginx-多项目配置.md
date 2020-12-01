@@ -1,7 +1,7 @@
 ```bash
 server {
     listen 80;
-    server_name guanding.manhuisoft.com;     
+    server_name www.a.com;     
 
     location / {
         proxy_pass http://127.0.0.1:40000;
