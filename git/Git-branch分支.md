@@ -44,4 +44,4 @@ git checkout dev
 
 删除分支名包含指定字符的分支：
 
-> git branch | grep ‘dev*’ | xargs git branch -d
+> git branch | grep 'dev*' | xargs git branch -d
