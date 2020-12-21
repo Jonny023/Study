@@ -29,3 +29,19 @@ $ git pull
 # 切换到dev分支
 git checkout dev
 ```
+
+## 删除分支命令
+
+------
+
+删除一条分支：
+
+> git branch -D branchName
+
+删除当前分支外的所有分支：
+
+> git branch | xargs git branch -d
+
+删除分支名包含指定字符的分支：
+
+> git branch | grep ‘dev*’ | xargs git branch -d
