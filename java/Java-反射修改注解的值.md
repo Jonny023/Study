@@ -12,7 +12,8 @@ public class DynamicBaseProperties {
 
 * 代码
 ```java
-DynamicBaseProperties baseProperties = new DynamicBaseProperties();
+  int index = 2;
+  DynamicBaseProperties baseProperties = new DynamicBaseProperties();
 
   //获取BaseProperties的value字段
   Field field = baseProperties.getClass().getDeclaredField("value");
