@@ -1,4 +1,6 @@
-* `Error running 'BmaApplication': Command line is too long. Shorten command line for BmaApplication or also for Spring Boot default configuration?`
+* `Error running 'Application': Command line is too long. Shorten command line for Application or also for Spring Boot default configuration?`
+
+> 启动项目报错
 
 ```bash
 将Edit Configurations/Environment/Shorten command line设置为：JAE manifest - java -cp classpath.jar className [args]
