@@ -17,6 +17,35 @@ set OPT=%OPT% %PENTAHO_DI_JAVA_OPTIONS% "-Dhttps.protocols=TLSv1,TLSv1.1,TLSv1.2
 select concat(count(1), '') from dual
 ```
 
+* Java程序运行ktr脚本报错
+
+```java
+package com.common.config;
+
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Configuration;
+
+import javax.annotation.PostConstruct;
+import java.util.TimeZone;
+
+/**
+ * @description: 解决kettle时区错误及时间差8小时
+ * @date: 2021-01-21
+ */
+@Configuration
+public class TimeZoneConfig {
+
+    @Value("${spring.jackson.time-zone:GMT+8}")
+    private String timeZone;
+
+    @PostConstruct
+    public void loadConfig() {
+        TimeZone tz = TimeZone.getTimeZone(timeZone);
+        TimeZone.setDefault(tz);
+    }
+}
+```
+
 ### MySQL
 
 * `kettle`连接`mysql`提示`Driver class org.gjt.mm.mysql.Driver could not be found`的问题
