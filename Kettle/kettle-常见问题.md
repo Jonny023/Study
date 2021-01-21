@@ -1,4 +1,4 @@
-## Kettle常见问题
+## Windows Kettle常见问题
 
 ### postgreSQL
 
@@ -16,7 +16,7 @@ set OPT=%OPT% %PENTAHO_DI_JAVA_OPTIONS% "-Dhttps.protocols=TLSv1,TLSv1.1,TLSv1.2
 
 * `kettle`连接`mysql`提示`Driver class org.gjt.mm.mysql.Driver could not be found`的问题
 
-> 下载5.+的驱动放到kettle/lib目录下
+> 下载5.+的驱动放到kettle/lib目录下，重启kettle客户端
 
 ```bash
 将mysql版本降到5.+或者不改变原来的驱动版本（多版本共存）
