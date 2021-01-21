@@ -11,6 +11,11 @@ set OPT=%OPT% %PENTAHO_DI_JAVA_OPTIONS% "-Dhttps.protocols=TLSv1,TLSv1.1,TLSv1.2
 ```
 [参考地址](https://github.com/pentaho/pentaho-kettle/blob/master/pom.xml)
 
+* 进行数据抽取的时候类型必须完全匹配，比如：postgreSQL表字段类型为字符型，从mysql查询的结果集也必须为字符，如下方式转换
+
+```sql
+select concat(count(1), '') from dual
+```
 
 ### MySQL
 
