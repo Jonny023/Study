@@ -5,3 +5,5 @@
 ```bash
 C:\Users\Administrator\AppData\Local\DBeaver\dbeaver.exe -nl zh -vmargs -Duser.timezone=GMT+8
 ```
+
+* 连接pgsql不显示模式，选中数据库`右键-Connection view--Advanced`
