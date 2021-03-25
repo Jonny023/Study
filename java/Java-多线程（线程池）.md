@@ -74,6 +74,7 @@ public class ThreadPoolService {
         for (int j = 0; j < 100; j++) {
             pool.submit(new ThreadTest());
         }
+        pool.submit(() ->{});
         System.out.println("执行完毕。。。");
     }
 
