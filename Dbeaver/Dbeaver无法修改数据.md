@@ -4,4 +4,5 @@
 
 * 原因：工具里面事务提交模式设置为：`手动提交`或`智能提交`模式了，需要手动提交事务
 
+
 ![img](https://github.com/Jonny023/Study/blob/master/Dbeaver/autocommit.png)
