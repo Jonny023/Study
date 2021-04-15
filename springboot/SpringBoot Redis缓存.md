@@ -218,3 +218,9 @@ public class UserServiceImpl {
 }
 ```
 
+
+* 手动清除缓存
+
+```java
+cacheManager.getCache(cacheName).clear()
+```
