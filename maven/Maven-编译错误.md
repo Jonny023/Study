@@ -1,4 +1,4 @@
-N0.1 程序包 com.sun.istack.internal 不存在
+No.1 程序包 com.sun.istack.internal 不存在
 
 > pom文件新增
 
@@ -37,7 +37,7 @@ java: Internal error in the mapping processor: java.lang.NullPointerException  	
 
 
 
-* NO.3 多环境动态指定插件开发环境没问题，线上正式环境出问题
+* No.3 多环境动态指定插件开发环境没问题，线上正式环境出问题
 
 > 原因及解决方法：类配置加了`@Profile("dev")`配置，打包的时候多个组件需要指定`profiles`
 
