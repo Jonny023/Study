@@ -73,3 +73,39 @@ cd /opt/kafka_2.13-2.7.0/bin
 ./kafka-topics.sh --zookeeper 10.113.74.246:2181 --list
 ```
 
+### 问题
+
+> Error response from daemon: Container 09bf9eeb0bc48f7d580421e5d8ddfa05d537c34b675dba7fe4628d930e083f27 is not running
+
+```bash
+docker start 09bf9eeb0bc48f7d580421e5d8ddfa05d537c34b675dba7fe4628d930e083f27
+```
+
+> SpringBoot整合kafka报could not be established. Broker may not be available.
+
+* 进入容器
+
+```
+docker exec -it kafka /bin/bash && cd /opt/kafka_2.13-2.7.0/config
+```
+
+* 修改kafka的server.properties
+
+```properties
+listeners=PLAINTEXT://kafka-host:9092
+advertised.listeners=PLAINTEXT://kafka-host:9092
+```
+
+### docker命令
+
+```bash
+# 查看所有镜像
+docker images
+
+# 查看容器
+docker ps -a
+
+# 删除容器
+docker rm 09bf9eeb0bc4
+```
+
