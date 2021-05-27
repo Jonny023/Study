@@ -1,3 +1,5 @@
+# Jackson转换json
+
 * jackson序列化工具类
 
 > 依赖
@@ -14,14 +16,11 @@
 ```java
 package com.common.utils;
 
-import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.MapperFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
-import com.fasterxml.jackson.databind.deser.std.StdScalarDeserializer;
-import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -32,7 +31,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * @author: Jonny
+ * @author: e-lijing6
  * @description: Jackson转换JSON工具类
  * @date:created in 2021/5/21 17:10
  * @modificed by:
@@ -46,19 +45,9 @@ public class JsonUtils {
     static {
         mapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
         mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+        mapper.enable(MapperFeature.ACCEPT_CASE_INSENSITIVE_ENUMS);
         mapper.registerModule(new JavaTimeModule());
-        SimpleModule module = new SimpleModule();
-        //自定义反序列化实现String类型的value转小写
-        module.addDeserializer(String.class, new StdScalarDeserializer<String>(String.class) {
-            @Override
-            public String deserialize(JsonParser p, DeserializationContext deserializationContext)
-                    throws IOException {
-                return p.getValueAsString() == null ? null : p.getValueAsString().toLowerCase();
-            }
-        });
-        mapper.registerModule(module);
     }
-
 
     public static String toJSONString(Object object) throws JsonProcessingException {
         return mapper.writeValueAsString(object);
