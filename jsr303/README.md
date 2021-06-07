@@ -3,7 +3,7 @@
 ##### 引入依赖
 
 > `springboot从2.3`版本开始已经移除了`spring-boot-starter-web`中的`hibernate-validator`依赖， [参考](https://blog.csdn.net/not_say/article/details/107366789)
-    
+
 * 引用依赖也最好用`spring-boot-starter-validation`这种`starter`方式，减少依赖冲突
 
 ```xml
@@ -197,10 +197,12 @@ UserAddOrUpdateForm update1(@Validated([Update.class]) @RequestBody UserAddOrUpd
     * 实体类没被扫描到，之前把@Valid注解加到interface方法上，死活不生效
       * 注解可以加到interface，但是需要保证它能被扫描到
     * `@Validated(Update.class)`注解分组和实体类没对上，可能没加分组等
-  
 
-##### 效果图
+* 控制器的方法上添加`@NotBlank(message="不能为空")`无效
 
-![](img/u1.png)
+  ```java
+  public String loging(@NotBlank(message="用户名不能为空") String username) {}
+  ```
 
-![](img/u2.png)
+  > 注解没用被扫描到，需用在类上添加`@Validated`
+
