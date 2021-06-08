@@ -82,3 +82,29 @@ public class FileDemo {
 ```
 
 >结果`{unit1=[a Good!, b Good after, c Good even], unit2=[a Hello, b Hello world!, c Hi], unit3=[a 中国, b 美国, c 法国, d 澳大利亚]}`
+
+
+
+### 优化写法
+
+```java
+public static void readLine(String fileName, Consumer<String> lineConsumer) {
+    try (BufferedReader reader = new BufferedReader(new FileReader(fileName))) {
+        String line;
+        while (Objects.nonNull(line = reader.readLine())) {
+            lineConsumer.accept(line);
+        }
+    } catch (IOException e) {
+        String message = String.format("读取文件(%s)异常", fileName);
+        log.error(message, e);
+    }
+}
+
+public static void main(String[] args) {
+    // 使用代码
+    readLine("C:\\projects\\2021-06-03.0.log", line -> {
+        System.out.println(line);
+    });
+}
+```
+
