@@ -47,8 +47,12 @@ public static void main(String[] args) {
 ```java
 String[] strs = new String[]{ "a", "b", "c"};
 Stream<String> strs1 = Stream.of(strs);
+// 双引号，结果："a","b","c"
 String collect = strs1.collect(Collectors.joining("\",\"", "\"", "\""));
 System.out.println(collect);
+
+// 单引号，结果：'a','b','c'
+String collect1 = Stream.of(strs).collect(Collectors.joining("\','", "'", "'"));
 ```
 
 # JSONArray数据筛选求和
