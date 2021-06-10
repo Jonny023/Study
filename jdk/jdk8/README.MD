@@ -136,7 +136,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 /**
- * @author 李静
+ * @author Jonny
  * @description 集合分批（分割）
  * @date 2020/8/28 9:42
  */
