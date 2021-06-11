@@ -2,7 +2,7 @@
 
 * 公共类里面注入同一个类，比如`baseRepository`不能用`@Resource`注解，要改成`@Autowired`
 
-### 单元测试
+### 1、单元测试
 
 * 报错
 
@@ -30,3 +30,9 @@ public class StatTest {
 
 ```
 
+### 2、JPA在`Respitory`中使用`@Query`问题
+
+> @Query("select new User(xx,xx) from User where xxx=?1")这种返回数据封装到实体类，这个类不能是数据库`@Entity`标注的类，否则可能导致:`column 'id' not found`
+
+* 返回自定类定义为单纯的VO或者Map
+* 查询列不要用*,名具体列
