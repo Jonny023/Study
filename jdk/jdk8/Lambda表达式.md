@@ -94,6 +94,9 @@ System.out.println(ids);
 // 获取用户指定属性封装为Map
 Map<Long, String> map = users.stream().collect(Collectors.toMap(User::getId, User::getUsername));
 
+// 键重复，按键去重
+Map<String, SysTarget> targetMap = targets.stream().collect(Collectors.toMap(SysTarget::getTargetValue, o -> o, (k, v) -> k));
+
 // 将指定属性封装为VO类
 List<UserVO> userVOList = users.stream().map(user -> {
 	return new UserVO(user.getId(), user.getUsername());
