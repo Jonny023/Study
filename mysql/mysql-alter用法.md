@@ -85,3 +85,15 @@ alter table `t_app` add column gateway_id int  not null default 0 AFTER `aid`；
 ```mysql
 alter table t_app  change gateway_id gateway_id int not null after aid ; #(注意gateway_id出现了2次)
 ```
+
+> 13.修改默认值
+
+```mysql
+alter table table_name alter column column_name set default xxx;
+```
+
+> 14.去掉timestamp自动更新
+
+```mysql
+alter table `sys_role` change create_time create_time timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP;
+```
