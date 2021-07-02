@@ -1,4 +1,4 @@
-[下载客户端redis-client](./linux - redis.rar)
+[下载客户端redis-client](https://github.com/Jonny023/Study/blob/master/centos/redis/linux%20-%20redis.rar)
 
 ### 通过远程连接其他redis服务
 
