@@ -28,7 +28,7 @@
 </dependency>
 ```
 
-* `yml`配置
+### 单机版`yml`配置
 
 ```yaml
 spring:
@@ -58,6 +58,27 @@ spring:
     ## 连接超时时间（毫秒）
     timeout: 1200
 ```
+
+### 哨兵模式`yml`配置
+
+```yaml
+spring:
+  redis:
+    database: 1
+    password: 123456
+    timeout: 5000
+    sentinel:
+      nodes: 192.168.1.10:26379,192.168.1.20:26379,192.168.1.30:26379
+      master: mymaster # 集群名称
+    jedis:
+      pool:
+        max-active: 50
+        max-idle: 20
+        min-idle: 5
+        max-wait: -1
+```
+
+
 
 * `redis`配置
 
