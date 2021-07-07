@@ -143,3 +143,23 @@ select currentDatabase();
   * 支持分区
   * 支持索引
   * 支持`mutation`(改、删操作)
+
+
+
+# 权限
+
+[参考](https://blog.csdn.net/vkingnew/article/details/107308936)
+
+### 权限
+
+```
+readonly：读写设置权限均有此标签配置，有三种取值：
+0：默认值，不进行任何取值
+1：只拥有读权限（执行select，exists，show和describe权限）
+2：拥有读写权限和设置权限
+ 
+allow_ddl:DDL权限控制标签，有两种取值。
+0：不允许DDL查询
+1：默认值，允许DDL查询。
+```
+
