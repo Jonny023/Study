@@ -3,7 +3,7 @@
 * 转换工具
 
 ```java
-package cn.com.util;
+package com.util;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -74,9 +74,9 @@ public class Convertor {
 * 分页类
 
 ```java
-package cn.com.api.base;
+package com.api.base;
 
-import cn.com.util.Convertor;
+import cn.util.Convertor;
 import com.querydsl.core.QueryResults;
 import com.querydsl.jpa.impl.JPAQuery;
 import io.swagger.annotations.ApiModelProperty;
@@ -90,8 +90,8 @@ import java.util.List;
 import java.util.function.Supplier;
 
 /**
- * @description: 分页类
- * @author: Jonny
+ * @description: JPA分页类
+ * @author: jonny
  * @date: 2021-04-02
  */
 @Data
@@ -137,15 +137,14 @@ public class PageVO<T> {
      */
     public static <T> PageVO<T> of(JPAQuery<T> query, QPageRequest request) {
         request = init(request);
-        QueryResults<T> results = query.offset((request.getPageNumber()) * request.getPageSize()).limit(request.getPageSize()).fetchResults();
-        PageVO<T> pageVO = (PageVO<T>) PageVO.builder()
+        QueryResults<T> results = query.offset((long) (request.getPageNumber()) * request.getPageSize()).limit(request.getPageSize()).fetchResults();
+        return (PageVO<T>) PageVO.builder()
                 .currentPage(request.getPageNumber() + 1)
                 .pageSize(request.getPageSize())
                 .totalPage((results.getTotal() + request.getPageSize() - 1) / request.getPageSize())
                 .totalCount(results.getTotal())
                 .data((List<Object>) results.getResults())
                 .build();
-        return pageVO;
     }
 
     /**
@@ -156,13 +155,13 @@ public class PageVO<T> {
      */
     public static <T, R> PageVO<R> of(JPAQuery<T> query, QPageRequest request, Supplier<R> target) {
         request = init(request);
-        JPAQuery<T> jpaQuery = query.offset((request.getPageNumber()) * request.getPageSize()).limit(request.getPageSize());
+        JPAQuery<T> jpaQuery = query.offset((long) (request.getPageNumber()) * request.getPageSize()).limit(request.getPageSize());
         long count = jpaQuery.fetchCount();
         PageVO<T> pageVO = (PageVO<T>) PageVO.builder()
                 .currentPage(request.getPageNumber() + 1)
                 .pageSize(request.getPageSize())
                 .totalPage((count + request.getPageSize() - 1) / request.getPageSize())
-                .totalCount(count)
+               .totalCount(count)
                 .data((List<Object>) jpaQuery.fetch())
                 .build();
         if (target != null) {
@@ -189,7 +188,7 @@ public class PageVO<T> {
         }
         // 超过最大限制条数设置为默认限制大小
         if(request.getPageSize() >= MAX_SIZE) {
-            request = QPageRequest.of((int)request.getPageNumber(), MAX_SIZE);
+            request = QPageRequest.of(request.getPageNumber(), MAX_SIZE);
         }
         request = (QPageRequest) request.previous();
         return request;
