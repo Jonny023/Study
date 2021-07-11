@@ -4,15 +4,15 @@
 
 > `path`中加入`mysql`所在位置
 ```
-path     F:\dev tools\mysql-5.7.21\bin
+path     F:\dev_tools\mysql-5.7.21\bin
 ```
 2、进入mysql解压文件目录创建my.ini文件
 
-> `F:\dev tools\mysql-5.7.21`，在目录下`my.ini`（没有`ini`的文件自己创建）中写入,在当前目录下创建一个`data`文件夹，存放数据
+> `F:\dev_tools\mysql-5.7.21`，在目录下`my.ini`（没有`ini`的文件自己创建）中写入,在当前目录下创建一个`data`文件夹，存放数据
 ```
 [mysqld]
-basedir=F:\dev tools\mysql-5.7.21
-datadir=F:\dev tools\mysql-5.7.21\data 
+basedir=F:\dev_tools\mysql-5.7.21
+datadir=F:\dev_tools\mysql-5.7.21\data 
 port=3306
 #不用密码登录
 skip-grant-tables
@@ -26,9 +26,9 @@ sql_mode=NO_ENGINE_SUBSTITUTION,STRICT_TRANS_TABLES
 ```
 3、以管理员身份进入mysql解压目录，通过mysqld -install安装服务，出现Service successfully installed.表示成功
 ```
-F:\dev tools\mysql-5.7.21>cd bin
+F:\dev_tools\mysql-5.7.21>cd bin
 
-F:\dev tools\mysql-5.7.21\bin>mysqld -install
+F:\dev_tools\mysql-5.7.21\bin>mysqld -install
 Service successfully installed.
 
 //接下来执行mysqld  --initialize初始化数据库
