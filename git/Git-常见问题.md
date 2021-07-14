@@ -19,6 +19,8 @@ hint: See the 'Note about fast-forwards' in 'git push --help' for details.
 
 ```shell
 git pull --rebase origin master
+
+git reset --hard origin/master
 ```
 
 
