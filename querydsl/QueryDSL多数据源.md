@@ -57,7 +57,10 @@
 ```java
 package cn.com.config;
 
+package com.example.springbootjpadruid.config;
+
 import java.util.Map;
+import java.util.Objects;
 import javax.annotation.Resource;
 import javax.persistence.EntityManager;
 import javax.sql.DataSource;
@@ -74,6 +77,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
+import org.springframework.orm.jpa.SharedEntityManagerCreator;
 
 @Configuration
 @EnableJpaRepositories(
@@ -104,10 +108,6 @@ public class JpaClickHouseConfig {
     @Resource
     private JpaProperties jpaProperties;
 
-    // 实体管理工厂
-    @Resource
-    private EntityManagerFactoryBuilder factoryBuilder;
-
     @Resource
     private HibernateProperties hibernateProperties;
 
@@ -122,8 +122,8 @@ public class JpaClickHouseConfig {
      * @return
      */
     @Bean(name = "ckEntityManagerFactoryBean")
-    public LocalContainerEntityManagerFactoryBean entityManagerFactoryBean() {
-        return factoryBuilder.dataSource(dataSource)
+    public LocalContainerEntityManagerFactoryBean entityManagerFactoryBean(org.springframework.boot.orm.jpa.EntityManagerFactoryBuilder builder) {
+        return builder.dataSource(dataSource)
                 .properties(getVendorProperties())
                 .packages(entityBasePackage)
                 .persistenceUnit("ckPersistenceUnit")
@@ -142,8 +142,8 @@ public class JpaClickHouseConfig {
      * @return
      */
     @Bean(name = "ckEntityManager")
-    public EntityManager entityManager() {
-        return entityManagerFactoryBean().getObject().createEntityManager();
+    public EntityManager entityManager(org.springframework.boot.orm.jpa.EntityManagerFactoryBuilder builder) {
+        return SharedEntityManagerCreator.createSharedEntityManager(Objects.requireNonNull(entityManagerFactoryBean(builder).getObject()));
     }
 
     /**
@@ -152,10 +152,8 @@ public class JpaClickHouseConfig {
      * @return
      */
     @Bean(name = "ckTransactionManager")
-    public JpaTransactionManager transactionManager() {
-        JpaTransactionManager jpaTransactionManager = new JpaTransactionManager();
-        jpaTransactionManager.setEntityManagerFactory(entityManagerFactoryBean().getObject());
-        return jpaTransactionManager;
+    public JpaTransactionManager transactionManager(EntityManagerFactoryBuilder builder) {
+        return new JpaTransactionManager(entityManagerFactoryBean(builder).getObject());
     }
 }
 ```
