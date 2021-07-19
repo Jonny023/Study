@@ -29,12 +29,11 @@ import org.springframework.util.StringUtils;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 /**
- * @author: e-lijing6
+ * @author: Jonny
  * @description: Jackson转换JSON工具类
- * @date:created in 2021/5/21 17:10
- * @modificed by:
  */
 public class JsonUtils {
 
@@ -82,7 +81,7 @@ public class JsonUtils {
 
     public static <T> T toClass(String json, Class<T> clazz) {
         try {
-            if (!StringUtils.hasText(json)) {
+            if (Optional.ofNullable(json).orElse("").trim().isEmpty()) {
                 return null;
             }
             return mapper.readValue(json, clazz);
@@ -92,16 +91,20 @@ public class JsonUtils {
         return null;
     }
 
+    /**
+     *  判断是否为有效json【严格模式】
+     *  isContainerNode()去除“123”这种格式的无效json字符
+     * @param data
+     * @return
+     */
     public static boolean isJson(String data) {
         try {
-            mapper.readTree(data);
-            return true;
+            return mapper.readTree(data).isContainerNode();
         } catch (JsonProcessingException e) {
             log.warn("{} is not json", data);
             return false;
         }
     }
-
 }
 ```
 

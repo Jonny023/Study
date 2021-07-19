@@ -71,6 +71,9 @@ cd /opt/kafka_2.13-2.7.0/bin
 
 # 查看topic
 ./kafka-topics.sh --zookeeper 10.113.74.246:2181 --list
+
+# 创建topic
+./bin/kafka-topics.sh --create --topic USER_SERVICE.TOPIC1 --partitions 8 --replication-factor 3 --zookeeper 192.168.1.20:2181
 ```
 
 ### 问题
