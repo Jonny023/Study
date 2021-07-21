@@ -36,7 +36,41 @@ docker version
 ### 服务
 
 ```bash
+# 开机自启
+systemctl enable docker
+
+# 启动
 service docker start
+systemctl start docker
+
+# 停止
 service docker stop
+systemctl stop docker
+
+# 状态
+service docker status
+systemctl status docker
+```
+
+### 镜像
+
+```shell
+# 查看所有镜像
+docker ps -a
+
+# 启动
+docker start containerID
+
+# 停止
+docker stop containerID
+
+# 查看日志、状态
+docker logs containerID
+
+# 开机启动
+docker run --restart=always containerID
+
+# 创建时未启动开机自启，通过更新
+docker update --restart=always containerID
 ```
 

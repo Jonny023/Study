@@ -114,7 +114,13 @@ docker ps -a
 # 删除容器
 docker rm 09bf9eeb0bc4
 
-# 查看日志
-docker logs xxxx
+# 查看日志、状态
+docker logs containerID
+
+# 开机启动
+docker run --restart=always containerID
+
+# 创建时未启动开机自启，通过更新
+docker update --restart=always containerID
 ```
 
