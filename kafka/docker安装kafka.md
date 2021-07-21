@@ -3,6 +3,9 @@
 ### 启动docker
 
 ```shell
+# 开机自启
+systemctl enable docker
+
 # 查看状态
 systemctl status docker
 
