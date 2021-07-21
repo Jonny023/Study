@@ -51,7 +51,7 @@ docker pull wurstmeister/kafka:2.11-0.11.0.3
 ```shell
 docker run -d --name zookeeper -p 2181:2181 -v /etc/localtime:/etc/localtime wurstmeister/zookeeper
 
-docker run  -d --name kafka -p 9092:9092 -e KAFKA_BROKER_ID=0 -e KAFKA_ZOOKEEPER_CONNECT=10.113.74.246:2181 -e KAFKA_ADVERTISED_LISTENERS=PLAINTEXT://10.113.74.246:9092 -e KAFKA_LISTENERS=PLAINTEXT://0.0.0.0:9092 -t wurstmeister/kafka
+docker run  -d --name kafka -p 9092:9092 -e KAFKA_BROKER_ID=0 -e KAFKA_ZOOKEEPER_CONNECT=10.113.74.113:2181 -e KAFKA_ADVERTISED_LISTENERS=PLAINTEXT://10.113.74.113:9092 -e KAFKA_LISTENERS=PLAINTEXT://0.0.0.0:9092 -t wurstmeister/kafka
 
 docker ps -a
 ```
@@ -70,7 +70,7 @@ cd /opt/kafka_2.13-2.7.0/bin
 ./kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic test --from-beginning
 
 # 查看topic
-./kafka-topics.sh --zookeeper 10.113.74.246:2181 --list
+./kafka-topics.sh --zookeeper 10.113.74.113:2181 --list
 
 # 创建topic
 ./bin/kafka-topics.sh --create --topic USER_SERVICE.TOPIC1 --partitions 8 --replication-factor 3 --zookeeper 192.168.1.20:2181
@@ -110,5 +110,8 @@ docker ps -a
 
 # 删除容器
 docker rm 09bf9eeb0bc4
+
+# 查看日志
+docker logs xxxx
 ```
 
