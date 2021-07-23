@@ -1,3 +1,5 @@
+# 1.传统排序
+
 > 数值型字符排序(传统方式)
 
 ```java
@@ -16,6 +18,8 @@ public static void main(String[] args) {
     // 输出[-100, 0, 1, 2, 3, 100, 200]
 }
 ```
+
+# 2.lambda排序
 
 > Lambda表达式
 
@@ -42,6 +46,8 @@ public static void main(String[] args) {
 }
 ```
 
+# 3.join用法
+
 > join前后加字符
 
 ```java
@@ -55,7 +61,7 @@ System.out.println(collect);
 String collect1 = Stream.of(strs).collect(Collectors.joining("\','", "'", "'"));
 ```
 
-# JSONArray数据筛选求和
+# 4.JSONArray数据筛选求和
 
 > 求时长的和
 
@@ -110,7 +116,7 @@ public void count() {
 }
 ```
 
-* 字符串转set
+# 5.String转Set
 
 ```java
 List<Map<String, Object>> list= new ArrayList<>();
@@ -130,9 +136,10 @@ Set<String> managerName = list.stream().map(map -> (String) map.get("managerName
 System.out.println(managerName);
 ```
 
-* 集合超过指定长度进行分组
+# 6.集合超过指定长度进行分组【切割】
 
 ```java
+//方式1
 package com.whalebest.common.utils;
 
 import java.util.List;
@@ -170,4 +177,107 @@ public class ListBatchUtil {
     }
 }
 
+
+//方式2 借助guava工具
+List<List<User>> parts = Lists.partition(users, 50);
+```
+
+# 7.List排序
+
+## 7.1 按日期排序
+
+```java
+List<DailyDataChartVo> list = list.stream()
+        .sorted(Comparator.comparing(DailyDataChartVo::getDate))
+        .collect(Collectors.toList());
+```
+
+## 7.2 按日期排序后，逆序
+
+```java
+List<DailyDataChartVo> list = list.stream()
+        .sorted(Comparator.comparing(DailyDataChartVo::getDate).reversed())
+        .collect(Collectors.toList());
+```
+
+## 7.3 按日期排序后，再按金额排序
+
+```java
+List<DailyDataChartVo> list = list.stream()
+        .sorted(Comparator.comparing(DailyDataChartVo::getDate)
+                .thenComparing(DailyDataChartVo::getRevenue))
+        .collect(Collectors.toList());
+```
+
+## 7.4 按金额排序，排序时过滤Null值（如果排序的字段为null，NPE）
+
+```java
+List<DailyDataChartVo> list = list.stream()
+        .filter(c -> Objects.nonNull(c.getRevenue()))
+        .sorted(Comparator.comparing(DailyDataChartVo::getRevenue))
+        .collect(Collectors.toList());
+```
+
+## 7.5 按金额排序，Null值排在最前面
+
+java
+
+```java
+List<DailyDataChartVo> list = list.stream()
+        .sorted(Comparator.comparing(DailyDataChartVo::getRevenue,
+                Comparator.nullsFirst(BigDecimal::compareTo)))
+        .collect(Collectors.toList());
+//注意Comparator.nullsFirst的方法引用中，比较的字段是BigDecimal类型的，如果前后类型不一致，会报错：Non-static method cannot be referenced from a static context
+```
+
+## 7.6 按金额排序，Null值排在最后面
+
+java
+
+```java
+List<DailyDataChartVo> list = list.stream()
+        .sorted(Comparator.comparing(DailyDataChartVo::getRevenue,
+                Comparator.nullsLast(BigDecimal::compareTo)))
+        .collect(Collectors.toList());
+```
+
+# 8.Map排序
+
+## 8.1 按key排序
+
+```java
+Map<LocalDate, BigDecimal> map = map.entrySet()
+        .stream()
+        .sorted(Map.Entry.comparingByKey())
+        .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, (c1, c2) -> c1, LinkedHashMap::new));
+```
+
+> 将map转换成流，在流中对元素进行排序，排序后，再用LinkedHashMap收集来保留顺序
+
+```java
+public static <K extends Comparable<? super K>, V> Comparator<Map.Entry<K,V>> comparingByKey() {
+    return (Comparator<Map.Entry<K, V>> & Serializable)
+        (c1, c2) -> c1.getKey().compareTo(c2.getKey());
+}
+```
+
+> Map.Entry.comparingByKey()：对任意的c1, c2进行比较，然后将结果强制转换成一个可序列化的Comparator<Map.Entry<K, V>>
+> [Collectors.toMap()基础](https://www.cnblogs.com/milete/p/14070775.html)
+
+## 8.2 按key排序后，逆序
+
+```java
+Map<LocalDate, BigDecimal> map = map.entrySet()
+        .stream()
+        .sorted(Map.Entry.comparingByKey(Comparator.reverseOrder()))
+        .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, (c1, c2) -> c1, LinkedHashMap::new));
+```
+
+## 8.3 按value排序
+
+```java
+Map<LocalDate, BigDecimal> map = map.entrySet()
+        .stream()
+        .sorted(Map.Entry.comparingByValue())
+        .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, (c1, c2) -> c1, LinkedHashMap::new));
 ```
