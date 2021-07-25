@@ -1,6 +1,6 @@
 # Tomcat配置https (Windows)
 
-* 创建证书，分别创建`test.com`和`dev.test.com`两个域名的证书
+* 创建证书，分别创建`test.com`和`dev.com`两个域名的证书
 
 ```shell
 keytool -genkey -alias domainname -keyalg RSA -keysize 2048 -keystore filename.jks
