@@ -574,7 +574,7 @@ Caused by: java.net.URISyntaxException: Illegal character in scheme name at inde
 
 # [非法字符检测](https://www.soscisurvey.de/tools/view-chars.php)
 
-![image-20210724225835991](.\image-20210724225835991.png)
+![image-20210724225835991](image-20210724225835991.png)
 
 # [证书安装](https://cloud.tencent.com/document/product/400/4143#4.-tomcat-.E8.AF.81.E4.B9.A6.E9.83.A8.E7.BD.B2)
 
