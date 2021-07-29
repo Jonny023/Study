@@ -30,7 +30,7 @@ Profile Settings-->SSH Keys--->Add SSH Key
 
 ```shell
 ssh-keygen -t rsa -C 'test@xx.com' -f %HOMEPATH%\.ssh\gitlab-rsa
-ssh-keygen -t rsa -C 'test@xx.com' -f %HOMEPATH%\.ssh\gitee-rsa
+ssh-keygen -t rsa -C 'test@xx.com' -f %HOMEPATH%\.ssh\github-rsa
 ```
 
 
@@ -38,14 +38,14 @@ ssh-keygen -t rsa -C 'test@xx.com' -f %HOMEPATH%\.ssh\gitee-rsa
 ```yaml
 # gitlab
 Host gitlab.com
-    HostName gitlab.com
-    PreferredAuthentications publickey
-    IdentityFile ~/.ssh/gitlab_id-rsa
+HostName gitlab.com
+PreferredAuthentications publickey
+IdentityFile ~/.ssh/gitlab_id-rsa
 # github
 Host github.com
-    HostName github.com
-    PreferredAuthentications publickey
-    IdentityFile ~/.ssh/github_id-rsa
+HostName github.com
+PreferredAuthentications publickey
+IdentityFile ~/.ssh/github_id-rsa
   
 # 配置文件参数
 # Host : Host可以看作是一个你要识别的模式，对识别的模式，进行配置对应的的主机名和ssh文件

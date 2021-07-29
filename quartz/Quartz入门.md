@@ -1,6 +1,4 @@
-# 1. Quartz入门
-
-[视频地址](https://www.bilibili.com/video/BV19t41127de?p=11&spm_id_from=pageDriver)
+# 1. Quartz实战应用
 
 ## 一、核心概念
 
@@ -184,7 +182,7 @@ withMisfireHandlingInstructionIgnoreMisfires()
 
 
 
-### 3.示例
+### 3.cron表达式示例
 
 | cron表达式            | 描述                                                 |
 | ------------------------ | ------------------------------------------------------------ |
@@ -207,14 +205,483 @@ withMisfireHandlingInstructionIgnoreMisfires()
 | 0 0 12 1/5 * ?           | 每月的第一个中午开始每隔5天触发一次                          |
 | 0 11 11 11 11 ?          | 每年的11月11号 11点11分触发(光棍节)                          |
 
+## 七、实践（Job）
+
+### 1. pom依赖
+
+```xml
+<dependency>
+    <groupId>org.projectlombok</groupId>
+    <artifactId>lombok</artifactId>
+    <version>1.18.20</version>
+</dependency>
+<dependency>
+    <groupId>org.slf4j</groupId>
+    <artifactId>slf4j-simple</artifactId>
+    <version>1.7.25</version>
+</dependency>
+<dependency>
+    <groupId>org.quartz-scheduler</groupId>
+    <artifactId>quartz</artifactId>
+    <version>2.3.2</version>
+</dependency>
+<dependency>
+    <groupId>org.quartz-scheduler</groupId>
+    <artifactId>quartz-jobs</artifactId>
+    <version>2.3.2</version>
+</dependency>
+```
+
+### 2.创建任务实现类`HelloJob`实现`Job`接口
+
+```java
+package com.quartz.job;
+
+import lombok.extern.slf4j.Slf4j;
+import org.quartz.Job;
+import org.quartz.JobExecutionContext;
+import org.quartz.JobExecutionException;
+
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
+@Slf4j
+public class HelloJob implements Job {
+
+    public static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS");
+
+    @Override
+    public void execute(JobExecutionContext context) throws JobExecutionException {
+        String currentDate = formatter.format(LocalDateTime.now());
+        log.info("HelloJob running:{}", currentDate);
+    }
+}
+```
+
+### 3.任务调度
+
+```java
+// 调度器
+Scheduler scheduler = StdSchedulerFactory.getDefaultScheduler();
+
+// 任务实例
+JobDetail jobDetail = JobBuilder.newJob(HelloJob.class)
+    .withIdentity("helloJob", "helloGroup")
+    .build();
+
+// 触发器
+SimpleTrigger trigger = TriggerBuilder.newTrigger()
+    .withIdentity("helloTrigger", "triggerGroup")
+    .withSchedule(SimpleScheduleBuilder.repeatSecondlyForever(5))
+    .startNow()
+    .build();
+
+// 关联任务实例和触发器
+scheduler.scheduleJob(jobDetail, trigger);
+
+// 启动调度器
+scheduler.start();
+
+// 停止
+//scheduler.shutdown();
+```
+
+
+
 # 2. Quartz分布式任务调度
 
 ## 1、实现方式
 
 ### 原理：
 
-* Quartz是基于DB锁来实现的分布式调度
+* Quartz是基于DB锁来实现的分布式调度（抢占锁）
 
-## 参考
+## 2.实践(QuartzJobBean)
 
-* [CronExpression表达式](https://blog.csdn.net/caiwenfeng_for_23/article/details/17004213)
+> 数据库脚本在quartz自带的包路径`org.quartz.impl.jdbcjobstore`下
+
+### 2.1 pom依赖
+
+```xml
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-quartz</artifactId>
+</dependency>
+<dependency>
+    <groupId>org.springframework</groupId>
+    <artifactId>spring-jdbc</artifactId>
+</dependency>
+<dependency>
+    <groupId>com.alibaba</groupId>
+    <artifactId>druid-spring-boot-starter</artifactId>
+    <version>1.1.20</version>
+</dependency>
+<dependency>
+    <groupId>mysql</groupId>
+    <artifactId>mysql-connector-java</artifactId>
+    <version>5.1.49</version>
+    <scope>runtime</scope>
+</dependency>
+```
+
+
+
+#### 2.2.配置文件
+
+##### 2.2.1.yaml配置
+
+```yaml
+spring:
+  application:
+    name: quartz-boot
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    druid:
+      master:
+        driver-class-name: com.mysql.jdbc.Driver
+        url: jdbc:mysql://localhost:3306/quartz_boot?useSSL=false&useUnicode=true&characterEncoding=utf8&autoReconnect=true&failOverReadOnly=false
+        username: root
+        password: 123456
+        initial-size: 2
+        min-idle: 5
+        max-active: 10
+        max-wait: 5000
+        validationQuery: SELECT 1
+        test-on-borrow: false
+        test-while-idle: true
+        time-between-eviction-runs-millis: 18800
+      web-stat-filter:
+        enabled: true
+        exclusions: js,gif,jpg,png,css,ico,/druid/*
+      stat-view-servlet:
+        enabled: true
+        login-username: root
+        login-password: root
+```
+
+##### 2.2.2.quartz配置
+
+```properties
+# JobDataMaps是否都为String类型，默认false
+org.quartz.jobStore.useProperties=false
+
+# 表的前缀，默认QRTZ_
+org.quartz.jobStore.tablePrefix = QRTZ_
+
+# 是否加入集群
+org.quartz.jobStore.isClustered = true
+
+# 调度实例失效的检查时间间隔 ms
+org.quartz.jobStore.clusterCheckinInterval = 5000
+
+# 当设置为“true”时，此属性告诉Quartz 在非托管JDBC连接上调用setTransactionIsolation（Connection.TRANSACTION_READ_COMMITTED）。
+org.quartz.jobStore.txIsolationLevelReadCommitted = true
+
+# 数据保存方式为数据库持久化
+org.quartz.jobStore.class = org.quartz.impl.jdbcjobstore.JobStoreTX
+
+# 数据库代理类，一般org.quartz.impl.jdbcjobstore.StdJDBCDelegate可以满足大部分数据库
+org.quartz.jobStore.driverDelegateClass = org.quartz.impl.jdbcjobstore.StdJDBCDelegate
+
+#============================================================================
+# Scheduler 调度器属性配置
+#============================================================================
+# 调度标识名 集群中每一个实例都必须使用相同的名称
+org.quartz.scheduler.instanceName = ClusterQuartz
+# ID设置为自动获取 每一个必须不同
+org.quartz.scheduler.instanceId= AUTO
+
+#============================================================================
+# 配置ThreadPool
+#============================================================================
+# 线程池的实现类（一般使用SimpleThreadPool即可满足几乎所有用户的需求）
+org.quartz.threadPool.class=org.quartz.simpl.SimpleThreadPool
+
+# 指定线程数，一般设置为1-100直接的整数，根据系统资源配置
+org.quartz.threadPool.threadCount = 10
+
+# 设置线程的优先级(可以是Thread.MIN_PRIORITY（即1）和Thread.MAX_PRIORITY（这是10）之间的任何int 。默认值为Thread.NORM_PRIORITY（5）。)
+org.quartz.threadPool.threadPriority = 5
+```
+
+### 2.3.JavaBean配置
+
+#### 2.3.1.数据源配置
+
+```java
+package com.quartz.boot.config;
+
+import com.alibaba.druid.spring.boot.autoconfigure.DruidDataSourceBuilder;
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
+
+import javax.sql.DataSource;
+
+@Configuration
+public class DataSourceConfig {
+
+    @Primary
+    @Bean(value = "primaryDataSource",initMethod = "init")
+    @ConfigurationProperties("spring.datasource.druid.master")
+    public DataSource dataSourceOne(){
+        return DruidDataSourceBuilder.create().build();
+    }
+}
+```
+
+#### 2.3.2.quartz配置
+
+```java
+package com.quartz.boot.config;
+
+import org.quartz.Scheduler;
+import org.springframework.beans.factory.config.PropertiesFactoryBean;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
+import org.springframework.scheduling.quartz.SchedulerFactoryBean;
+
+import javax.annotation.Resource;
+import javax.sql.DataSource;
+import java.io.IOException;
+import java.util.Properties;
+import java.util.concurrent.Executor;
+
+@Configuration
+public class QuartzConfig {
+
+    @Resource
+    private DataSource dataSource;
+
+    /**
+     * 调度器
+     * @return
+     * @throws Exception
+     */
+    @Bean
+    public Scheduler scheduler() throws Exception {
+        return schedulerFactoryBean().getScheduler();
+    }
+
+    /**
+     * Scheduler工厂类
+     * @return
+     * @throws IOException
+     */
+    @Bean
+    public SchedulerFactoryBean schedulerFactoryBean() throws IOException {
+        SchedulerFactoryBean factory = new SchedulerFactoryBean();
+        factory.setSchedulerName("Cluster_Scheduler");
+        factory.setDataSource(dataSource);
+        factory.setApplicationContextSchedulerContextKey("applicationContext");
+        factory.setQuartzProperties(quartzProperties());
+        factory.setTaskExecutor(schedulerThreadPool());
+        factory.setStartupDelay(5);//延迟5s执行
+        return factory;
+    }
+
+    /**
+     * 加载配置属性
+     * @return
+     * @throws IOException
+     */
+    @Bean
+    public Properties quartzProperties() throws IOException {
+        PropertiesFactoryBean propertiesFactoryBean = new PropertiesFactoryBean();
+        propertiesFactoryBean.setLocation(new ClassPathResource("/spring-quartz.properties"));
+        propertiesFactoryBean.afterPropertiesSet();
+        return propertiesFactoryBean.getObject();
+    }
+
+    /**
+     * schedule配置线程池
+     * @return
+     */
+    @Bean
+    public Executor schedulerThreadPool() {
+        ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
+        executor.setCorePoolSize(Runtime.getRuntime().availableProcessors());
+        executor.setMaxPoolSize(Runtime.getRuntime().availableProcessors());
+        executor.setQueueCapacity(Runtime.getRuntime().availableProcessors());
+        return executor;
+    }
+
+}
+```
+
+### 2.4.创建Job
+
+```java
+package com.quartz.boot.job;
+
+import com.quartz.boot.service.TestService;
+import com.quartz.boot.utils.ApplicationContextUtil;
+import org.quartz.DisallowConcurrentExecution;
+import org.quartz.JobExecutionContext;
+import org.quartz.JobExecutionException;
+import org.quartz.PersistJobDataAfterExecution;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.scheduling.quartz.QuartzJobBean;
+
+/**
+ * 测试Job
+ */
+@PersistJobDataAfterExecution
+@DisallowConcurrentExecution
+public class TestJob extends QuartzJobBean {
+
+    private static final Logger log = LoggerFactory.getLogger(TestJob.class);
+
+    private static TestService testService;
+
+    static {
+        TestJob.testService = ApplicationContextUtil.getBean(TestService.class);
+    }
+
+    @Override
+    protected void executeInternal(JobExecutionContext context) throws JobExecutionException {
+        try {
+            log.info("------------------start------------------");
+            testService.hello();
+            log.info(context.getScheduler().getSchedulerInstanceId());
+            log.info("------------------stop------------------");
+        } catch (Exception e) {
+            log.error("{}", e);
+            JobExecutionException jobExecutionException = new JobExecutionException(e);
+            // 立即重新开始
+            jobExecutionException.setRefireImmediately(true);
+            throw jobExecutionException;
+        }
+    }
+
+}
+```
+
+### 2.5.创建监听器
+
+```java
+package com.quartz.boot.lisenter;
+
+import com.quartz.boot.job.TestJob;
+import org.quartz.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.context.ApplicationListener;
+import org.springframework.context.event.ContextRefreshedEvent;
+import org.springframework.stereotype.Component;
+
+import javax.annotation.Resource;
+
+@Component
+public class SchedulerListener implements ApplicationListener<ContextRefreshedEvent> {
+
+    private static final Logger log = LoggerFactory.getLogger(SchedulerListener.class);
+
+    private static String CRON = "0 0/1 * * * ?";
+
+    @Resource
+    private Scheduler scheduler;
+    private static String TRIGGER_GROUP_NAME = "TestGroupTrigger";
+    private static String TRIGGER_GROUP = "TestGroupTrigger";
+    private static String GROUP_NAME = "GroupName";
+    public static final String JOB_NAME = "TestJob";
+    private static String JOB_GROUP_NAME = "TestJobGroup";
+
+    @Override
+    public void onApplicationEvent(ContextRefreshedEvent event) {
+        try {
+            TriggerKey testTriggerKey = TriggerKey.triggerKey(TRIGGER_GROUP_NAME, TRIGGER_GROUP);
+            Trigger trigger = scheduler.getTrigger(testTriggerKey);
+            if (trigger == null) {
+                trigger = TriggerBuilder.newTrigger()
+                        .withIdentity(testTriggerKey)
+                        .withSchedule(CronScheduleBuilder.cronSchedule(CRON).withMisfireHandlingInstructionIgnoreMisfires())
+                        .startNow()
+                        .build();
+                JobDetail jobDetail = JobBuilder.newJob(TestJob.class)
+                        .withIdentity(JOB_NAME, JOB_GROUP_NAME)
+                        .requestRecovery(true)
+                        .build();
+                scheduler.scheduleJob(jobDetail, trigger);
+            }
+
+            scheduler.start();
+        } catch (SchedulerException e) {
+            log.error("execute job failed:{}", e);
+        }
+    }
+
+}
+```
+
+### 2.6.工具类
+
+```java
+package com.quartz.boot.utils;
+
+import org.springframework.beans.BeansException;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationContextAware;
+import org.springframework.stereotype.Component;
+
+@Component
+public class ApplicationContextUtil implements ApplicationContextAware {
+
+    /**
+     * 上下文对象实例
+     */
+    private static ApplicationContext applicationContext;
+
+    @Override
+    public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
+        ApplicationContextUtil.applicationContext = applicationContext;
+    }
+
+    /**
+     * 获取applicationContext
+     *
+     * @return
+     */
+    public static ApplicationContext getApplicationContext() {
+        return applicationContext;
+    }
+
+    /**
+     * 通过name获取 Bean.
+     *
+     * @param name
+     * @return
+     */
+    public static Object getBean(String name) {
+        return getApplicationContext().getBean(name);
+    }
+
+    /**
+     * 通过class获取Bean.
+     *
+     * @param clazz
+     * @param <T>
+     * @return
+     */
+    public static <T> T getBean(Class<T> clazz) {
+        return getApplicationContext().getBean(clazz);
+    }
+
+    /**
+     * 通过name,以及Clazz返回指定的Bean
+     *
+     * @param name
+     * @param clazz
+     * @param <T>
+     * @return
+     */
+    public static <T> T getBean(String name, Class<T> clazz) {
+        return getApplicationContext().getBean(name, clazz);
+    }
+}
+```
+
