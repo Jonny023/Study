@@ -93,6 +93,108 @@ clickhouse-client --multiquery < /home/xxx.sql
 | 双字节枚举           | Enum16                               | 取值范围为[-32768，32767]，共65536个值       |                                                              |
 | 数组类型             | 数组类型                             | Array(T)                                     | 表示由 T 类型组成的数组类型，不推荐使用嵌套数组              |
 
+## 角色(role)
+
+```sql
+/* superman user*/
+CREATE USER IF NOT EXISTS  admin ON CLUSTER user_logs IDENTIFIED WITH plaintext_password BY '123456';
+GRANT ON CLUSTER user_logs ALL ON *.* TO admin WITH GRANT OPTION;
+
+/* read_only role */
+CREATE  ROLE IF NOT EXISTS  read_only_roles ON CLUSTER user_logs;
+GRANT ON CLUSTER user_logs SELECT ON test_logs.* TO read_only_roles;
+
+CREATE USER IF NOT EXISTS  web ON CLUSTER user_logs IDENTIFIED WITH plaintext_password BY '123456' DEFAULT ROLE read_only_roles;
+
+
+
+/*  read_write_apps_roles role */
+CREATE  ROLE IF NOT EXISTS  read_write_apps_roles ON CLUSTER user_logs ;
+GRANT ON CLUSTER user_logs SELECT,INSERT ON test_logs.* TO read_write_apps_roles; 
+CREATE USER IF NOT EXISTS  collect ON CLUSTER user_logs IDENTIFIED WITH plaintext_password BY '123456' DEFAULT ROLE read_write_apps_roles; 
+
+
+/*delete user or role */
+/*
+
+REVOKE ON CLUSTER user_logs ALL ON test_logs.* from read_only_roles
+
+REVOKE ON CLUSTER user_logs ALL ON test_logs.* from read_write_apps_roles
+
+
+drop role IF  EXISTS read_only_roles ON CLUSTER user_logs ;
+
+drop role IF  EXISTS read_write_apps_role ON CLUSTER user_logs ;
+
+drop user IF  EXISTS web  ON CLUSTER user_logs  
+
+drop user IF  EXISTS collect  ON CLUSTER user_logs  
+
+*/
+
+/*  test  role and user */
+
+/*
+CREATE SETTINGS PROFILE IF NOT EXISTS test_profile  ON CLUSTER user_logs settings readonly=0 READONLY
+
+
+CREATE  ROLE IF NOT EXISTS  test_roles ON CLUSTER user_logs settings profile 'test_profile';
+
+CREATE USER IF NOT EXISTS  test_user ON CLUSTER user_logs IDENTIFIED WITH no_password DEFAULT ROLE test_roles 
+
+GRANT ON CLUSTER user_logs ALL ON test_logs.* TO test_roles;
+
+drop role IF  EXISTS test_roles ON CLUSTER user_logs ;
+
+DROP SETTINGS PROFILE test_profile ON CLUSTER user_logs
+
+drop user IF  EXISTS test_user  ON CLUSTER user_logs  
+*/
+```
+
+## 表（table）
+
+```sql
+create database if NOT exists test_logs ON CLUSTER user_logs;
+
+use test_logs;
+
+/*
+drop database if  exists test_logs ON CLUSTER user_logs;
+*/
+
+ 
+/*test*/
+create table IF NOT EXISTS test_logs.test_basics ON CLUSTER user_logs (
+si FixedString(32) , 
+event_time DateTime ,
+pv UInt32 ,
+uv UInt32 ,
+ip_counts UInt32 ,
+devices UInt32,
+vv UInt32,
+avg_visit_times UInt64 
+) ENGINE = ReplicatedMergeTree()
+PARTITION BY toYear(event_time)
+ORDER BY (si,event_time);
+ 
+create table IF NOT EXISTS test_logs.test_record ON CLUSTER user_logs (
+si FixedString(32) , 
+event_time DateTime ,
+pv UInt32 ,
+uv UInt32 ,
+vv UInt32,
+devices UInt32,
+ip_counts UInt32 ,
+avg_visit_times UInt64
+) ENGINE =  Distributed(user_logs, test_logs,test_logs.test_basics, rand());
+
+/*add  xxx_field*/
+
+ALTER TABLE test_logs.test_record ON CLUSTER user_logs  ADD Column IF NOT EXISTS xxx_field UInt64;
+
+```
+
 ## 函数
 
 ### JSON函数
