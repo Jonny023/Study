@@ -296,6 +296,24 @@ scheduler.start();
 
 * Quartz是基于DB锁来实现的分布式调度（抢占锁）
 
+| 表名（共11张表）         | 描述                                                         |
+| ------------------------ | ------------------------------------------------------------ |
+| qrtz_blob_triggers       | 以Blob 类型存储的触发器(自定义trigger)                       |
+| qrtz_calendars           | 存放日历信息， quartz可配置一个日历来指定一个时间范围        |
+| qrtz_cron_triggers       | 存放cron类型的触发器                                         |
+| qrtz_fired_triggers      | 存放已触发的触发器，执行完从表中删除记录                     |
+| qrtz_job_details         | 存放一个jobDetail信息                                        |
+| qrtz_locks               | 存储程序的悲观锁的信息，默认有2个锁：`STATE_ACCESS`-定期检查保证一个节点执行，`TRIGGER_ACCESS`-在TRIGGER被调度的时候，保证只有一个节点去执行调度 |
+| qrtz_paused_trigger_grps | 存放暂停掉的触发器                                           |
+| qrtz_scheduler_state     | 调度器状态，存储所有节点的scheduler，定期检查scheduler是否失效，启动多个scheduler，根据配置的quartz.properties中CHECKIN_INTERVAL的值来检查 |
+| qrtz_simple_triggers     | 简单触发器的信息(`TIMES_TRIGGERED`-已执行次数，默认为0，`REPEAT_COUNT`-总执行次数，当`TIMES_TRIGGERED>REPEAT_COUNT`时停止，执行完毕后删除此记录) |
+| qrtz_simprop_triggers    | 存储`CalendarIntervalTrigger`和`DailyTimeIntervalTrigger`两种类型的触发器 |
+| qrtz_triggers            | 触发器的基本信息                                             |
+
+>  相关表操作在类`StdJDBCDelegate`中，相关sql语句在`StdJDBCConstants`中
+>
+> cron用到的4张表：`qrtz_triggers`，`qrtz_cron_triggers`，`qrtz_fired_triggers`，`qrtz_job_details`
+
 ## 2.实践(QuartzJobBean)
 
 > 数据库脚本在quartz自带的包路径`org.quartz.impl.jdbcjobstore`下
