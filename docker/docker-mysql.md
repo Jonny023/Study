@@ -2,7 +2,7 @@
 
 ```shell
 docker exec -it mysql57 /bin/bash
-mysqldump -uroot -p123456 wmbi2_database > /usr/local/sql/xxx.sql
+mysqldump -uroot -p123456 database > /usr/local/sql/xxx.sql
 
 
 # 导入数据库
