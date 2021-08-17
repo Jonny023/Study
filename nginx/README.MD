@@ -20,3 +20,34 @@ location /admin {
     index  index.html;
 }
 ```
+
+# 软连接
+
+```bash
+
+ln -s /usr/local/nginx/sbin/nginx /usr/bin/nginx
+```
+
+# 重启
+
+```bash
+nginx -s reload
+```
+
+# 停止
+```bash
+# 快速退出
+nginx -s stop
+
+# 正常退出
+nginx -s quit
+```
+
+# 指定配置启动
+
+```bash
+nginx -t -c /usr/local/nginx/conf/nginx.conf
+nginx -c /usr/local/nginx/conf/nginx.conf
+```
+* -c 指定文件
+* -t 验证配置是否正确
