@@ -51,3 +51,4 @@ nginx -c /usr/local/nginx/conf/nginx.conf
 ```
 * -c 指定文件
 * -t 验证配置是否正确
+* -s 发送信号stop, quit, reopen, reload
