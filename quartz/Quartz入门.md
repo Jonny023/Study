@@ -284,6 +284,42 @@ scheduler.start();
 
 // 停止
 //scheduler.shutdown();
+
+
+
+
+//=====================================一个job对应多个trigger=======================================================
+// 调度器
+Scheduler scheduler = StdSchedulerFactory.getDefaultScheduler();
+ 
+// 任务实例
+JobDetail jobDetail = JobBuilder.newJob(HelloJob.class)
+        .withIdentity("helloJob", "helloGroup")
+        .storeDurably() // 一个job绑定多个Trigger必须配置durability，否则报错：Jobs added with no trigger must be durable.
+        .build();
+ 
+// 触发器
+Trigger trigger = TriggerBuilder
+        .newTrigger()
+        .forJob(jobDetail) // 必须配置
+        .withIdentity("cronTrigger", "group")
+        .withSchedule(CronScheduleBuilder.cronSchedule("0/5 * * * * ?"))
+        .build();
+ 
+// trigger名称能一样，group可以和其他的一样
+Trigger trigger1 = TriggerBuilder
+        .newTrigger()
+        .forJob(jobDetail) // 必须配置
+        .withIdentity("cronTrigger1", "group1")
+        .withSchedule(CronScheduleBuilder.cronSchedule("0/2 * * * * ?"))
+        .build();
+ 
+// 必须配置
+scheduler.addJob(jobDetail, false);
+ 
+scheduler.scheduleJob(trigger);
+scheduler.scheduleJob(trigger1);
+scheduler.start();
 ```
 
 
