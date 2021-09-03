@@ -15,9 +15,12 @@ public final class ProgressUtil {
     /**
      * @param molecular   分子
      * @param denominator 分母
-     * @return
+     * @return 10%
      */
     public static String calc(int molecular, int denominator) {
+        if (denominator == 0) {
+            return "0%";
+        }
         BigDecimal result = BigDecimal.valueOf(molecular).divide(BigDecimal.valueOf(denominator), 6, BigDecimal.ROUND_HALF_UP)
         .multiply(BigDecimal.valueOf(100))
                 .setScale(2, BigDecimal.ROUND_HALF_UP);
