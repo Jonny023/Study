@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>m3u8 video播放</title>
+    <style>
+        #video {
+            width: 500px;
+            height: 500px;
+        }
+    </style>
+</head>
+<body>
+<video id="video" controls="controls"></video>
+<script src="https://cdn.jsdelivr.net/hls.js/latest/hls.min.js"></script>
+<script>
+    if (Hls.isSupported()) {
+        var video = document.getElementById("video");
+        var hls = new Hls();
+        hls.loadSource("http://localhost/hls/1.m3u8");
+        hls.attachMedia(video);
+        hls.on(Hls.Events.MANIFEST_PASSED, function () {
+
+        });
+    }
+</script>
+</body>
+</html>
