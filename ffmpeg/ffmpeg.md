@@ -193,6 +193,14 @@ ffmpeg -r 30 -f dshow -i video="USB 视频设备" -vcodec h264 -max_delay 100 -f
 ffmpeg -thread_queue_size 512 -r 30 -f dshow -i video="USB 视频设备" -vcodec h264 -max_delay 100 -f flv -g 5 -b 700000 rtmp://localhost:1935/hls/1
 ```
 
+## 检测rtmp地址是否可用
+
+```shell
+ffprobe -v quiet -print_format json -show_streams rtmp://ns8.indexforce.com/home/mystream
+```
+
+
+
 ## 在线测试地址（能用的rtmp源）
 
 ```
