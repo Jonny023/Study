@@ -44,7 +44,7 @@ public class JsInterceptor implements HandlerInterceptor {
             log.warn("非法请求hm.js,si未注册域名,referer:{},si:{}", referer, si);
             return false;
         }
-        domain = domain.replaceAll("www.", "");
+        domain = domain.replace("http://", "").replace("https://", "").replace("www.", "");
         boolean result = referer.contains(domain);
         if (!result) {
             log.warn("非法请求hm.js,si注册域名与请求来源不一致,referer:{},si:{}", referer, si);
