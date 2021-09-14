@@ -218,3 +218,7 @@ public final class RegexUtil {
 
 }
 ```
+
+# 正则
+
+* 中文、字母大小写.-_ - `^([\\u4E00-\\uFA29]|[\\uE7C7-\\uE7F3]|[a-zA-Z0-9._-])*$`
