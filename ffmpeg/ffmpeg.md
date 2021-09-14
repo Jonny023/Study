@@ -193,18 +193,22 @@ ffmpeg -r 30 -f dshow -i video="USB 视频设备" -vcodec h264 -max_delay 100 -f
 ffmpeg -thread_queue_size 512 -r 30 -f dshow -i video="USB 视频设备" -vcodec h264 -max_delay 100 -f flv -g 5 -b 700000 rtmp://localhost:1935/hls/1
 ```
 
-## 检测rtmp地址是否可用
-
-```shell
-ffprobe -v quiet -print_format json -show_streams rtmp://ns8.indexforce.com/home/mystream
-```
-
-
-
 ## 在线测试地址（能用的rtmp源）
 
-```
+```properties
 rtsp://wowzaec2demo.streamlock.net/vod/mp4:BigBuckBunny_115k.mov
+
+# rtsp推流
+# 其它机器拉流
+ffmpeg -re -rtsp_transport tcp -i "rtsp://admin:a12345678@10.16.55.150:555//Streaming/Channels/1" -f flv -vcodec libx264 -vprofile baseline -acodec aac -ar 44100 -strict -2 -ac 1 -f flv -s 1280x720 -q 10 "rtmp://10.16.55.26:1935/live/1"
+
+# 截图
+# 直播每秒截1张图
+#-r 每秒提取的帧数
+#-vframes：指定抽取的帧数，如-vframes 120，指定抽取120张 -frames:v
+# -f image2 图片格式，这里为image2
+# %d 命名自增-1，-2
+ffmpeg -i "rtsp://user:password@ip/xxx live=1" -y -ss 0 -r 1 -frames:v 1 -f image2 c:/cut/temp/2026-%d.png
 ```
 
 ## ffmpeg实例参考
