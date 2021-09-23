@@ -98,3 +98,15 @@ public class RtmpValidTest {
 }
 ```
 
+```java
+String cmd = "ffprobe -v quiet -print_format json -show_streams " + streamAddress;
+try {
+    Runtime rt = Runtime.getRuntime();
+    Process proc = rt.exec(cmd);
+    return proc.waitFor() == 0;
+} catch (Throwable t) {
+    log.error("异常");
+}
+
+```
+
