@@ -17,5 +17,10 @@ ZoneId zoneId = ZoneId.systemDefault();
 ZonedDateTime zdt = localDateTime.atZone(zoneId);
 Date date = Date.from(zdt.toInstant());
 System.out.println(date);
+
+//localDateTime的0点和23点
+localDateTime.with(LocalTime.MIN);
+localDateTime.with(LocalTime.MAX);
+
 ```
 
