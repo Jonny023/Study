@@ -19,7 +19,7 @@ tar -zxvf jdk-8u161-linux-x64.tar.gz
 ```bash
 export JAVA_HOME=/usr/local/env/java/jdk1.8.0_161
 export PATH=$PATH:$JAVA_HOME/bin
-export CLASSPATH=.:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar 
+export CLASSPATH=.:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar
 ```
 
 * 应用配置
