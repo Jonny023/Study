@@ -29,5 +29,7 @@ INSERT INTO demo (id, name, create_time, update_time) VALUES(8, 'A', '2021-11-22
 ```sql 
 -- timestampdiff(minute, p1, p2) 计算分钟数
 SELECT t1.name, any_value(timestampdiff(minute,t1.create_time, t1.update_time)) as deal_time FROM demo t1 
-left join demo t2 on t1.id > t2.id and t1.name = t2.name group by t1.name, t1.id order by t1.create_time desc
+left join demo t2 on t1.id > t2.id and t1.name = t2.name group by t1.name, t1.id
+having count(1) < 10
+order by t1.create_time desc
 ```
