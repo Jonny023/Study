@@ -9,6 +9,8 @@ RUN mkdir -p /home/ffmpeg_log
 COPY test-1.0.jar app.jar
 COPY dist dist
 COPY config config
+ENV TZ=Asia/Shanghai
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 ENTRYPOINT [ "java", "-jar", "-Dspring.profiles.active=dev", "app.jar" ]
 ```
 

@@ -19,6 +19,8 @@ WORKDIR /home
 COPY test-1.0.jar app.jar
 COPY dist dist
 COPY config config
+ENV TZ=Asia/Shanghai
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 ENTRYPOINT [ "java", "-jar", "-Dspring.profiles.active=local", "app.jar" ]
 ```
 
@@ -45,6 +47,8 @@ docker run -itd --name test -p 8086:8086 -v /data/docker/volumes/images:/home/im
 ```dockerfile
 FROM java:8
 COPY test-1.0.jar app.jar
+ENV TZ=Asia/Shanghai
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 ENTRYPOINT [ "java", "-jar", "-Dspring.profiles.active=local", "app.jar" ]
 ```
 
@@ -72,4 +76,10 @@ docker run -d -p 8080:8080 -v /usr/local/upload:/usr/local/upload helloworld
 ```
 ps -ef | grep jps | awk '{print $1}'
 ```
+
+
+
+# 时区问题
+
+[参考地址](https://blog.csdn.net/Jarbein/article/details/103631718)
 
