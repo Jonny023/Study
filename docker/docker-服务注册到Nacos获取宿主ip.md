@@ -4,7 +4,7 @@
 
 ## 方式1
 
-> 直接在配置文件中配置`spring.cloud.nacos.preferred-networks`或者`spring.cloud.nacos.discovery.ip`指定ip，视版本而定
+> 直接在配置文件中配置`spring.cloud.inetutils.preferred-networks`或者`spring.cloud.nacos.discovery.ip`指定ip，视版本而定
 
 ```yaml
 spring:
