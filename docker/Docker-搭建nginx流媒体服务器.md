@@ -63,7 +63,7 @@ docker pull alqutami/rtmp-hls
 # 查看镜像
 docker images
 
-# 启动
+# 启动（基础命令）
 sudo docker run --restart=always -d --name rtmp -p 1935:1935 -p 8080:8080 -v /usr/local/nginx-rtmp/conf/nginx.conf:/etc/nginx/nginx.conf alqutami/rtmp-hls
 
 # 启动运行
@@ -97,7 +97,7 @@ docker ps -a
 
 ```shell
 # hls推流
-ffmpeg -re -i "rtsp://admin:daas1234@10.113.70.17/Streaming/Channels/101 live=1" -c copy -f flv rtmp://192.168.1.2:1935/show/1
+ffmpeg -re -i "rtsp://admin:1234@192.168.1.2/cam/realmonitor?channel=1&subtype=0 live=1" -c copy -f flv rtmp://192.168.1.2:1935/show/1
 
 # 播放地址
 http://192.168.1.2:808/hls/1.m3u8
@@ -108,7 +108,7 @@ http://192.168.1.2:808/hls/1.m3u8
 
 
 # live推流
-ffmpeg -re -i "rtsp://admin:daas1234@10.113.70.17/Streaming/Channels/101 live=1" -c copy -f flv rtmp://192.168.1.2:1935/live/1
+ffmpeg -re -i "rtsp://admin:1234@192.168.1.2/cam/realmonitor?channel=1&subtype=0 live=1" -c copy -f flv rtmp://192.168.1.2:1935/live/1
 
 # 播放
 vlc rtmp://192.168.1.2:1935/live/1
