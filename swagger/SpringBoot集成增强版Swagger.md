@@ -277,3 +277,7 @@ public class UserController {
 ![image|690x338](https://springboot.io/uploads/default/optimized/2X/b/b82455c45dffa074614491c3fa0a05b87b53ca2c_2_1035x507.png)
 
 ![image|690x338](https://springboot.io/uploads/default/optimized/2X/b/bced615525fea9d4b575ca9b934d50a1f10e7efe_2_1035x507.png) 
+
+## 1.context-path重复？
+
+> knife4j contextPath重复，用`2.0.6`版本会有这个bug，升级到`2.0.7+`即可解决

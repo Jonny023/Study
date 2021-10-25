@@ -52,6 +52,9 @@ docker cp xxx.sql mysql:/xxx.sql
 # 导入sql
 mysql -u username -p -D db < xxx.sql
 docker exec -i mysql57 mysql --default-character-set=utf8 -u root -p123456 -D shiro < db.sql
+
+# 查看日志
+docker logs -f -t --tail 200 mysql57
 ```
 
 # 时区

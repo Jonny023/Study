@@ -30,12 +30,18 @@ systemctl start docker
 systemctl stop docker
 ```
 
-### 5.开机启动
+#### 5.开机启动
 
 ```shell
 systemctl enable docker
 
 systemctl disable docker
+```
+
+#### 6.查看日志
+
+```
+docker logs -f -t --tail 行数 容器名/id
 ```
 
 
