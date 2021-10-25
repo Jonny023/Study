@@ -22,6 +22,7 @@ mkdir -p /data/docker/volumes/mysql/data
 
 # 运行docker
 docker run -itd --restart=always --name mysql57 -p 3306:3306 \
+-e TZ=Asia/Shanghai \
 --mount type=bind,src=/data/docker/volumes/mysql/conf,dst=/etc/mysql \
 --mount type=bind,src=/data/docker/volumes/mysql/data,dst=/var/lib/mysql \
 -e MYSQL_ROOT_PASSWORD=123456 mysql:5.7
@@ -53,3 +54,38 @@ mysql -u username -p -D db < xxx.sql
 docker exec -i mysql57 mysql --default-character-set=utf8 -u root -p123456 -D shiro < db.sql
 ```
 
+# 时区
+
+```shell
+# 进入容器
+docker exec -it mysql57 bash
+
+# 查看容器系统时间
+date -R
+
+# 连接mysql查看时区
+mysql -u root -p123456
+
+# 查看时区
+show variables like '%time_zone';
+
+# 查看时间
+select now();
+
+
+
+#==============时区相差8小时==========================
+# 方式1 启动参数添加:-e TZ=Asia/Shanghai
+-e TZ=Asia/Shanghai
+
+
+# 方式2 永久生效
+cp /usr/share/zoneinfo/PRC /etc/localtime
+# 或者【推荐】,软连接
+ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
+
+# 重启容器生效
+docker restart mysql5.7
+```
+
+[时区问题](cnblogs.com/shisanye/p/13926175.html)

@@ -76,6 +76,8 @@ sudo yum install -y yum-utils device-mapper-persistent-data lvm2
 
 ```shell
 sudo yum-config-manager --add-repo http://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo
+
+wget https://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo -O /etc/yum.repos.d/docker-ce.repo
 ```
 
 #### 5. 更新 yum 缓存
@@ -174,8 +176,34 @@ curl -sSL https://get.daocloud.io/daotools/set_mirror.sh | sh -s http://f1361db2
 
 在配置文件`/etc/docker/daemon.json`中添加如下数据，该文件不存在的话，则新建一个。其中中括号里就是加速镜像的地址。
 
-```properties
+```shell
 {
   "registry-mirrors": ["https://registry.docker-cn.com"]
 }
 ```
+
+## 加速配置
+
+* 创建目录
+
+```shell
+sudo mkdir -p /etc/docker
+```
+
+* 编辑文件
+
+```shell
+sudo tee /etc/docker/daemon.json <<-'EOF'
+{
+  "registry-mirrors": ["https://docker.mirrors.ustc.edu.cn", "https://ustc-edu-cn.mirror.aliyuncs.com","https://7uuu3esz.mirror.aliyuncs.com","https://780urbjd.mirror.aliyuncs.com"]
+}
+EOF
+```
+
+* 重启docker
+
+```shell
+sudo systemctl daemon-reload
+sudo systemctl restart docker
+```
+
