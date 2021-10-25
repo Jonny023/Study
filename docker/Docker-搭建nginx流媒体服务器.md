@@ -39,6 +39,14 @@ sudo kill -SIGHUP $(pidof dockerd)
 
 
 
+### nginx外部配置
+
+```properties
+
+```
+
+
+
 ### 安装推流模块`rtmp-hls`
 
 #### 查看完整信息
@@ -102,11 +110,6 @@ ffmpeg -re -i "rtsp://admin:1234@192.168.1.2/cam/realmonitor?channel=1&subtype=0
 # 播放地址
 http://192.168.1.2:808/hls/1.m3u8
 
-
-
-
-
-
 # live推流
 ffmpeg -re -i "rtsp://admin:1234@192.168.1.2/cam/realmonitor?channel=1&subtype=0 live=1" -c copy -f flv rtmp://192.168.1.2:1935/live/1
 
@@ -116,6 +119,18 @@ vlc rtmp://192.168.1.2:1935/live/1
 # live=1实时流
 ffplay "rtmp://192.168.1.2:1935/live/1 live=1"
 
+
+
+==============================================
+#hls推流
+ffmpeg -i rtmp://mobliestream.c3tv.com:554/live/goodtv.sdp -vcodec libx264 -f flv rtmp://192.168.56.101:1935/show/2
+# m3u8播放地址
+http://192.168.56.101:8080/hls/2.m3u8
+
+#live推流
+ffmpeg -i rtmp://mobliestream.c3tv.com:554/live/goodtv.sdp -vcodec libx264 -f flv rtmp://192.168.56.101:1935/live/2
+#播放
+rtmp://192.168.56.101:1935/live/2
 ```
 
 

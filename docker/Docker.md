@@ -72,5 +72,21 @@ docker run --restart=always containerID
 
 # 创建时未启动开机自启，通过更新
 docker update --restart=always containerID
+
+# 禁用开机重启
+docker update --restart=no my-container
+
+# 查看容器信息
+docker inspect containerID
+
+# 进入容器
+docker exec -it imageName bash
+docker exec -it containerID /bin/bash
+
+# 删除容器
+docker rm containerID
+
+# 删除镜像
+docker rmi imageID
 ```
 
