@@ -39,7 +39,7 @@
 
 ```yaml
 knife4j:
-  # 开启增强配置，此配置可配置ignoreParameters忽略参数
+  # 开启增强配置，此配置可配置ignoreParameters忽略参数，接口排序等
   enable: true
   # 开启生产环境屏蔽
   production: false
@@ -280,4 +280,32 @@ public class UserController {
 
 ## 1.context-path重复？
 
-> knife4j contextPath重复，用`2.0.6`版本会有这个bug，升级到`2.0.7+`即可解决
+> knife4j `contextPath`重复，用`2.0.6`版本会有这个bug，升级到`2.0.7+`即可解决
+
+## 2.接口排序
+
+> 需要启用增强功能
+
+```yaml
+knife4j:
+  enable: true
+```
+
+>  `@ApiSort`作用于控制器类上，越小越靠前；`@ApiOperationSupport(order = 1)`作用于控制器方法上，越小越靠前
+
+```java
+@ApiSort(1)
+@RestController
+@RequestMapping("/user")
+@Api(tags = "用户管理")
+public class UserController {
+    
+    @ApiOperationSupport(order = 1)
+    @ApiOperation(value = "列表")
+    @GetMapping("/list")
+    public Object index() {
+        return null;
+    }
+}
+```
+
