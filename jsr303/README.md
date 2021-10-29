@@ -334,7 +334,7 @@ public class EnumValidator implements ConstraintValidator<EnumValid, Object> {
                 for (Class<?> cl : clazz) {
                     if (cl.isEnum()) {
                         for (Object obj : cl.getEnumConstants()) {
-                            if (Objects.equals(value, cl.getMethod(method).invoke(obj, null))) {
+                            if (Objects.equals(value.toString(), cl.getMethod(method).invoke(obj))) {
                                 return true;
                             }
                         }
