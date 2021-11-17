@@ -219,6 +219,19 @@ public final class RegexUtil {
 }
 ```
 
+### 校验linux路径
+
+> 只能做简单的校验，校验：/、/a/b    反例：//a//b
+
+```java
+String regex = "^(((\\/(?! )[^/:*?<>\\\"\"|\\/]+)+\\/?)|(\\/)?)\\s*$";
+Pattern pattern = Pattern.compile(regex);
+String str = "/a（1）";
+boolean flag = pattern.matcher(str).find();
+```
+
+
+
 # 正则
 
 * 中文、字母大小写.-_ - `^([\\u4E00-\\uFA29]|[\\uE7C7-\\uE7F3]|[a-zA-Z0-9._-])*$`

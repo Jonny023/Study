@@ -215,3 +215,4 @@ ffmpeg -i "rtsp://user:password@ip/xxx live=1" -y -ss 0 -r 1 -frames:v 1 -f imag
 
 [参考](https://www.cxymm.net/article/qq_37059136/116737654)
 
+[参考2](http://www.itcast.cn/news/20201028/14185768757.shtml)

@@ -309,3 +309,8 @@ public class UserController {
 }
 ```
 
+## 3.response无字段说明
+
+* 返回类未声明范性
+* 数据封装过程中做了转换，被转换类和目标类的属性不一致，如：通过json字符转换为实体类，原本属性为`name`, 目标类为`label`
+

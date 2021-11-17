@@ -88,5 +88,8 @@ docker rm containerID
 
 # 删除镜像
 docker rmi imageID
+
+# 强制删除
+docker rmi -f imageID
 ```
 

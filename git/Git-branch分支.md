@@ -23,7 +23,7 @@ $ git pull
 
 ```
 
-# 切换分支
+## 切换分支
 
 ```bash
 # 切换到dev分支
@@ -45,3 +45,10 @@ git checkout dev
 删除分支名包含指定字符的分支：
 
 > git branch | grep 'dev*' | xargs git branch -d
+
+## 分支重命名
+
+```shell
+git remote rename origin xxx
+```
+
