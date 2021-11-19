@@ -1,4 +1,4 @@
-## 无法提交，错误提示
+> 无法提交，错误提示
 
 ```
 To https://github.com/Jonny023/Grails.git
@@ -15,7 +15,7 @@ hint: See the 'Note about fast-forwards' in 'git push --help' for details.
 
 * git上有东西没有更新下来
 
-## 解决办法，执行下面命令，再次提交即可
+>  解决办法，执行下面命令，再次提交即可
 
 ```shell
 git pull --rebase origin master
@@ -32,4 +32,17 @@ git remote show origin
 # 远程分支已经被删除，本地同步
 git remote prune origin
 ```
+
+### ssl错误
+
+> git操作提示SSL certificate problem
+> 需要关闭git的证书验证：
+
+```shell
+git config --global http.sslverify false
+```
+
+## github访问慢
+
+> 安装`fastgithub`
 
