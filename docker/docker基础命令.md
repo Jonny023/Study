@@ -170,6 +170,11 @@ docker import http://example.com/exampleimage.tgz example/imagerepo
 
 ### 导出导入
 
+* save会保存该镜像所有历史记录，export不会保留
+* save保存的是镜像，export导出的是容器
+* load载入镜像包，import载入容器包，导入最终为镜像
+* load不能对镜像重命名，import可以指定镜像项名称
+
 ```shell
 # 导出
 docker export 1e560fca3906 > nginx.tar
@@ -183,6 +188,27 @@ docker export containerId -o d.tar
 
 # 导出镜像
 docker image save container -o a.tar
+
+
+# 导出
+# 导出镜像
+docker save a3562aa0b991 > openjdk.tar openjdk
+docker save -o /usr/local/env/jdk.tar openjdk
+
+# 导入镜像
+docker load -i jdk.tar
+docker load < jdk.tar
+
+# 导出容器
+# 只能用容器id
+docker export -o portainer.tar 3205eeded8c9
+# 可以用名字或id
+docker export containerName/containerID > portainer.tar.gz
+
+# 导入容器
+# 导入成功在镜像列表多一个镜像，costom为tag
+docker import portainer.tar.gz portainer:custom
+cat portainer.tar.gz | docker import - portainer:v1
 ```
 
 # 查看容器环境变量
