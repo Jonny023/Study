@@ -1,5 +1,7 @@
 # HttpServletRequest输入里重复读
 
+## 多次读取
+
 ```java
 package com.wrapper;
 
@@ -124,5 +126,12 @@ public class RequestWrapper extends HttpServletRequestWrapper {
 }
 ```
 
+## 任意获取HttpServletRequest
 
+```java
+ServletRequestAttributes attributes = (ServletRequestAttributes)RequestContextHolder.getRequestAttributes();
+if (attributes != null) {
+    HttpServletRequest request = attributes.getRequest();
+}
+```
 
