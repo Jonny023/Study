@@ -55,8 +55,26 @@
 </mirror>
 <mirror>    
   <id>ibiblio</id>    
-  <mirrorOf>ibiblio</mirrorOf>    
+  <mirrorOf>central</mirrorOf>    
   <name>Human Readable Name for this Mirror.</name>    
   <url>http://mirrors.ibiblio.org/pub/mirrors/maven2/</url>    
 </mirror>
 ```
+
+
+
+# 验证
+
+```shell
+# 查看配置日志
+mvn help:effective-settings
+mvn help:system
+
+# 验证依赖是否存在
+mvn dependency:tree
+```
+
+# 公司私库无法拉取依赖
+
+* **在项目的pom.xml中单独声明`<repositories></repositories>`**
+
