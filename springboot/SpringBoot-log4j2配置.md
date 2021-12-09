@@ -74,3 +74,4 @@ logging:
 </configuration>
 ```
 
+[表达式地址](https://logging.apache.org/log4j/2.x/manual/layouts.html#Patterns)
