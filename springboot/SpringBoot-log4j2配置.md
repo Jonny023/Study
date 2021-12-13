@@ -74,4 +74,12 @@ logging:
 </configuration>
 ```
 
+## 获取异常所在类和行号
+
+```java
+StackTraceElement element = e.getStackTrace()[0];
+return String.format("%s:%d", element.getClassName(), element.getLineNumber());
+
+```
+
 [表达式地址](https://logging.apache.org/log4j/2.x/manual/layouts.html#Patterns)
