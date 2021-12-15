@@ -58,6 +58,10 @@ docker images
 
 # 删除镜像（删除前需停止容器）
 docker rmi 镜像id或镜像名称
+
+# 进入容器
+docker exec -it 容器id或名称 bash
+docker exec -it 容器id或名称 /bin/bash
 ```
 
 ## 2.网络
@@ -118,5 +122,22 @@ docker network connect bridge test:v1
 
 # 删除容器指定网络【删除bridge】
 docker network disconnect bridge test:v1
+```
+
+## 3.日志
+
+* 查看容器日志
+
+```shell
+docker logs 容器id
+```
+
+* 查看容器实时日志
+
+```shell
+docker logs -t -f --tail 100 容器id或name
+docker logs -t -f --tail=100 容器id或name
+docker logs -t -f -n=100 容器id或name
+docker logs -t -f -n 100 容器id或name
 ```
 

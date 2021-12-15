@@ -227,6 +227,9 @@ toYYYYMMDDhhmmss(now())
 
 -- 格式化为年月日小时
 formatDateTime(create_time,' %Y-%m-%d %H:00:00')
+
+-- 年月日
+toDate(create_time)
 ```
 
 ### ip函数(IPv4)
@@ -239,5 +242,37 @@ select * from table where IPv4NumToString(ip) like '10%';
 
 ```sql
 trimBoth(JSONExtractString(json,'mc_package','topic_id')) != ''
+```
+
+# 实战
+
+## 1.数据补全
+
+> 补全数据类型必须为`日期`或`数值`
+
+```sql
+-- 补全年月日
+select
+	toDate(event_time) as day,
+	count(1) as count
+from
+	demo where toDate(event_time) between '2021-07-01' and '2021-07-20'
+group by day order by day asc
+with fill
+from
+	toDate('2021-07-01') to toDate('2021-07-20') STEP dateDiff('day',
+    now(),
+    now() + INTERVAL 1 day)
+    
+-- 补全数值
+select
+	toUInt16(formatDateTime(event_time, '%Y')) as day,
+	count(1) as count
+from
+	demo where toDate(event_time) between '2021-06-01' and '2021-12-20'
+group by day order by day asc
+with fill
+from
+	1998 to 2021 STEP 1
 ```
 
