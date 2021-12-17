@@ -66,6 +66,17 @@ docker exec -it 容器id或名称 /bin/bash
 
 ## 2.网络
 
+> 使用不同网桥的容器是服务通信的
+
+| 模式             | 优点                                                         | 缺点                                                         |
+| ---------------- | ------------------------------------------------------------ | ------------------------------------------------------------ |
+| bridge(桥接模式) | 1.容器网络隔离                                               | 1.没有共有ip，和宿主机处于不同网段，安全性高<br>2.拥有独立的网络<br>3.网络传输效率低，因为需要主转发 |
+| host             | 1.直接使用宿主机的ip地址和外界进行通信，无需NAT转换<br>2.    | 1.缺少网络隔离，安全信较低<br>2.没有独立的网络<br>3.由于没有独立的网络，容器会与宿主竞争网络栈的使用 |
+| Container        | 1.多个容器共享同一个网络栈，容器间使用localhost高效快速通信【用于容器间的通信】<br>2.容器与宿主机及其他容器形成网络隔离<br>3.节约网络资源 | 1.没改善宿主机和容器间的通讯情况<br>2.和桥接一样，不能连接宿主机以外的其他设备 |
+| none             | 1.无法进行容器间的通信                                       | 1.没有任何网络环境<br>2.一旦使用只能使用loopback回环地址     |
+
+
+
 * 查看网络
 
 ```shell
@@ -93,6 +104,10 @@ bridge link show
 
 # 查看网络信息
 ifconfig 网桥name
+ip a show 网桥名称
+
+# 查看网桥网络详情
+docker network inspect my_net01
 
 # 使用指定网络【host模式】
 docker run -itd --net=my_net01 --name=test test:v1
@@ -139,5 +154,24 @@ docker logs -t -f --tail 100 容器id或name
 docker logs -t -f --tail=100 容器id或name
 docker logs -t -f -n=100 容器id或name
 docker logs -t -f -n 100 容器id或name
+```
+
+4.容器ip
+
+```shell
+# 获取指定容器的ip
+docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' container_name_or_id
+
+docker inspect 容器ID/name | grep IPAddress
+
+# 获取所有容器的ip
+docker inspect --format='{{.Name}} - {{range.NetworkSettings.Networks}}{{.IPAddress}}{{end}}' $(docker ps -aq)
+
+
+# 获取容器name
+docker inspect -f='{{.Name}}' $(sudo docker ps -a -q)
+
+# 获取容器ip/name/port
+docker inspect -f='{{.Name}} {{.NetworkSettings.IPAddress}} {{.HostConfig.PortBindings}}' $(docker ps -aq)
 ```
 
