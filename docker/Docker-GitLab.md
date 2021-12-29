@@ -14,10 +14,14 @@ docker pull gitlab/gitlab-ce
 docker run -d  -p 443:443 -p 80:80 -p 222:22 \
 --name gitlab \
 --privileged=true \
--e TZ=Asia/Shanghai \
+-e GITLAB_SKIP_UNMIGRATED_DATA_CHECK=true \
+--env GITLAB_OMNIBUS_CONFIG="external_url 'http://192.168.56.101'; gitlab_rails['lfs_enabled'] = true;" \
+-e 'GITLAB_TIMEZONE=Asia/Shanghai' -e 'TZ=Asia/Shanghai' \
+-e GITLAB_HOST=192.168.56.101 \
+-v /etc/localtime:/etc/localtime:ro \
 -v /usr/local/docker/gitlab/config:/etc/gitlab \
 -v /usr/local/docker/gitlab/logs:/var/log/gitlab \
--v /usr/local/docker/data:/var/opt/gitlab \
+-v /usr/local/docker/gitlab/data:/var/opt/gitlab \
 gitlab/gitlab-ce
 
 # --privileged=true 防止权限不足
@@ -26,6 +30,11 @@ gitlab/gitlab-ce
 # --name：命名容器名称
 # --restart always 后台运行
 # -v：将容器内数据文件夹或者日志、配置等文件夹挂载到宿主机指定目录
+
+# 公网访问
+--publish 198.168.100.1:443:443 \
+--publish 198.168.100.1:80:80 \
+--publish 198.168.100.1:22:22 \
 
 # 启用或停用开机自启
 docker update --restart=always containerId/Name
@@ -111,6 +120,32 @@ exit
 
 > 也可以登录web管理，右上角：头像-preferences-Password进行修改
 
+## 邮箱配置
+
+```shell
+gitlab_rails['smtp_enable'] = true
+gitlab_rails['smtp_address'] = "smtp.163.com"
+gitlab_rails['smtp_port'] = 25
+gitlab_rails['smtp_user_name'] = "XXX@163.com"
+gitlab_rails['smtp_password'] = "password"
+gitlab_rails['smtp_domain'] = "163.com"
+gitlab_rails['smtp_authentication'] = :login
+gitlab_rails['smtp_enable_starttls_auto'] = true
+gitlab_rails['gitlab_email_from'] = "XXX@163.com"
+user["git_user_email"] = "XXX@163.com"
+```
+
+### 刷新配置
+
+```shell
+# 进入容器
+docker exec -it gitlab bash
+# 刷新配置
+gitlab-ctl reconfigure
+```
+
+
+
 ## 内存不够用？
 
 > 解决方法: 将磁盘空间虚拟成内存使用
@@ -148,6 +183,3 @@ vim /etc/fstab
 # reboot重启
 reboot
 ```
-
-
-
