@@ -143,6 +143,6 @@ FROM openjdk:8-jdk-alpine
 ENV TZ=Asia/Shanghai
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 COPY target/hello-1.0.jar /home/app.jar
-ENTRYPOINT [ "java","-jar", "app.jar" ]
+ENTRYPOINT [ "java","-jar", "/home/app.jar" ]
 ```
 

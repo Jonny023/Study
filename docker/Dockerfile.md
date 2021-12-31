@@ -1,5 +1,7 @@
 # Dockerfile
 
+* **ADD和COPY都只能操作同级目录或子目录下的文件或目录，无法操作上级及其他绝对路径的目录**，反例：`ADD /home/xxx.jar /home/xxx.jar`
+
 ## 1.运行Dockerfile
 
 * `Dockerfile`文件
