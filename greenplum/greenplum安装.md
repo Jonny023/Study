@@ -47,8 +47,6 @@ docker run -itd -p 15432:15432 --name gpdb1 \
 --privileged \
 -v /opt/greenplum:/workspace \
 pivotaldata/gpdb-devel
-
-gpstart -m -d /workspace/gpdb/gpAux/gpdemo/datadirs/qddir/demoDataDir-1
 ```
 
 ## 3.进入容器
@@ -95,19 +93,19 @@ CREATE USER test WITH PASSWORD '123456' NOSUPERUSER;
 ## 8.添加到用户组
 
 ```sql
-# 创建角色
+-- 创建角色
 CREATE ROLE test_role;
 
-# 用户绑定角色
+-- 用户绑定角色
 GRANT test_role TO dba,test;
 
-# 查看用户角色信息
+-- 查看用户角色信息
 \du
 
-# 查看db版本
+-- 查看db版本
 select * from version();
 
-# 取消超管
+-- 取消超管
 alter role dba nosuperuser;
 ```
 

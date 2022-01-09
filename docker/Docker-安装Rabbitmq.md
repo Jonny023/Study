@@ -46,6 +46,20 @@ rabbitmqctl set_user_tags admin administrator
 rabbitmqctl set_permissions -p / admin "." "." ".*"
 ```
 
+## 查看用户列表
+
+```shell
+rabbitmqctl list_users
+```
+
+## 	查看版本
+
+```shell
+rabbitmqctl list_users
+```
+
+
+
 ## 端口
 
 > 默认用户名和密码为`guest`，不支持远程连接
