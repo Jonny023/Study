@@ -1,5 +1,7 @@
 # greenplum安装【projectairws/greenplum】
 
+[官方文档](https://cn.greenplum.org/docs/)
+
 > 镜像大小1.4+GB，版本：PostgreSQL 9.4.24 (Greenplum Database 6.13.0 build commit:4f1adf8e247a9685c19ea02bcaddfdc200937ecd Open Source) on x86_64-unknown-linux-gnu, compiled by gcc (GCC) 6.4.0, 64-bit compiled on Dec 18 2020 22:31:16
 
 ## 1.拉取镜像
