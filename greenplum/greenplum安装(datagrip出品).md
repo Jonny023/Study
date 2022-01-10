@@ -1,4 +1,4 @@
-# greenplum安装【datagrop】
+# greenplum安装【datagrip】
 
 > 版本：PostgreSQL 8.2.15 (Greenplum Database 4.3.7.1 build 1) on x86_64-unknown-linux-gnu, compiled by GCC gcc (GCC) 4.4.2 compiled on Jan 21 2016 15:51:02
 
