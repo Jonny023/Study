@@ -1,8 +1,10 @@
-# greenplum安装
+# greenplum安装(pivotaldata/gpdb-devel)
 
 [参考1](https://my.oschina.net/xiaozhublog/blog/2249525)
 
 [参考2【重点】]([https://www.xswsym.online/pages/cf1834/#_9-%E9%87%8D%E5%90%AF%E5%AE%B9%E5%99%A8](https://www.xswsym.online/pages/cf1834/#_9-重启容器))
+
+> 镜像大小上G
 
 ## 1.拉取镜像
 
@@ -106,7 +108,7 @@ GRANT test_role TO dba,test;
 select * from version();
 
 -- 取消超管
-alter role dba nosuperuser;
+alter role dba superuser;
 ```
 
 ## 9.启用远程访问

@@ -1,55 +1,55 @@
-# greenplum安装【datagrip】
+# greenplum安装【projectairws/greenplum】
 
-> 镜像大小为几百兆，版本：PostgreSQL 8.2.15 (Greenplum Database 4.3.7.1 build 1) on x86_64-unknown-linux-gnu, compiled by GCC gcc (GCC) 4.4.2 compiled on Jan 21 2016 15:51:02
+> 镜像大小1.4+GB，版本：PostgreSQL 9.4.24 (Greenplum Database 6.13.0 build commit:4f1adf8e247a9685c19ea02bcaddfdc200937ecd Open Source) on x86_64-unknown-linux-gnu, compiled by gcc (GCC) 6.4.0, 64-bit compiled on Dec 18 2020 22:31:16
 
 ## 1.拉取镜像
 
 ```shell
-docker pull datagrip/greenplum
+docker pull projectairws/greenplum:latest
 ```
 
 ## 2.运行
 
 ```shell
-mkdir -p /usr/local/greenplum/log
+mkdir -p /opt/greenplum/log
 
 # 临时运行一个容器
-docker run -itd -p 5432:5432 --name gpdb0 \
+docker run -itd -p 5432:5432 --name gpdb1 \
 -e TZ=Asia/Shanghai \
-datagrip/greenplum
+projectairws/greenplum
 
 # 查看日志，待启动完成后考到Database successfully started再执行下面的
-docker logs -f gpdb0
+docker logs -f gpdb1
 
 # 拷贝配置
-docker cp gpdb0:/gpdata /usr/local/greenplum
+docker cp gpdb1:/gpdata /opt/greenplum
 
 # 查看是否存在postmaster.pid，如果不存在则无法启动
-ll /usr/local/greenplum/gpdata/master/gpseg-1
+ll /opt/greenplum/gpdata/master/gpseg-1
 
 # 查看启动日志
-cat /usr/local/greenplum/gpdata/master/gpseg-1/pg_log/startup.log
+cat /opt/greenplum/gpdata/master/gpseg-1/pg_log/startup.log
 
 # 删除镜像
-docker rm -f gpdb0
+docker rm -f gpdb1
 
 # 修改目录权限【权限必须是这些，修改就了就gg】
-chown 500 -R /usr/local/greenplum/{gpdata,log}
-chmod 0700 -R /usr/local/greenplum/{gpdata,log}
+chown 1000 -R /opt/greenplum/{gpdata,log}
+chmod 0700 -R /opt/greenplum/{gpdata,log}
 
 # 持久化配置
-docker run -itd -p 5432:5432 --name gpdb0 \
+docker run -itd -p 5432:5432 --name gpdb1 \
 -e TZ=Asia/Shanghai \
 --privileged=true \
--v /usr/local/greenplum/gpdata:/gpdata \
--v /usr/local/greenplum/log:/home/gpadmin/gpAdminLogs \
-datagrip/greenplum
+-v /opt/greenplum/gpdata:/gpdata \
+-v /opt/greenplum/log:/home/gpadmin/gpAdminLogs \
+projectairws/greenplum
 ```
 
 ## 3.进入容器
 
 ```shell
-docker exec -it gpdb0 bash
+docker exec -it gpdb1 bash
 ```
 
 ## 4.切换用户
@@ -63,7 +63,7 @@ source ~/.bash_profile
 
 ## 5.创建用户
 
-> 创建一个数据库`dba`用户，密码设置为`123456`，输入两次密码
+> 创建一个数据库dba用户，密码设置为123456，输入两次密码
 
 ```
 createuser -P dba
@@ -84,7 +84,7 @@ help
 
 ## 7.用户
 
-> 默认用户名: `gpadmin` 密码: `pivotal`
+> 默认用户名: `gpadmin` 密码: `gpadmin`
 
 ```sql
 CREATE USER test WITH PASSWORD '123456' NOSUPERUSER;
@@ -117,7 +117,7 @@ alter role dba superuser;
 
 ## 9.远程访问
 
-> 进入容器内部，切换至用户：pgadmin，默认是启动远程访问的，若虚修改在容器内部路径：`/gpdata/master/gpseg-1`，物理机就是：`/usr/local/greenplum/gpdata/master/gpseg-1`下的`pg_hba.conf`
+> 进入容器内部，切换至用户：pgadmin，默认是启动远程访问的，若虚修改在容器内部路径：`/gpdata/master/gpseg-1`，物理机就是：`/opt/greenplum/gpdata/master/gpseg-1`下的`pg_hba.conf`
 
 ```shell
 cd /gpdata/master/gpseg-1
@@ -135,8 +135,8 @@ gpstop -r
 gpstart
 gpstart -a
 
-docker restart gpdb0
-docker exec -it gpdb0 bash
+docker restart gpdb1
+docker exec -it gpdb1 bash
 su gpadmin
 ```
 
@@ -151,3 +151,4 @@ psql -h localhost -U dba -d demo
 ```sql
 alter user test password '1234561';
 ```
+

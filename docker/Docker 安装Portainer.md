@@ -9,7 +9,7 @@ docker search portainer
 * 下载选定的Portainer镜像，这里我们选择下载量最多的官方镜像，如果未指定版本则默认为最新版本，`latest`版本
 
 ```shell
-docker pull portainer/portainer
+docker pull portainer/portainer:latest
 ```
 
 运行镜像
