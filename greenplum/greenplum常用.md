@@ -68,6 +68,9 @@ drop schema test cascade;
 
 -- 选择schema
 set search_path to '_schema,public';
+
+-- 查看所有schema
+select * from information_schema.schemata;
 ```
 
 
