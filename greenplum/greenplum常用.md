@@ -1,6 +1,6 @@
 # greenplum常用
 
-> 数据库、模式、表名 "identities"."Test"."tab_test"
+> 关系：数据库(database).模式(schema).表名(table)  例如：demo.test.user，demo为数据库，test为模式也即schema，user为用户表
 
 ## 库
 
