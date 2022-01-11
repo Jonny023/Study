@@ -123,6 +123,13 @@ CREATE TABLE public.test (
 	CONSTRAINT pk_test_id PRIMARY KEY (id)
 )
 DISTRIBUTED BY (id);
+
+
+-- 创建主键自增表2【推荐】
+CREATE TABLE public.test (
+	id serial PRIMARY KEY,
+	name varchar(20) NOT NULL
+)
 ```
 
 ### 查看表
