@@ -69,8 +69,17 @@ drop schema test cascade;
 -- 选择schema
 set search_path to '_schema,public';
 
+-- 查看当前schema
+select current_schema();
+
 -- 查看所有schema
 select * from information_schema.schemata;
+
+\dn
+\dn+
+
+-- 赋权
+grant all on SCHEMA tran to public;
 ```
 
 
@@ -105,15 +114,32 @@ CREATE TABLE test.user1 (
 	create_time timestamp NULL,
 	CONSTRAINT user1_pkey PRIMARY KEY (id)
 )
+
+
+-- 创建主键自增表【推荐】
+CREATE TABLE public.test (
+	id serial NOT NULL,
+	name varchar(20) NOT NULL,
+	CONSTRAINT pk_test_id PRIMARY KEY (id)
+)
+DISTRIBUTED BY (id);
 ```
 
 ### 查看表
 
 ```sql
-\l
-\l+
--- 查看test库下的表
+-- 查看test模式（schema）下的表
 SELECT table_name FROM information_schema.tables WHERE table_schema = 'test';
+
+-- 命令行查看表，必须选择schema
+SET search_path= test;
+\dt
+
+-- 查看表结构
+\d user;
+
+-- 查看建表语句
+pg_dump -st test.user demo
 ```
 
 ### 添加表备注
