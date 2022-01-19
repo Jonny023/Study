@@ -20,3 +20,25 @@ reboot
 shutdown -r now
 ```
 
+## 查看端口
+
+### netstat
+
+```shell
+netstat -tunlp | grep 8080
+```
+
+### ss
+
+```shell
+ss -tunlp | grep 8080
+```
+
+### lsof
+
+> 第三方组件，需要安装：yum install -y lsof
+
+```shell
+lsof -i:8080
+```
+
