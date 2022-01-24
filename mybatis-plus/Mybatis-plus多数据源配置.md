@@ -46,6 +46,9 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
+import com.baomidou.mybatisplus.annotation.DbType;
+import com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor;
+import com.baomidou.mybatisplus.extension.plugins.inner.PaginationInnerInterceptor;
 
 import javax.sql.DataSource;
 
@@ -78,6 +81,12 @@ public class MasterDataSourceConfig {
         final MybatisSqlSessionFactoryBean sessionFactory = new MybatisSqlSessionFactoryBean();
         sessionFactory.setDataSource(masterDataSource);
         sessionFactory.setMapperLocations(new PathMatchingResourcePatternResolver().getResources(MasterDataSourceConfig.MAPPER_LOCATION));
+        
+        //分页
+        MybatisPlusInterceptor interceptor = new MybatisPlusInterceptor();
+        interceptor.addInnerInter(new PaginationInnerInterceptor(DbType.MYSQL));
+        sessionFactory.setPlugins(interceptor);
+        
         return sessionFactory.getObject();
     }
 
@@ -105,6 +114,9 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
+import com.baomidou.mybatisplus.annotation.DbType;
+import com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor;
+import com.baomidou.mybatisplus.extension.plugins.inner.PaginationInnerInterceptor;
 
 import javax.sql.DataSource;
 
@@ -134,6 +146,10 @@ public class SlaveDataSourceConfig {
         final MybatisSqlSessionFactoryBean sessionFactory = new MybatisSqlSessionFactoryBean();
         sessionFactory.setDataSource(slaveDataSource);
         sessionFactory.setMapperLocations(new PathMatchingResourcePatternResolver().getResources(SlaveDataSourceConfig.MAPPER_LOCATION));
+        //分页
+        MybatisPlusInterceptor interceptor = new MybatisPlusInterceptor();
+        interceptor.addInnerInter(new PaginationInnerInterceptor(DbType.MYSQL));
+        sessionFactory.setPlugins(interceptor);
         return sessionFactory.getObject();
     }
 }
@@ -148,4 +164,13 @@ public class SlaveDataSourceConfig {
     ```
 
     
+
+* 多数据源分页无效？
+
+```java
+//分页
+MybatisPlusInterceptor interceptor = new MybatisPlusInterceptor();
+interceptor.addInnerInter(new PaginationInnerInterceptor(DbType.MYSQL));
+sessionFactory.setPlugins(interceptor);
+```
 
