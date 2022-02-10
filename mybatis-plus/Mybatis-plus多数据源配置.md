@@ -1,5 +1,15 @@
 # Mybatis-plus多数据源配置
 
+> 依赖
+
+```xml
+<dependency>
+   <groupId>com.baomidou</groupId>
+   <artifactId>mybatis-plus-boot-starter</artifactId>
+   <version>3.5.1</version>
+</dependency>
+```
+
 ## 1.yaml配置
 
 ```yaml
