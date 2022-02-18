@@ -266,3 +266,20 @@ implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransfor
 
 > Could not resolve dependencies for project，多模块打包找不到依赖，需要先将被依赖的模块`install`到本地，再执行`package`打包
 
+### 作用于
+
+> 打包时，如果依赖的scope为test,provided时不会被打包到jar中
+
+compile: 无论是多模块还是直接依赖打包都会存在
+
+多模块：
+
+* 若父工程依赖的scope作用域为test,runtime，则不能向下传递，也就是说子模块在打包时无法引用父工程依赖的Java类
+* provided: 在打包时会移除，父工程引入了，子工程可以测试运行
+
+非多模块：
+
+* provided: 打包后包里面存在jar依赖文件，只是描述文件`MANIFEST.MF`中移除掉了
+
+* test/runtime: 在类中都无法引用，编译无法通过
+

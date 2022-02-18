@@ -93,3 +93,24 @@ docker rmi imageID
 docker rmi -f imageID
 ```
 
+### 查看docker信息
+
+```shell
+# 查看docker配置信息
+dokcer system info
+
+# 查看镜像、容器、数据卷占用磁盘信息
+docker system df
+
+# 详细信息
+docker system df -v
+
+# 查看docker实时日志
+docker system events
+
+# docker清理(清理停止的容器，没用容器使用的网络，镜像，缓存)
+docker system prune
+# 深度清理(清理所有停止的容器，未使用的数据卷和网络，镜像)
+docker system prune -a
+```
+
