@@ -1,10 +1,10 @@
 ## 常用数据库jdbc url
 
-> 凡是手动创建的示例，而不是交给spring类似框架管理的，都需要手动关闭连接，如手动创建DruidDataSource，直接调用，需要关闭连接
+> 凡是手动创建的示例，而不是交给spring类似框架管理的，都需要手动关闭连接，如手动创建DruidDataSource，直接调用，需要手动调用关闭连接
 
 ### postgresql
 
-> pom.xml
+* 驱动`org.postgresql.Driver`
 
 ```xml
 <dependency>
@@ -38,6 +38,10 @@ statement.close();
 
 ### mysql
 
+* 驱动
+  * 5.5+ `com.mysql.jdbc.Driver`
+  * 8.0+ `com.mysql.cj.jdbc.Driver`
+
 ```xml
 <dependency>
     <groupId>mysql</groupId>
@@ -69,6 +73,8 @@ statement.close();
 
 ### oracle
 
+* 驱动`oracle.jdbc.driver.OracleDriver`
+
 * 切换schema: `alter session set current_schema=test`
 * 获取当前模式：`SELECT sys_context('USERENV', 'CURRENT_SCHEMA') FROM dual;`
 
@@ -98,5 +104,35 @@ while (resultSet.next()) {
 connection.close();
 resultSet.close();
 statement.close();
+```
+
+### sqlserver(mssql)
+
+* 驱动`com.microsoft.sqlserver.jdbc.SQLServerDriver`
+
+```xml
+<dependency>
+    <groupId>com.microsoft.sqlserver</groupId>
+    <artifactId>sqljdbc4</artifactId>
+    <version>4.0</version>
+</dependency>
+```
+
+```java
+//sqlserver
+String url = "jdbc:sqlserver://localhost:1433;databaseName=test";
+String username = "sa";
+String password = "123456";
+Connection connection = DriverManager.getConnection(url, username, password);
+Statement statement = connection.createStatement();
+String sql = "SELECT * FROM student";
+ResultSet resultSet = statement.executeQuery(sql);
+while (resultSet.next()) {
+
+    int id = resultSet.getInt("id");
+    String v = resultSet.getString("stu_name");
+    int age = resultSet.getInt("age");
+    System.out.println("id:" + id + ", value: " + v + ", type: " + age);
+}
 ```
 
