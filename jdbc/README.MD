@@ -1,0 +1,91 @@
+## 常用数据库jdbc url
+
+### postgresql
+
+> pom.xml
+
+```xml
+<dependency>
+    <groupId>org.postgresql</groupId>
+    <artifactId>postgresql</artifactId>
+    <version>42.3.1</version>
+</dependency>
+```
+
+```java
+String url = "jdbc:postgresql://localhost:5432/dev?ssl=false&currentSchema=test";
+String username = "gpadmin";
+String password = "gpadmin";
+Connection connection = DriverManager.getConnection(url, username, password);
+Statement statement = connection.createStatement();
+String sql = "SELECT id, (total::float8 * 3) as total FROM test.kpi";
+ResultSet resultSet = statement.executeQuery(sql);
+while (resultSet.next()) {
+    //Long id = resultSet.getLong(1);
+    //double v = resultSet.getDouble(2);
+
+    Long id = resultSet.getLong("id");
+    //double v = resultSet.getDouble("total");
+    Float v = resultSet.getFloat("total");
+    System.out.println("id:" + id + ", value: " + v);
+}
+```
+
+### mysql
+
+```xml
+<dependency>
+    <groupId>mysql</groupId>
+    <artifactId>mysql-connector-java</artifactId>
+    <version>5.1.49</version>
+</dependency>
+```
+
+```java
+String url = "jdbc:mysql://localhost:3306/test?useUnicode=true&characterEncoding=utf8&autoReconnect=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=Asia/Shanghai&useSSL=false&allowMultiQueries=true";
+
+String username = "root";
+String password = "123456";
+Connection connection = DriverManager.getConnection(url, username, password);
+Statement statement = connection.createStatement();
+String sql = "SELECT * FROM test";
+ResultSet resultSet = statement.executeQuery(sql);
+while (resultSet.next()) {
+
+    int id = resultSet.getInt("id");
+    String v = resultSet.getString("name");
+    String type = resultSet.getString("type");
+    System.out.println("id:" + id + ", value: " + v + ", type: " + type);
+}
+```
+
+### oracle
+
+* 切换schema: `alter session set current_schema=test`
+* 获取当前模式：`SELECT sys_context('USERENV', 'CURRENT_SCHEMA') FROM dual;`
+
+```xml
+ <dependency>
+     <groupId>cn.guoyukun.jdbc</groupId>
+     <artifactId>oracle-ojdbc6</artifactId>
+     <version>11.2.0.3.0</version>
+</dependency>
+```
+
+```java
+String url = "jdbc:oracle:thin:@//localhost:1521/helowin";
+String username = "system";
+String password = "system";
+Connection connection = DriverManager.getConnection(url, username, password);
+Statement statement = connection.createStatement();
+String sql = "SELECT * FROM XX.DEMO";
+ResultSet resultSet = statement.executeQuery(sql);
+while (resultSet.next()) {
+
+    int id = resultSet.getInt("ID");
+    String name = resultSet.getString("NAME");
+    String age = resultSet.getString("AGE");
+    System.out.println("id:" + id + ", value: " + name + ", type: " + age);
+}
+```
+
