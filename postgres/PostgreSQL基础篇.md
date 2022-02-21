@@ -1,6 +1,4 @@
-# PostgreSQL基础篇】
-
-### 
+# PostgreSQL基础篇
 
 * 查看数据存放路径
 
