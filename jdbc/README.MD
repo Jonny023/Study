@@ -1,5 +1,7 @@
 ## 常用数据库jdbc url
 
+> 凡是手动创建的示例，而不是交给spring类似框架管理的，都需要手动关闭连接，如手动创建DruidDataSource，直接调用，需要关闭连接
+
 ### postgresql
 
 > pom.xml
@@ -29,6 +31,9 @@ while (resultSet.next()) {
     Float v = resultSet.getFloat("total");
     System.out.println("id:" + id + ", value: " + v);
 }
+connection.close();
+resultSet.close();
+statement.close();
 ```
 
 ### mysql
@@ -57,6 +62,9 @@ while (resultSet.next()) {
     String type = resultSet.getString("type");
     System.out.println("id:" + id + ", value: " + v + ", type: " + type);
 }
+connection.close();
+resultSet.close();
+statement.close();
 ```
 
 ### oracle
@@ -87,5 +95,8 @@ while (resultSet.next()) {
     String age = resultSet.getString("AGE");
     System.out.println("id:" + id + ", value: " + name + ", type: " + age);
 }
+connection.close();
+resultSet.close();
+statement.close();
 ```
 
