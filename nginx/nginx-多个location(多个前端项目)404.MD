@@ -4,7 +4,7 @@
 
 ### 原配置（不生效）
 
-```properties
+```nginx
 location /pc/ {
       root   /data/html/pc/; 
       index  index.html index.html; 
@@ -21,7 +21,7 @@ location /h5/ {
 
 #### 1.取消root目录重复值
 
-```properties
+```nginx
 location /pc/ {
       root   /data/html/; 
       index  index.html index.html; 
@@ -32,7 +32,7 @@ location /pc/ {
 
 > location如果一个特定的url 要使用别名，不能用root，alias指定的目录是准确的，root是指定目录的上级目录，改动后即可以使用了【url和目录名不一样】
 
-```properties
+```nginx
 location /pc/ {
   alias /data/html/pc/; 
   index  index.html index.htm; 
@@ -40,3 +40,4 @@ location /pc/ {
 ```
 
 #### 3.配置多个server
+

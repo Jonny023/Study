@@ -6,13 +6,13 @@
 
 * 此时在nginx的配置文件下的location配置下面添加一句
 
-```
+```nginx
 proxy_set_header Host jonny023.github.io;
 ```
 
 ## 注意知道对不对，如果不对请来砍我
 
-```
+```nginx
 server {
 	listen 80;
 	server_name blog.first-blood.cn;
@@ -52,3 +52,4 @@ server {
 	}
 }
 ```
+

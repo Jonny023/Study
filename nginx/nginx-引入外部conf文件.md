@@ -1,6 +1,6 @@
 * nginx.conf中
 
-```bash
+```nginx
 http {
     include ../custom_conf/my.conf;
 }

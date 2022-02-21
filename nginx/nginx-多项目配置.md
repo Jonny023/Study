@@ -1,4 +1,4 @@
-```bash
+```nginx
 server {
     listen 80;
     server_name www.a.com;     

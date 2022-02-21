@@ -1,6 +1,6 @@
 * 映射`apk`下载
 
-```bash
+```nginx
 <!--进入配置文件编辑模式-->
 vim conf/nginx.conf
 

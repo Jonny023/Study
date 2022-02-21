@@ -2,7 +2,7 @@
 
 ### 配置
 
-```properties
+```nginx
 server{
    listen 80;
    server_name static.a.com;

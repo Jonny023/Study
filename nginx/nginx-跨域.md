@@ -2,7 +2,7 @@
 
 > 跨域核心配置：`add_header Access-Control-Allow-Origin *;`
 
-```properties
+```nginx
 server {
 
     listen       80;

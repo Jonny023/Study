@@ -10,7 +10,7 @@
 
 * 修改nginx.conf文件
 
-```
+```nginx
 http {
 	
     upstream local {

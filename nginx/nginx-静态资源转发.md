@@ -1,6 +1,6 @@
 * 映射
 
-```
+```nginx
 server {
     listen       80;
     server_name  localhost;

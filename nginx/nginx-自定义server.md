@@ -19,7 +19,7 @@ server:
 
 > nginx代理后，想直接获取上面配置的server
 
-```properties
+```nginx
 http {
 	
 	#隐藏nginx版本号

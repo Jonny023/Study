@@ -2,7 +2,7 @@
 
 > 如访问/hello.html的时候，$uri代表的就是hello.html
 
-```groovy
+```nginx
 location / {
     root html;
     index index.html index.htm;

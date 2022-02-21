@@ -5,7 +5,7 @@ location下面的root只能配置一个，其他的配置为alias
 ```
 
 * nginx
-```
+```nginx
 location / {
     root   /test;
     # vue防止路由丢失，浏览器刷新地址丢失，访问不到页面
