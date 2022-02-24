@@ -76,3 +76,15 @@ docker restart kafka
 /opt/kafka/bin/kafka-topics.sh --zookeeper localhost:2181 --alter --partitions 3 --topic topicname
 ```
 
+## 6.查看日志
+
+```sh
+docker logs kafka
+
+# 实时查看
+docker logs kafka -f --tail 200
+
+# 实时查看日志和行号
+docker logs kafka -f --tail 200 | nl
+```
+
