@@ -82,6 +82,9 @@ show warnings;
   * `smallint(n)` 2字节
   * `int(n)` 4字节
   * `bigint(n)` 8字节
+  * `float(n)` 4字节
+  * `double(n)` 8字节
+  * `decimal(M,D)` 如果M>D，为M+2，否则为D+2
 * 时间类型
   * `date(n)` 3字节
   * `timestamp(n)` 4字节
