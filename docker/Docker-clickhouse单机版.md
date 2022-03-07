@@ -74,7 +74,7 @@ PASSWORD=$(base64 < /dev/urandom | head -c8); echo "$PASSWORD"; echo -n "$PASSWO
 * -e TZ=Asia/Shanghai 指定时区，默认为UTC，少8小时，国内用的都是东八区`UTC+8`=`AsiaShanghai`
 * --restart=always 开机自启
 
-> 容器启动后想要设置开机自启：`docker update --restart=always 容器id/name `，关闭：将always改成no
+> 容器启动后想要设置开机自启：`docker update --restart=always 容器id/name `，关闭：将always改成no，8123是http端口，9000为tcp端口
 
 ```shell
 docker run -itd --name ck-server \
@@ -368,4 +368,6 @@ chown -R 101 /opt/clickhouse/data
 chown -R 101 /opt/clickhouse/config
 chown -R 101 /opt/clickhouse/log
 ```
+
+# [docker集群部署](https://www.cnblogs.com/EminemJK/p/15138536.html)
 

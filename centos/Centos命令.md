@@ -42,3 +42,17 @@ ss -tunlp | grep 8080
 lsof -i:8080
 ```
 
+## 磁盘占用空间
+
+### 系统
+
+```sh
+lsblk
+```
+
+### docker 
+
+```sh
+docker system df
+```
+
