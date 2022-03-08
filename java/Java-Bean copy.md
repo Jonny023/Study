@@ -1,5 +1,91 @@
 # 对象copy
 
+### 方式1【速度快】
+
+```java
+package com.example.springbootsentinel.utils;
+
+import org.springframework.cglib.beans.BeanCopier;
+import org.springframework.util.CollectionUtils;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.function.Supplier;
+
+/**
+ * 对象拷贝工具类
+ * 属性类型必须一致，可以通过自定义转换处理是否转换
+ */
+public class Convertor {
+
+    /**
+     * BeanCopier的缓存
+     */
+    static final ConcurrentHashMap<String, BeanCopier> CACHE = new ConcurrentHashMap<>();
+
+    private static BeanCopier getInstance(Object source, Object target) {
+        String key = genKey(source.getClass(), target.getClass());
+        BeanCopier beanCopier;
+        if (CACHE.containsKey(key)) {
+            beanCopier = CACHE.get(key);
+        } else {
+            beanCopier = BeanCopier.create(source.getClass(), target.getClass(), false);
+            CACHE.put(key, beanCopier);
+        }
+        return beanCopier;
+    }
+
+    /**
+     * 对象拷贝
+     *
+     * @param source       源对象
+     * @param destSupplier 目标对象：User::new
+     * @return
+     */
+    private static <T1, T2> T2 copy(T1 source, Supplier<T2> destSupplier) {
+        if (source == null || destSupplier == null) {
+            return null;
+        }
+        T2 target = destSupplier.get();
+        BeanCopier copier = getInstance(source, target);
+        copier.copy(source, target, null);
+        return target;
+    }
+
+    private static <T2, T1> List<T2> copyList(List<T1> source, Class<T2> targetClass) {
+        if (CollectionUtils.isEmpty(source)) {
+            return Collections.emptyList();
+        }
+        List<T2> resultList = new ArrayList<>();
+        try {
+            T2 target = targetClass.newInstance();
+            for (T1 t1 : source) {
+                resultList.add(copy(t1, () -> target));
+            }
+        } catch (InstantiationException | IllegalAccessException e) {
+            e.printStackTrace();
+        }
+
+        return resultList;
+    }
+
+    /**
+     * 生成key
+     *
+     * @param srcClazz 源文件的class
+     * @param tgtClazz 目标文件的class
+     * @return string
+     */
+    private static String genKey(Class<?> srcClazz, Class<?> tgtClazz) {
+        return srcClazz.getName() + tgtClazz.getName();
+    }
+}
+```
+
+### 方式2
+
 * 函数式接口
 ```java
 package com.common.util;
