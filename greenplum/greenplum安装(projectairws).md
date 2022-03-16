@@ -57,6 +57,9 @@ docker exec -it gpdb1 bash
 ## 4.切换用户
 
 ```shell
+# su - gpadmin会使环境生效
+su - gpadmin
+
 su gpadmin
 
 # 想要执行命令，运行一次

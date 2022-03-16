@@ -25,6 +25,9 @@ pivotaldata/gpdb-devel
 # 进入容器
 docker exec -it gpdb1 bash
 
+# su - gpadmin会使环境生效
+su - gpadmin
+
 # 切换用户
 su gpadmin
 
