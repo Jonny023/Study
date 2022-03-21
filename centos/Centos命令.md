@@ -1,5 +1,17 @@
 # Centos命令
 
+## 指定时间段日志
+
+```sh
+cat xxx.log |sed -n '/2020-08-19 23:12/,/2020-08-19 23:15/p'
+sed -n '/2022-03-18 15:55/,/2022-03-18 16:55/p' stat.log
+
+sed -n '/2022-03-18 15/,/2022-03-18 16/p' stat.log
+cat stat.log |sed -n '/2022-03-18 15/,/2022-03-18 16/p'
+```
+
+
+
 ## 远程登陆
 
 ```bash
@@ -27,6 +39,16 @@ shutdown -r now
 ```shell
 netstat -tunlp | grep 8080
 ```
+
+### 查看指定文件大小
+
+> 查询包含green关键字文件大小
+
+```sh
+ls | grep green | xargs -i du -h {}
+```
+
+
 
 ### ss
 
