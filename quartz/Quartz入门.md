@@ -415,6 +415,8 @@ spring:
 
 ##### 2.2.2.quartz配置
 
+> springboot项目用了starter，默认会加载`resources/quartz.properties`配置，线程池用默认的就行了，扩展的线程池貌似没用
+
 ```properties
 # JobDataMaps是否都为String类型，默认false
 org.quartz.jobStore.useProperties=false
