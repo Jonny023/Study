@@ -17,10 +17,12 @@ docker run -itd -v /home/ftp:/home/vsftpd \
 -p 21100-21110:21100-21110 \
 -e FTP_USER=test \
 -e FTP_PASS=test \
--e PASV_ADDRESS=192.168.56.2 \
+-e PASV_ADDRESS=10.113.75.118 \
 -e PASV_MIN_PORT=21100 \
 -e PASV_MAX_PORT=21110 \
 -e TZ=Asia/Shanghai \
+-e LANG=zh_CN.utf8 \
+-e LC_ALL=zh_CN.utf8 \
 --name vsftpd \
 --restart=always fauria/vsftpd
 ```
@@ -33,3 +35,57 @@ docker run -itd -v /home/ftp:/home/vsftpd \
 * PASV_ADDRESS：当前电脑ip，当需要使用被动模式时必须设置。
 * PASV_MIN_PORT~ PASV_MAX_PORT：给客服端提供下载服务随机端口号范围，默认 21100-21110，与前面的 docker 端口映射设置成一样。
 
+
+
+## 中文乱码
+
+```sh
+# 更新yum源
+docker cp /etc/yum.repos.d/CentOS-Base.repo ebadb0a06623:/etc/yum.repos.d/
+
+yum clean all
+yum update -y
+yum makecache
+
+# 查看语言
+echo $LANG
+
+# 若没有zh_CN.UTF-8语言包
+yum install kde-l10n-Chinese -y
+
+# 设置语言
+localedef -c -f UTF-8 -i zh_CN zh_CN.utf8
+```
+
+
+
+## 新增用户
+
+```sh
+docker exec -it vsftpd bash
+
+# 创建用户(admin)目录
+mkdir /home/vsftpd/admin
+
+# 授权
+chown -R ftp:ftp /home/vsftpd
+
+# 奇数配置用户名，偶数配置密码
+vi /etc/vsftpd/virtual_users.txt
+test     #用户
+test123  #密码
+admin    #用户
+admin123 #密码
+
+# 写入db
+/usr/bin/db_load -T -t hash -f /etc/vsftpd/virtual_users.txt /etc/vsftpd/virtual_users.db
+
+# 重启容器
+docker restart vsftpd
+```
+
+
+
+## web访问
+
+> ftp://test:123456@ip:port
