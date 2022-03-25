@@ -17,7 +17,7 @@ docker run -itd -v /home/ftp:/home/vsftpd \
 -p 21100-21110:21100-21110 \
 -e FTP_USER=test \
 -e FTP_PASS=test \
--e PASV_ADDRESS=10.113.75.118 \
+-e PASV_ADDRESS=192.168.1.2 \
 -e PASV_MIN_PORT=21100 \
 -e PASV_MAX_PORT=21110 \
 -e TZ=Asia/Shanghai \
@@ -40,15 +40,23 @@ docker run -itd -v /home/ftp:/home/vsftpd \
 ## 中文乱码
 
 ```sh
-# 更新yum源
+# 用xftp上传文件遇到乱码，可能是xftp软件编码问题，左侧windows编码默认为GBK2312,右侧linux编码应设置为
+# Unicode(UTF-8)如果还不行则可能需要安装语言包,步骤如下
+
+# 更新yum源(由于docker容器中没有yum源，所以需要将宿主机的文件拷贝到容器中)
 docker cp /etc/yum.repos.d/CentOS-Base.repo ebadb0a06623:/etc/yum.repos.d/
 
 yum clean all
-yum update -y
 yum makecache
+yum update -y
+
 
 # 查看语言
 echo $LANG
+
+# 查看系统支持语言
+locale -a
+locale
 
 # 若没有zh_CN.UTF-8语言包
 yum install kde-l10n-Chinese -y
