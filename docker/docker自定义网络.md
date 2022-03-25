@@ -16,3 +16,19 @@ docker network create --subnet=172.18.0.0/16 my_net
 docker run --network my_net --ip 172.18.0.2 --name xx -p 8086:8086 -itd xx
 ```
 
+## 2.连接网络、删除网络
+
+```sh
+# 查看已有网络
+docker network ls
+
+# 查看容器网络
+docker inspect 容器名
+
+# 连接到指定网络
+docker network connect bridge vsftpd
+
+# 断开连接指定网络
+docker network disconnect bridge vsftpd
+```
+
