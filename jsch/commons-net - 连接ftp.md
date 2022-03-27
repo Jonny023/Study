@@ -12,6 +12,15 @@
 
 ## 2.工具类
 
+> 遇到问题项目通过容器部署，ftp文件服务器也通过docker部署，通过宿主ip进行访问获取不到ftp服务器的文件，而通过`java -jar xxx.jar`部署都可以访问，这个问题需要设置ftp服务器
+
+```java
+ftpClient.enterLocalPassiveMode();
+ftpClient.setRemoteVerificationEnabled(false);
+```
+
+
+
 ```java
 package com.demo;
 
@@ -56,6 +65,11 @@ public class FTPUtil {
 
         try {
 
+            //每次数据连接之前，ftp client告诉ftp server开通一个端口来传输数据。
+            //因为ftp server可能每次开启不同的端口来传输数据，但是在linux上或者其他服务器上面，   
+            //由于安全限制，可能某些端口没有开启，所以就出现阻塞。
+            ftpClient.enterLocalPassiveMode();
+            ftpClient.setRemoteVerificationEnabled(false);
             ftpClient.connect(host, port);
             ftpClient.setControlEncoding("UTF8");
 
