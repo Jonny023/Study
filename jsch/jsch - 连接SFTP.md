@@ -241,7 +241,7 @@ public class SFTPUtil {
         Field f = cl.getDeclaredField("server_version");
         f.setAccessible(true);
         f.set(sftp, 2);
-        sftp.setFilenameEncoding("UTF-8");
+        sftp.setFilenameEncoding("GBK");
 
         InputStream is = sftp.get(downloadFile);
 
@@ -315,13 +315,13 @@ public class SFTPUtil {
 
     /**
      * 通过正则读取指定文件
-     *
+     * Pattern.CASE_INSENSITIVE 忽略大小写
      * @param dir
      * @param regex
      * @return
      */
     public List<FileInfo> listFiles(String dir, String regex) {
-        Pattern filenamePattern = Pattern.compile(regex);
+        Pattern filenamePattern = Pattern.compile(regex, Pattern.CASE_INSENSITIVE);
         Class<?> cl = ChannelSftp.class;
         Field f;
         FileInfo fileInfo;
@@ -330,7 +330,7 @@ public class SFTPUtil {
             f = cl.getDeclaredField("server_version");
             f.setAccessible(true);
             f.set(sftp, 2);
-            sftp.setFilenameEncoding("UTF-8");
+            sftp.setFilenameEncoding("GBK");
             List<ChannelSftp.LsEntry> dirs = lsFiles(dir, filenamePattern, sftp);
             StringBuilder sb;
             for (ChannelSftp.LsEntry d : dirs) {
@@ -373,6 +373,29 @@ public class SFTPUtil {
 
         sftp.logout();
     }
+}
+```
+
+
+
+## 4.判断目录是否存在
+
+> 不用遍历目录判断是否存在某个目录
+
+* [参考](https://blog.csdn.net/qq_33390789/article/details/78614466)
+
+```java
+sftp.cd(serverPath);
+// 判断子目录文件夹是否存在，不存在即创建
+SftpATTRS attrs = null;
+try {
+	attrs = sftp.stat(folderName);
+} catch (Exception e) {
+	// TODO: handle exception
+}
+if (attrs == null) {
+	sftp.mkdir(folderName);
+	logger.info("创建子目录：" + folderName);
 }
 ```
 

@@ -244,3 +244,11 @@ boolean flag = pattern.matcher(str).find();
 ^[A-Za-z/\-]{1,32}$
 ```
 
+## 匹配excel后缀
+
+> Pattern.CASE_INSENSITIVE忽略大小写
+
+```java
+Pattern.compile("^.*\\.(?:xls|xlsx|csv)$", Pattern.CASE_INSENSITIVE);
+```
+
