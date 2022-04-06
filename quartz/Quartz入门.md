@@ -889,9 +889,9 @@ public class JobServiceImpl implements JobService {
 }
 ```
 
-
-
 # 问题
+
+### 问题1
 
 * 高版本springboot2.6.6部分配置修改
   
@@ -904,4 +904,75 @@ org.quartz.jobStore.dataSource = dataSource
 # 数据保存方式为数据库持久化
 #org.quartz.jobStore.class = org.quartz.impl.jdbcjobstore.JobStoreTX
 org.quartz.jobStore.class = org.springframework.scheduling.quartz.LocalDataSourceJobStore
+```
+
+### 问题2
+
+* 动态修改cron表达式
+
+```java
+package com.example.springbootdemo.event;
+
+import com.example.springbootdemo.job.TestJob;
+import org.quartz.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.context.event.ApplicationReadyEvent;
+import org.springframework.context.ApplicationListener;
+import org.springframework.stereotype.Component;
+
+import javax.annotation.Resource;
+
+@Component
+public class SchedulerListener implements ApplicationListener<ApplicationReadyEvent> {
+
+    private static final Logger log = LoggerFactory.getLogger(SchedulerListener.class);
+
+    @Value("${cron}")
+    private String CRON;
+
+    @Resource
+    private Scheduler scheduler;
+    private static String TRIGGER_GROUP_NAME = "TestGroupTrigger";
+    private static String TRIGGER_GROUP = "TestGroupTrigger";
+    private static String GROUP_NAME = "GroupName";
+    public static final String JOB_NAME = "TestJob";
+    private static String JOB_GROUP_NAME = "TestJobGroup";
+
+    @Override
+    public void onApplicationEvent(ApplicationReadyEvent event) {
+        try {
+            TriggerKey testTriggerKey = TriggerKey.triggerKey(TRIGGER_GROUP_NAME, TRIGGER_GROUP);
+            // 重启和分布式都必须要获取和==null判断，因为job持久化到数据库，有唯一性，不然会报错
+            //Trigger trigger = scheduler.getTrigger(testTriggerKey);
+            CronTrigger  trigger = (CronTrigger) scheduler.getTrigger(testTriggerKey);
+            if (trigger == null) {
+                trigger = TriggerBuilder.newTrigger()
+                        .withIdentity(testTriggerKey)
+                        .withSchedule(CronScheduleBuilder.cronSchedule(CRON).withMisfireHandlingInstructionIgnoreMisfires())
+                        .startNow()
+                        .build();
+                JobDetail jobDetail = JobBuilder.newJob(TestJob.class)
+                        .withIdentity(JOB_NAME, JOB_GROUP_NAME)
+                        .requestRecovery(true)
+                        .build();
+                scheduler.scheduleJob(jobDetail, trigger);
+            } else {
+                //https://www.cnblogs.com/xuha0/p/6813617.html
+                //修改cron表达式后重新以新的cron表达式执行
+                if (!trigger.getCronExpression().equals(CRON)) {
+                    trigger = trigger.getTriggerBuilder().withSchedule(CronScheduleBuilder.cronSchedule(CRON)).build();
+                    //trigger = TriggerBuilder.newTrigger().withIdentity(testTriggerKey).withSchedule(CronScheduleBuilder.cronSchedule(CRON)).build();
+                    scheduler.rescheduleJob(testTriggerKey, trigger);
+                }
+            }
+
+            scheduler.start();
+        } catch (SchedulerException e) {
+            log.error("execute job failed:{}", e);
+        }
+    }
+}
+
 ```
