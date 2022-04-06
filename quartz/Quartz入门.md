@@ -3,21 +3,19 @@
 ## 一、核心概念
 
 * 任务`Job`
-  
+
 * 触发器`Trigger`
+  
   * `SimpleTrigger`
   * `CronTrigger`
 
 * 调度器`Scheduler`
   
   * 将任务`Job`和触发器`Trigger`整合起来，基于`Trigger`设定的时间执行`Job`
-  
 
 > 每个`Job`必须实现`org.quartz.Job`接口，且只需实现接口定义的`execute`方法
 
 ## 二、结构
-
-
 
 ![](img/结构.png)
 
@@ -38,13 +36,11 @@
 
 ## 四、Scheduler(调度器)
 
-| 暂停任务     | Scheduler scheduler = schedulerFactoryBean.getScheduler(); <br/>JobKey jobKey = JobKey.jobKey(scheduleJob.getJobName(), scheduleJob.getJobGroup()); scheduler.pauseJob(jobKey); |
-| ------------ | ------------------------------------------------------------ |
-| 恢复任务     | Scheduler scheduler = schedulerFactoryBean.getScheduler(); <br/>JobKey jobKey = JobKey.jobKey(scheduleJob.getJobName(), scheduleJob.getJobGroup()); scheduler.resumeJob(jobKey); |
-| 删除任务     | Scheduler scheduler = schedulerFactoryBean.getScheduler(); <br/>JobKey jobKey = JobKey.jobKey(scheduleJob.getJobName(), scheduleJob.getJobGroup()); scheduler.deleteJob(jobKey); |
+| 暂停任务   | Scheduler scheduler = schedulerFactoryBean.getScheduler(); <br/>JobKey jobKey = JobKey.jobKey(scheduleJob.getJobName(), scheduleJob.getJobGroup()); scheduler.pauseJob(jobKey);   |
+| ------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 恢复任务   | Scheduler scheduler = schedulerFactoryBean.getScheduler(); <br/>JobKey jobKey = JobKey.jobKey(scheduleJob.getJobName(), scheduleJob.getJobGroup()); scheduler.resumeJob(jobKey);  |
+| 删除任务   | Scheduler scheduler = schedulerFactoryBean.getScheduler(); <br/>JobKey jobKey = JobKey.jobKey(scheduleJob.getJobName(), scheduleJob.getJobGroup()); scheduler.deleteJob(jobKey);  |
 | 立即运行任务 | Scheduler scheduler = schedulerFactoryBean.getScheduler(); <br/>JobKey jobKey = JobKey.jobKey(scheduleJob.getJobName(), scheduleJob.getJobGroup()); scheduler.triggerJob(jobKey); |
-
-
 
 ## 五、misfire(失火/哑火)
 
@@ -53,7 +49,6 @@
 **产生条件**：
 
 * 到了该触发执行时上一个执行还未完成，且线程池中没有空闲线程可以使用（或有空闲线程可以使用但job设置为`@DisallowConcurrentExecution`）且过期时间已经超过misfireThreshold就认为是misfire了，错失触发了job默认是并发执行, 如果job设置`@DisallowConcurrentExecution` ,则为串行执行.
-  
 
 **产生原因**：
 
@@ -79,45 +74,52 @@ withMisfireHandlingInstructionNowWithRemainingCount()
 #### 处理机制
 
 * 1.`withMisfireHandlingInstructionFireNow`  ---> misfireInstruction == 1
+  
   * 以当前时间为触发频率立即触发执行
   * 执行至FinalTIme的剩余周期次数
   * 以调度或恢复调度的时刻为基准的周期频率，FinalTime根据剩余次数和当前时间计算得到
   * 调整后的FinalTime会略大于根据starttime计算的到的FinalTime值
 
 * 2.`withMisfireHandlingInstructionIgnoreMisfires` ---> misfireInstruction == -1
+  
   * 以错过的第一个频率时间立刻开始执行
   * 重做错过的所有频率周期
   * 当下一次触发频率发生时间大于当前时间以后，按照Interval的依次执行剩下的频率
     共执行RepeatCount+1次
 
 * 3.`withMisfireHandlingInstructionNextWithExistingCount` ---> misfireInstruction == 5
+  
   * 不触发立即执行
   * 等待下次触发频率周期时刻，执行至FinalTime的剩余周期次数
   * 以startTime为基准计算周期频率，并得到FinalTime
   * 即使中间出现pause，resume以后保持FinalTime时间不变
 
 * 4.`withMisfireHandlingInstructionNextWithRemainingCount` ---> misfireInstruction = 4
+  
   * 不触发立即执行
   * 等待下次触发频率周期时刻，执行至FinalTime的剩余周期次数
   * 以startTime为基准计算周期频率，并得到FinalTime
   * 即使中间出现pause，resume以后保持FinalTime时间不变
 
 * 5.`withMisfireHandlingInstructionNowWithExistingCount` ---> misfireInstruction = 2
+  
   * 以当前时间为触发频率立即触发执行
   * 执行至FinalTIme的剩余周期次数
   * 以调度或恢复调度的时刻为基准的周期频率，FinalTime根据剩余次数和当前时间计算得到
   * 调整后的FinalTime会略大于根据starttime计算的到的FinalTime值
 
 * 6.`withMisfireHandlingInstructionNowWithRemainingCount` --- >misfireInstruction = 3
+  
   * 以当前时间为触发频率立即触发执行
   * 执行至FinalTIme的剩余周期次数
   * 以调度或恢复调度的时刻为基准的周期频率，FinalTime根据剩余次数和当前时间计算得到
   * 调整后的FinalTime会略大于根据starttime计算的到的FinalTime值
-* `MISFIRE_INSTRUCTION_RESCHEDULE_NOW_WITH_REMAINING_REPEAT_COUNT`值为 3
-    * 此指令导致trigger忘记原始设置的starttime和repeat-count
-    * 触发器的repeat-count将被设置为剩余的次数
-    * 这样会导致后面无法获得原始设定的starttime和repeat-count值
 
+* `MISFIRE_INSTRUCTION_RESCHEDULE_NOW_WITH_REMAINING_REPEAT_COUNT`值为 3
+  
+  * 此指令导致trigger忘记原始设置的starttime和repeat-count
+  * 触发器的repeat-count将被设置为剩余的次数
+  * 这样会导致后面无法获得原始设定的starttime和repeat-count值
 
 ### 2.CronTrigger
 
@@ -133,18 +135,20 @@ withMisfireHandlingInstructionIgnoreMisfires()
 #### 处理机制
 
 * 1.`withMisfireHandlingInstructionDoNothing` ---> misfireInstruction = 2，`MISFIRE_INSTRUCTION_DO_NOTHING`           **目前不执行，然后就按照正常的计划执行**
+  
   * 不触发立即执行
   * 等待下次Cron触发频率到达时刻开始按照Cron频率依次执行
 
 * 2.`withMisfireHandlingInstructionFireAndProceed` ---> misfireInstruction = 1，`MISFIRE_INSTRUCTION_FIRE_ONCE_NOW`   **立刻执行一次，然后就按照正常的计划执行**
+  
   * 以当前时间为触发频率立刻触发一次执行
   * 然后按照Cron频率依次执行
+
 * 3.`withMisfireHandlingInstructionIgnoreMisfires` ---> misfireInstruction = -1，`MISFIRE_INSTRUCTION_IGNORE_MISFIRE_POLICY` **忽略所有的超时状态，按照触发器的策略执行**
+  
   * 以错过的第一个频率时间立刻开始执行 
   * 重做错过的所有频率周期后
   * 当下一次触发频率发生时间大于当前时间后，再按照正常的Cron频率依次执行
-
-
 
 ## 六、CronExpression表达式
 
@@ -152,58 +156,58 @@ withMisfireHandlingInstructionIgnoreMisfires()
 
 * 完整格式为： [秒] [分] [小时] [日] [月] [周] [年]
 
-| 序号 | 说明 | 是否必填 | 允许填写的值       | 允许的通配符  |
-| ---- | ---- | -------- | ------------------ | ------------- |
-| 1    | 秒   | 是       | 0-59               | , - * /       |
-| 2    | 分   | 是       | 0-59               | , - * /       |
-| 3    | 小时 | 是       | 0-23               | , - * /       |
-| 4    | 日   | 是       | 1-31               | , - * ? / L W |
-| 5    | 月   | 是       | 1-12 or JAN-DEC    | , - * /       |
-| 6    | 周   | 是       | 1-7 or SUN-SAT     | , - * ? / L # |
-| 7    | 年   | 否       | empty 或 1970-2099 | , - * /       |
+| 序号  | 说明  | 是否必填 | 允许填写的值            | 允许的通配符        |
+| --- | --- | ---- | ----------------- | ------------- |
+| 1   | 秒   | 是    | 0-59              | , - * /       |
+| 2   | 分   | 是    | 0-59              | , - * /       |
+| 3   | 小时  | 是    | 0-23              | , - * /       |
+| 4   | 日   | 是    | 1-31              | , - * ? / L W |
+| 5   | 月   | 是    | 1-12 or JAN-DEC   | , - * /       |
+| 6   | 周   | 是    | 1-7 or SUN-SAT    | , - * ? / L # |
+| 7   | 年   | 否    | empty 或 1970-2099 | , - * /       |
 
 ### 2.通配符说明
 
 * **`*`** 表示所有值. 例如:在分的字段上设置 "*",表示每一分钟都会触发。
+
 * **`?`** 表示不指定值。使用的场景为不需要关心当前设置这个字段的值。例如:要在每月的10号触发一个操作，但不关心是周几，所以需要周位置的那个字段设置为"?" 具体设置为 0 0 0 10 * ?
 - **`-`** 表示区间。例如 在小时上设置 "10-12",表示 10,11,12点都会触发。
+
 - **`,`** 表示指定多个值，例如在周字段上设置 "MON,WED,FRI" 表示周一，周三和周五触发
+
 - **`/`** 用于递增触发。如在秒上面设置"5/15" 表示从5秒开始，每增15秒触发(5,20,35,50)。 在月字段上设置'1/3'所示每月1号开始，每隔三天触发一次。
+
 - **`L`** 表示最后的意思。在日字段设置上，表示当月的最后一天(依据当前月份，如果是二月还会依据是否是润年[leap]), 在周字段上表示星期六，相当于"7"或"SAT"。如果在"L"前加上数字，则表示该数据的最后一个。例如在周字段上设置"6L"这样的格式,则表示“本月最后一个星期五"
+
 - **`W`** 表示离指定日期的最近那个工作日(周一至周五). 例如在日字段上设置"15W"，表示离每月15号最近的那个工作日触发。如果15号正好是周六，则找最近的周五(14号)触发, 如果15号是周未，则找最近的下周一(16号)触发.如果15号正好在工作日(周一至周五)，则就在该天触发。如果指定格式为 "1W",它则表示每月1号往后最近的工作日触发。如果1号正是周六，则将在3号下周一触发。(注，"W"前只能设置具体的数字,不允许区间"-").
-
 * **`#`** 序号(表示每月的第几个周几)，例如在周字段上设置"6#3"表示在每月的第三个周六.注意如果指定"#5",正好第五周没有周六，则不会触发该配置(用在母亲节和父亲节再合适不过了)；
-
-
 
 **小提示**：
 *'L'和 'W'可以一组合使用。如果在日字段上设置"LW",则表示在本月的最后一个工作日触发；*
 *周字段的设置，若使用英文字母是不区分大小写的，即`MON` `与mon相同；`*
 
-
-
 ### 3.cron表达式示例
 
-| cron表达式            | 描述                                                 |
-| ------------------------ | ------------------------------------------------------------ |
-| 0 0 12 * * ?             | 每天12点触发                                                 |
-| 0 15 10 ? * *            | 每天10点15分触发                                             |
-| 0 15 10 * * ?            | 每天10点15分触发                                             |
-| 0 15 10 * * ? *          | 每天10点15分触发                                             |
-| 0 15 10 * * ? 2005       | 2005年每天10点15分触发                                       |
-| 0 * 14 * * ?             | 每天下午的 2点到2点59分每分触发                              |
-| 0 0/5 14 * * ?           | 每天下午的 2点到2点59分(整点开始，每隔5分触发)               |
+| cron表达式                  | 描述                                      |
+| ------------------------ | --------------------------------------- |
+| 0 0 12 * * ?             | 每天12点触发                                 |
+| 0 15 10 ? * *            | 每天10点15分触发                              |
+| 0 15 10 * * ?            | 每天10点15分触发                              |
+| 0 15 10 * * ? *          | 每天10点15分触发                              |
+| 0 15 10 * * ? 2005       | 2005年每天10点15分触发                         |
+| 0 * 14 * * ?             | 每天下午的 2点到2点59分每分触发                      |
+| 0 0/5 14 * * ?           | 每天下午的 2点到2点59分(整点开始，每隔5分触发)             |
 | 0 0/5 14,18 * * ?        | 每天下午的  2点到2点59分、18点到18点59分(整点开始，每隔5分触发) |
-| 0 0-5 14 * * ?           | 每天下午的 2点到2点05分每分触发                              |
-| 0 10,44 14 ? 3 WED       | 3月分每周三下午的 2点10分和2点44分触发                       |
-| 0 15 10 ? * MON-FRI      | 从周一到周五每天上午的10点15分触发                           |
-| 0 15 10 15 * ?           | 每月15号上午10点15分触发                                     |
-| 0 15 10 L * ?            | 每月最后一天的10点15分触发                                   |
-| 0 15 10 ? * 6L           | 每月最后一周的星期五的10点15分触发                           |
-| 0 15 10 ? * 6L 2002-2005 | 从2002年到2005年每月最后一周的星期五的10点15分触发           |
-| 0 15 10 ? * 6#3          | 每月的第三周的星期五开始触发                                 |
-| 0 0 12 1/5 * ?           | 每月的第一个中午开始每隔5天触发一次                          |
-| 0 11 11 11 11 ?          | 每年的11月11号 11点11分触发(光棍节)                          |
+| 0 0-5 14 * * ?           | 每天下午的 2点到2点05分每分触发                      |
+| 0 10,44 14 ? 3 WED       | 3月分每周三下午的 2点10分和2点44分触发                 |
+| 0 15 10 ? * MON-FRI      | 从周一到周五每天上午的10点15分触发                     |
+| 0 15 10 15 * ?           | 每月15号上午10点15分触发                         |
+| 0 15 10 L * ?            | 每月最后一天的10点15分触发                         |
+| 0 15 10 ? * 6L           | 每月最后一周的星期五的10点15分触发                     |
+| 0 15 10 ? * 6L 2002-2005 | 从2002年到2005年每月最后一周的星期五的10点15分触发         |
+| 0 15 10 ? * 6#3          | 每月的第三周的星期五开始触发                          |
+| 0 0 12 1/5 * ?           | 每月的第一个中午开始每隔5天触发一次                      |
+| 0 11 11 11 11 ?          | 每年的11月11号 11点11分触发(光棍节)                 |
 
 ## 七、实践（Job）
 
@@ -291,13 +295,13 @@ scheduler.start();
 //=====================================一个job对应多个trigger=======================================================
 // 调度器
 Scheduler scheduler = StdSchedulerFactory.getDefaultScheduler();
- 
+
 // 任务实例
 JobDetail jobDetail = JobBuilder.newJob(HelloJob.class)
         .withIdentity("helloJob", "helloGroup")
         .storeDurably() // 一个job绑定多个Trigger必须配置durability，否则报错：Jobs added with no trigger must be durable.
         .build();
- 
+
 // 触发器
 Trigger trigger = TriggerBuilder
         .newTrigger()
@@ -305,7 +309,7 @@ Trigger trigger = TriggerBuilder
         .withIdentity("cronTrigger", "group")
         .withSchedule(CronScheduleBuilder.cronSchedule("0/5 * * * * ?"))
         .build();
- 
+
 // trigger名称能一样，group可以和其他的一样
 Trigger trigger1 = TriggerBuilder
         .newTrigger()
@@ -313,16 +317,14 @@ Trigger trigger1 = TriggerBuilder
         .withIdentity("cronTrigger1", "group1")
         .withSchedule(CronScheduleBuilder.cronSchedule("0/2 * * * * ?"))
         .build();
- 
+
 // 必须配置
 scheduler.addJob(jobDetail, false);
- 
+
 scheduler.scheduleJob(trigger);
 scheduler.scheduleJob(trigger1);
 scheduler.start();
 ```
-
-
 
 # 2. Quartz分布式任务调度
 
@@ -332,22 +334,22 @@ scheduler.start();
 
 * Quartz是基于DB锁来实现的分布式调度（抢占锁）
 
-| 表名（共11张表）         | 描述                                                         |
-| ------------------------ | ------------------------------------------------------------ |
-| qrtz_blob_triggers       | 以Blob 类型存储的触发器(自定义trigger)                       |
-| qrtz_calendars           | 存放日历信息， quartz可配置一个日历来指定一个时间范围        |
-| qrtz_cron_triggers       | 存放cron类型的触发器                                         |
-| qrtz_fired_triggers      | 存放已触发的触发器，执行完从表中删除记录                     |
-| qrtz_job_details         | 存放一个jobDetail信息                                        |
-| qrtz_locks               | 存储程序的悲观锁的信息，默认有2个锁：`STATE_ACCESS`-定期检查保证一个节点执行，`TRIGGER_ACCESS`-在TRIGGER被调度的时候，保证只有一个节点去执行调度 |
-| qrtz_paused_trigger_grps | 存放暂停掉的触发器                                           |
-| qrtz_scheduler_state     | 调度器状态，存储所有节点的scheduler，定期检查scheduler是否失效，启动多个scheduler，根据配置的quartz.properties中CHECKIN_INTERVAL的值来检查 |
+| 表名（共11张表）                | 描述                                                                                                        |
+| ------------------------ | --------------------------------------------------------------------------------------------------------- |
+| qrtz_blob_triggers       | 以Blob 类型存储的触发器(自定义trigger)                                                                                |
+| qrtz_calendars           | 存放日历信息， quartz可配置一个日历来指定一个时间范围                                                                            |
+| qrtz_cron_triggers       | 存放cron类型的触发器                                                                                              |
+| qrtz_fired_triggers      | 存放已触发的触发器，执行完从表中删除记录                                                                                      |
+| qrtz_job_details         | 存放一个jobDetail信息                                                                                           |
+| qrtz_locks               | 存储程序的悲观锁的信息，默认有2个锁：`STATE_ACCESS`-定期检查保证一个节点执行，`TRIGGER_ACCESS`-在TRIGGER被调度的时候，保证只有一个节点去执行调度              |
+| qrtz_paused_trigger_grps | 存放暂停掉的触发器                                                                                                 |
+| qrtz_scheduler_state     | 调度器状态，存储所有节点的scheduler，定期检查scheduler是否失效，启动多个scheduler，根据配置的quartz.properties中CHECKIN_INTERVAL的值来检查       |
 | qrtz_simple_triggers     | 简单触发器的信息(`TIMES_TRIGGERED`-已执行次数，默认为0，`REPEAT_COUNT`-总执行次数，当`TIMES_TRIGGERED>REPEAT_COUNT`时停止，执行完毕后删除此记录) |
-| qrtz_simprop_triggers    | 存储`CalendarIntervalTrigger`和`DailyTimeIntervalTrigger`两种类型的触发器 |
-| qrtz_triggers            | 触发器的基本信息                                             |
+| qrtz_simprop_triggers    | 存储`CalendarIntervalTrigger`和`DailyTimeIntervalTrigger`两种类型的触发器                                            |
+| qrtz_triggers            | 触发器的基本信息                                                                                                  |
 
 >  相关表操作在类`StdJDBCDelegate`中，相关sql语句在`StdJDBCConstants`中
->
+> 
 > cron用到的4张表：`qrtz_triggers`，`qrtz_cron_triggers`，`qrtz_fired_triggers`，`qrtz_job_details`
 
 ## 2.实践(QuartzJobBean)
@@ -377,8 +379,6 @@ scheduler.start();
     <scope>runtime</scope>
 </dependency>
 ```
-
-
 
 #### 2.2.配置文件
 
@@ -889,3 +889,19 @@ public class JobServiceImpl implements JobService {
 }
 ```
 
+
+
+# 问题
+
+* 高版本springboot2.6.6部分配置修改
+  
+  * 必须配置数据源
+  
+  * 持久化类变更为`org.springframework.scheduling.quartz.LocalDataSourceJobSt`
+
+```properties
+org.quartz.jobStore.dataSource = dataSource
+# 数据保存方式为数据库持久化
+#org.quartz.jobStore.class = org.quartz.impl.jdbcjobstore.JobStoreTX
+org.quartz.jobStore.class = org.springframework.scheduling.quartz.LocalDataSourceJobStore
+```
