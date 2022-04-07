@@ -74,6 +74,14 @@ alter table data_basics delete where
 si in ('2e035e6067005ef3a2fe30aa9f42304c','bd1e41afdbdd76318c175a9f5219807b','34130cd716945e9222ee4a50c7027d29','ddab31cd8267c90d3d3d9906b04f2aba','9e20839a5f62e77f4ea1be5bb43c9bdd','d13f293cf15c3a46e1a5cc299dc6c667','13d1f8bcb47a96b20ce0fdd81f55e685','1e06d97d56d9828c63ebc3d2421d6555')
 and event_time in ('2022-04-06','2022-04-05');
 
+-- 删除原表数据
+alter table data_basics delete where 
+si in (select distinct si from a_basics) and event_time in (select distinct event_time from a_basics);
+
+-- group_concat -> 'a','b'
+SELECT arrayStringConcat(arrayMap(x -> concat('\'', toString(x), '\''), groupUniqArray(si)), ',') from a_basics;
+SELECT arrayStringConcat(arrayMap(x -> concat('\'', toString(x), '\''), groupUniqArray(event_time)), ',') from a_basics;
+
 -- 合并
 optimize table data_basics final;
 
@@ -82,6 +90,10 @@ insert into data_basics(si,event_time,pv,uv,ip_counts,devices,vv,avg_visit_times
 
 -- 删除中间表
 drop table a_basics;
+
+
+-- 查看返回结果类型
+select toTypeName(groupUniqArray(si)) from a_basics;
 ```
 
 ## 问题
