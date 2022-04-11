@@ -226,10 +226,14 @@ toYYYYMMDD(now())
 toYYYYMMDDhhmmss(now())
 
 -- 格式化为年月日小时
-formatDateTime(create_time,' %Y-%m-%d %H:00:00')
+formatDateTime(create_time,'%Y-%m-%d %H:00:00')
 
 -- 年月日
 toDate(create_time)
+
+--参考：https://blog.csdn.net/anyitian/article/details/116664687
+-- 统计日期相差天数（year,month,week,day,hour,minute,second）
+select dateDiff('day',  toDateTime(min(event_time)), now()) from tableName where toYear(event_time) >= 2021;
 ```
 
 ### ip函数(IPv4)
