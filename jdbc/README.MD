@@ -136,3 +136,76 @@ while (resultSet.next()) {
 }
 ```
 
+## oracle数据库问题
+
+> 通过jdbc连接oracle，数值类型不能用rs.getString()，可能造成精度丢失，
+> 解决方法：通过rs.getObject()获取数据，判断如果为NUMBER并且值为null字符则单独处理为0
+
+```java
+package com.example.springbootoracle;
+
+import net.minidev.json.JSONUtil;
+import org.json.JSONObject;
+
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+
+public class Test {
+
+    static {
+        System.out.println("加载Test.class类");
+    }
+
+    public static void main(String[] args) throws SQLException {
+        List<List<String>> allData = new ArrayList<>();
+        ResultSet rs = null;
+        Statement statement = null;
+        Connection connection = null;
+        try {
+            JSONObject dataInfoJson = JSONUtil.parseObj(dataInfo);
+            connection = DriverManager.getConnection("jdbc:oracle:thin:@192.168.1.1:1521:helowin", "system", "system");
+            statement = connection.createStatement();
+            statement.setFetchSize(10000);
+            rs = statement.executeQuery(dataInfoJson.getStr("sql"));
+
+            //表头
+            ResultSetMetaData metaData = rs.getMetaData();
+            List<String> rowData = null;
+            String value;
+            //抽取数据
+            while (rs.next()) {
+                rowData = new ArrayList<String>();
+                int headIndex = 1;
+                for (StructuresVO column : structures) {
+                    value = String.valueOf(rs.getObject(column.getColumnName()));
+                    //解决oracle小数点问题0.01 => .01 BigDecimal为空无法转换为String
+                    if (Objects.equals("NUMBER", metaData.getColumnTypeName(headIndex))) {
+                        if (Objects.equals(value, "null")) {
+                            rowData.add("0");
+                        } else {
+                            rowData.add(value);
+                        }
+                    } else {
+                        rowData.add(value);
+                    }
+                    headIndex++;
+                }
+                allData.add(rowData);
+            }
+
+        } finally {
+            try {
+                if (rs != null) rs.close();
+                if (statement != null) statement.close();
+                if (connection != null) connection.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+}
+
+
+```
