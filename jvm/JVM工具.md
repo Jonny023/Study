@@ -1,5 +1,7 @@
 # JVM工具
 
+[参考](https://blog.csdn.net/weixin_43849415/article/details/110631837)
+
 ```sh
 # 查看当前用户
 whoami
