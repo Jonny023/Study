@@ -291,3 +291,25 @@ ENTRYPOINT ["java", "-jar", \
 ```
 
 * 通过JDK自带的`Java VisualVM`工具可以远程连接192.168.5.106:9004访问了
+
+
+## java -jar运行
+```shell
+
+# 查看进程是谁运行的
+ps -aux | grep java
+
+# 非当前用户启动的，因为用的openjdk
+# 报错：
+# Unable to open socket file: target process not responding or HotSpot VM not loaded
+The -F option can be used when the target process is not responding
+
+sudo -u buriedpoint jstack 21448 > log.txt
+
+# 进程号转16进制
+printf '%x\n' pid
+
+# 查看进程占用信息
+top -Hp pid
+
+```
