@@ -13,7 +13,32 @@ apt-get update
 apt install curl
 ```
 
+## 报错
+```java
+[ERROR] Start arthas failed, exception stack trace: 
+java.io.IOException: well-known file /tmp/.java_pid21047 is not secure: file should be owned by the current user (which is 0) but is owned by 1001
+	at sun.tools.attach.LinuxVirtualMachine.checkPermissions(Native Method)
+	at sun.tools.attach.LinuxVirtualMachine.<init>(LinuxVirtualMachine.java:117)
+	at sun.tools.attach.LinuxAttachProvider.attachVirtualMachine(LinuxAttachProvider.java:78)
+	at com.sun.tools.attach.VirtualMachine.attach(VirtualMachine.java:250)
+	at com.taobao.arthas.core.Arthas.attachAgent(Arthas.java:102)
+	at com.taobao.arthas.core.Arthas.<init>(Arthas.java:27)
+	at com.taobao.arthas.core.Arthas.main(Arthas.java:151)
+[ERROR] attach fail, targetPid: 21047
 
+```
+
+### 权限问题
+
+```shell
+chmod 755 arthas-boot.jar && chown -R demo:demo arthas-boot.jar
+```
+
+### 指定用户运行
+
+```shell
+sudo -u demo java -jar arthas-boot.jar
+```
 
 ### 用arthas-boot启动
 
