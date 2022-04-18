@@ -3,6 +3,19 @@
 [参考](https://blog.csdn.net/weixin_43849415/article/details/110631837)
 
 ```sh
+# 查询段落
+awk '/daas/' RS="\n\n" ORS="\n\n" gc.log
+
+sed -n '/daas/,/^$/p' gc.log
+
+-n ，禁止自动打印图案空间
+-p ，打印当前模式空间
+/daas/ ，以Pa0模式开头的段落
+/^$/ ，以空行结尾的段落
+^ ，开始行
+$ ，行尾
+
+
 # 查看当前用户
 whoami
 
