@@ -1,5 +1,3 @@
-[参考](https://blog.csdn.net/qjyws/article/details/122846352?spm=1001.2101.3001.6661.1&utm_medium=distribute.pc_relevant_t0.none-task-blog-2%7Edefault%7EBlogCommendFromBaidu%7ERate-1.pc_relevant_default&depth_1-utm_source=distribute.pc_relevant_t0.none-task-blog-2%7Edefault%7EBlogCommendFromBaidu%7ERate-1.pc_relevant_default&utm_relevant_index=1](https://blog.csdn.net/qjyws/article/details/122846352?spm=1001.2101.3001.6661.1&utm_medium=distribute.pc_relevant_t0.none-task-blog-2~default~BlogCommendFromBaidu~Rate-1.pc_relevant_default&depth_1-utm_source=distribute.pc_relevant_t0.none-task-blog-2~default~BlogCommendFromBaidu~Rate-1.pc_relevant_default&utm_relevant_index=1)
-
 垃圾收集器则是内存回收的具体实现
 
 - 回收新生代的收集器包括Serial、PraNew、Parallel Scavenge
