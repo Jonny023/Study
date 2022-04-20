@@ -1,5 +1,9 @@
 # Arthas-tunnel-server
 
+> arthas-boot是客户端，只能和启用java的服务端部署到一起，而且只能单次启动运行
+> arthas-tunnel-server是一个服务，类似注册中心，可以在任意地方启动，但是需要在项目中配置arthas相关信息，并且服务端和你的java项目要能够连通，通过socket远程访问
+
+
 ## 下载
 
 ```sh
@@ -44,6 +48,25 @@ http://127.0.0.1:8888/actuator/arthas
 }
 ```
 
+## 查看WAITING线程
+```sh
+thread --state WAITING
+```
+
+## 启用增强
+```sh
+options unsafe true
+```
+
+## 监听
+
+```sh
+stack java.util.concurrent.ThreadPoolExecutor <init>
+watch com.alibaba.druid.pool.DruidDataSource init
+
+# 导出dump文件
+heapdump --live /root/jvm.hprof
+```
 
 
 ## arthas
