@@ -48,6 +48,17 @@ http://127.0.0.1:8888/actuator/arthas
 }
 ```
 
+## docker运行
+
+```sh
+#下载
+docker pull leixuewen/arthas-tunnel-server:3.6.0
+
+
+#运行
+docker run --name arthas-tunnel -itd -p 8888:8080 -p 7777:7777 leixuewen/arthas-tunnel-server:3.6.0
+```
+
 ## 查看WAITING线程
 ```sh
 thread --state WAITING
