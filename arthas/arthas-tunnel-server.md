@@ -59,6 +59,31 @@ docker pull leixuewen/arthas-tunnel-server:3.6.0
 docker run --name arthas-tunnel -itd -p 8888:8080 -p 7777:7777 leixuewen/arthas-tunnel-server:3.6.0
 ```
 
+## 随机agentId
+
+### yml
+
+```yaml
+arthas:
+  agent-id: ${spring.application.name}-${spring.profiles.active}-${random.uuid}
+  tunnel-server: ws://127.0.0.1:7777/ws
+```
+
+
+
+### 查看所有agentId
+
+[http://localhost:8888/actuator/arthas](http://localhost:8888/actuator/arthas)
+
+* 用户名：arthas
+* 密码需要在arthas-tunnel-server日志中查看
+
+```sh
+docker logs 容器id | grep -w password
+```
+
+
+
 ## 查看WAITING线程
 ```sh
 thread --state WAITING
