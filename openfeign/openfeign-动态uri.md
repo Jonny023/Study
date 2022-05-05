@@ -33,18 +33,33 @@ public class SpringBootOpenfeignApplication {
 ## 接口
 
 > 通过URI参数传入http接口地址，调用时会自动将uri参数作为请求地址，url必须填写，只是占位，因为url必须要传
+> post请求动态参数用示例中的3种都可以，如果是确定的对象也可以用  `(@RequestBody User user)`
 
 ```java
+package com.example.springbootopenfeign.service;
+
 import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.net.URI;
+import java.util.Map;
 
 @FeignClient(name = "API-SERVICE", url = "url-placeholder")
 public interface ApiClient {
 
-    @PostMapping(value = "")
-    String getData(URI uri);
+    @GetMapping(value = "")
+    String getData(URI uri, @RequestParam Map<String, Object> map);
+
+    @PostMapping(consumes = {"application/json"}, produces = {"application/json"})
+    String postData(URI uri, String param);
+
+    @PostMapping(consumes = {"application/json"}, produces = {"application/json"})
+    String postData(URI uri, Object param);
+
+    @PostMapping(consumes = {"application/json"}, produces = {"application/json"})
+    String postData(URI uri, Map param);
 
 }
 ```
