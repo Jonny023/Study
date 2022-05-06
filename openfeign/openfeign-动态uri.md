@@ -61,20 +61,65 @@ public interface ApiClient {
     @PostMapping(consumes = {"application/json"}, produces = {"application/json"})
     Object postData(URI uri, Map param);
     
-    @PostMapping
-    Object getPostData(URI uri, @RequestBody Map param);
+    //@PostMapping
+    //Object getPostData(URI uri, @RequestBody Map param);
     
     /**
      * 多参数、多请求头
+     * 若想传递header，可通过注解传递，但是注解值能针对确定的请求头中的参数，如：Authorization
+     * 想要实现动态的多个请求头，需要实现feign.RequestInterceptor
      * https://localcoder.org/using-headers-with-dynamic-values-in-feign-client-spring-cloud-brixton-rc2
+     * https://blog.csdn.net/hkk666123/article/details/113964715
      * @param uri
      * @param headers
      * @param param
      * @return
      */
     @PostMapping
-    Object getPostData(URI uri, @RequestHeader Map<String, Object> headers, @RequestBody Map param);
+    Object getPostData(URI uri, @RequestBody Map param);
 
+}
+```
+
+* 若需传递请求头参数
+
+```java
+package com.example.springbootopenfeign.config;
+
+import feign.RequestInterceptor;
+import feign.RequestTemplate;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
+
+import javax.servlet.http.HttpServletRequest;
+import java.util.Enumeration;
+
+@Configuration
+public class FeignConfiguration implements RequestInterceptor {
+
+    private final Logger logger = LoggerFactory.getLogger(FeignConfiguration.class);
+
+    @Override
+    public void apply(RequestTemplate template) {
+        ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
+        HttpServletRequest request = attributes.getRequest();
+        Enumeration<String> headerNames = request.getHeaderNames();
+        if (headerNames != null) {
+            while (headerNames.hasMoreElements()) {
+                String name = headerNames.nextElement();
+                String values = request.getHeader(name);
+
+                //跳过content-length，解决too many bites written的问题
+                if ("content-length".equals(name)) {
+                    continue;
+                }
+                template.header(name, values);
+            }
+        }
+    }
 }
 ```
 
