@@ -63,6 +63,17 @@ public interface ApiClient {
     
     @PostMapping
     Object getPostData(URI uri, @RequestBody Map param);
+    
+    /**
+     * 多参数、多请求头
+     * https://localcoder.org/using-headers-with-dynamic-values-in-feign-client-spring-cloud-brixton-rc2
+     * @param uri
+     * @param headers
+     * @param param
+     * @return
+     */
+    @PostMapping
+    Object getPostData(URI uri, @RequestHeader Map<String, Object> headers, @RequestBody Map param);
 
 }
 ```
