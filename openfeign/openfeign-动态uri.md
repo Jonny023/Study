@@ -50,16 +50,19 @@ import java.util.Map;
 public interface ApiClient {
 
     @GetMapping(value = "")
-    String getData(URI uri, @RequestParam Map<String, Object> map);
+    Object getData(URI uri, @RequestParam Map<String, Object> map);
 
     @PostMapping(consumes = {"application/json"}, produces = {"application/json"})
-    String postData(URI uri, String param);
+    Object postData(URI uri, String param);
 
     @PostMapping(consumes = {"application/json"}, produces = {"application/json"})
-    String postData(URI uri, Object param);
+    Object postData(URI uri, Object param);
 
     @PostMapping(consumes = {"application/json"}, produces = {"application/json"})
-    String postData(URI uri, Map param);
+    Object postData(URI uri, Map param);
+    
+    @PostMapping
+    Object getPostData(URI uri, @RequestBody Map param);
 
 }
 ```
