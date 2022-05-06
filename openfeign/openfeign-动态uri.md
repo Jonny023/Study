@@ -132,3 +132,67 @@ public class PostController {
     }
 ```
 
+# 方式2
+
+> 用@RequestLine注解
+
+## RequestLine
+
+> `RequestLine`不能和`GetMapping`、`PostMapping`一起使用，也就是用`RequestLine`的类中只能用`@RequestLine`注解，不然会报如下错误
+
+```bash
+Caused by: java.lang.IllegalStateException: Method ApiClient#getData(URI,Map) not annotated with HTTP method type (ex. GET, POST)
+Warnings:
+- Class ApiClient has annotations [FeignClient] that are not used by contract Default
+- Method getData has an annotation GetMapping that is not used by contract Default
+```
+
+> 添加配置类，然后在interface中配置configuration（经测试这一步可以不要）
+
+```java
+package com.example.springbootopenfeign.config;
+
+import feign.Contract;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+
+@Configuration
+public class FeignClientConfig {
+
+    @Bean
+    public Contract feignContract() {
+        return new Contract.Default();
+    }
+}
+```
+
+### 接口类
+
+> 动态url
+
+```java
+package com.example.springbootopenfeign.service;
+
+import feign.Headers;
+import feign.QueryMap;
+import feign.RequestLine;
+import org.springframework.cloud.openfeign.FeignClient;
+
+import java.net.URI;
+import java.util.Map;
+
+@FeignClient(name = "API-SERVICE", url = "url-placeholder")
+public interface ApiClient {
+
+    @RequestLine("GET")
+    @Headers({
+        "Content-Type: application/json",
+        "Accept: application/json"
+    })
+    Object getPostData(URI uri, @RequestBody Map<String, Object> queryMap);
+
+}
+```
+
+
+
