@@ -181,14 +181,21 @@ public class Test {
                 for (StructuresVO column : structures) {
                     value = String.valueOf(rs.getObject(column.getColumnName()));
                     //解决oracle小数点问题0.01 => .01 BigDecimal为空无法转换为String
-                    if (Objects.equals("NUMBER", metaData.getColumnTypeName(headIndex))) {
-                        if (Objects.equals(value, "null")) {
-                            rowData.add("0");
-                        } else {
-                            rowData.add(value);
-                        }
-                    } else {
-                        rowData.add(value);
+                    int columnType = metaData.getColumnType(headIndex);
+                    switch (columnType) {
+                        case Types.DOUBLE:
+                        case Types.DECIMAL:
+                        case Types.INTEGER:
+                        case Types.TINYINT:
+                        case Types.SMALLINT:
+                        case Types.BIGINT:
+                        case Types.NUMERIC:
+                        case Types.FLOAT:
+                            if (Objects.equals(value, "null")) {
+                                value = "0";
+                            }
+                            System.out.println("number类型");
+                            break;
                     }
                     headIndex++;
                 }
