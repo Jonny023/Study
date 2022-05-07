@@ -142,77 +142,55 @@ while (resultSet.next()) {
 > 解决方法：通过rs.getObject()获取数据，判断如果为NUMBER并且值为null字符则单独处理为0
 
 ```java
-package com.example.springbootoracle;
+public static void main(String[] args) throws SQLException {
+        //Class.forName("oracle.jdbc.driver.OracleDriver");
+        System.setProperty("jdbc.driver", "oracle.jdbc.driver.OracleDriver");
+        Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@192.168.56.2:1521:helowin", "system", "system");
+        //connection.prepareStatement("alter session set current_schema=BI");
+        PreparedStatement statement = connection.prepareStatement("select * from DB.test");
+        ResultSet resultSet = statement.executeQuery();
 
-import net.minidev.json.JSONUtil;
-import org.json.JSONObject;
+        ResultSetMetaData metaData = resultSet.getMetaData();
+        int columnCount = metaData.getColumnCount();
+        List<Map<String, Object>> list = new ArrayList<>();
+        Map<String, Object> map;
+        while (resultSet.next()) {
+            map = new HashMap<>();
+            for (int i = 1; i <= columnCount; i++) {
 
-import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-
-public class Test {
-
-    static {
-        System.out.println("加载Test.class类");
-    }
-
-    public static void main(String[] args) throws SQLException {
-        List<List<String>> allData = new ArrayList<>();
-        ResultSet rs = null;
-        Statement statement = null;
-        Connection connection = null;
-        try {
-            JSONObject dataInfoJson = JSONUtil.parseObj(dataInfo);
-            connection = DriverManager.getConnection("jdbc:oracle:thin:@192.168.1.1:1521:helowin", "system", "system");
-            statement = connection.createStatement();
-            statement.setFetchSize(10000);
-            rs = statement.executeQuery(dataInfoJson.getStr("sql"));
-
-            //表头
-            ResultSetMetaData metaData = rs.getMetaData();
-            List<String> rowData = null;
-            String value;
-            //抽取数据
-            while (rs.next()) {
-                rowData = new ArrayList<String>();
-                int headIndex = 1;
-                for (StructuresVO column : structures) {
-                    value = String.valueOf(rs.getObject(column.getColumnName()));
-                    //解决oracle小数点问题0.01 => .01 BigDecimal为空无法转换为String
-                    int columnType = metaData.getColumnType(headIndex);
-                    switch (columnType) {
-                        case Types.DOUBLE:
-                        case Types.DECIMAL:
-                        case Types.INTEGER:
-                        case Types.TINYINT:
-                        case Types.SMALLINT:
-                        case Types.BIGINT:
-                        case Types.NUMERIC:
-                        case Types.FLOAT:
-                            if (Objects.equals(value, "null")) {
-                                value = "0";
-                            }
-                            System.out.println("number类型");
-                            break;
-                    }
-                    headIndex++;
+                //解决oracle小数点问题0.01 => .01 BigDecimal为空无法转换为String
+                String value = String.valueOf(resultSet.getObject(i));
+                //判断列类型
+                int columnType = metaData.getColumnType(i);
+                switch (columnType) {
+                    case Types.DOUBLE:
+                    case Types.DECIMAL:
+                    case Types.INTEGER:
+                    case Types.TINYINT:
+                    case Types.SMALLINT:
+                    case Types.BIGINT:
+                    case Types.NUMERIC:
+                    case Types.FLOAT:
+                        if (Objects.equals(value, "null")) {
+                            value = "0";
+                        }
+                        System.out.println("number类型");
+                        break;
                 }
-                allData.add(rowData);
-            }
+                //if (Objects.equals("NUMBER", metaData.getColumnTypeName(i))) {
+                //    if (Objects.equals(value, "null")) {
+                //        value = "0";
+                //    }
+                //}
 
-        } finally {
-            try {
-                if (rs != null) rs.close();
-                if (statement != null) statement.close();
-                if (connection != null) connection.close();
-            } catch (Exception e) {
-                e.printStackTrace();
+                map.put(metaData.getColumnName(i), value);
             }
+            list.add(map);
         }
+        System.out.println(list);
+        statement.close();
+        connection.close();
     }
 }
-
 
 ```
