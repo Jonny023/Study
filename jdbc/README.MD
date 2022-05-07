@@ -194,3 +194,85 @@ public static void main(String[] args) throws SQLException {
 }
 
 ```
+
+# fetchSize
+
+```java
+
+package com.example.springbootoracle.jdbc;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.sql.*;
+import java.time.Instant;
+
+public class NewTest {
+
+    private Logger logger = LoggerFactory.getLogger(NewTest.class);
+
+    /**
+     * 参考：http://kmanong.top/kmn/qxw/form/article?id=74268&cate=71
+     */
+    @org.junit.jupiter.api.Test
+    public void read() {
+        Connection connection = null;
+        ResultSet resultSet = null;
+        PreparedStatement preparedStatement = null;
+        try {
+            long start = Instant.now().toEpochMilli();
+            connection = conn();
+            connection.setAutoCommit(false);
+            String sql = "select * from test0408 limit 1000000;";
+            preparedStatement = connection.prepareStatement(sql, ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY);
+            //这里因为MySQL驱动实现使用Integer.MIN_VALUE来判断是否使用流的方式
+            //详情查看：com.mysql.jdbc.StatementImpl.createStreamingResultSet
+            preparedStatement.setFetchSize(Integer.MIN_VALUE);
+
+            //PostgreSql中则需要关闭自动提交和设置setFetchSize
+            //connection.setAutoCommit(false);
+            //preparedStatement.setFetchSize(100000);
+
+            preparedStatement.setFetchDirection(ResultSet.FETCH_FORWARD);
+            resultSet = preparedStatement.executeQuery();
+            int count = 0;
+            while (resultSet.next()) {
+                count++;
+            }
+            long end = Instant.now().toEpochMilli();
+            logger.info("执行次数：{}", count);
+            logger.info("执行耗时：{}秒", (end - start) / 1000);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            close(connection, resultSet, preparedStatement);
+        }
+    }
+
+    private void close(Connection connection, ResultSet resultSet, Statement statement) {
+        try {
+            if (resultSet != null) {
+                resultSet.close();
+            }
+            if (statement != null) {
+                statement.close();
+            }
+            if (connection != null) {
+                connection.close();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    private Connection conn() throws SQLException {
+        String url = "jdbc:mysql://192.168.1.2/test?useUnicode=true&characterEncoding=utf8&autoReconnect=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=Asia/Shanghai&useSSL=false&allowMultiQueries=true&useCursorFetch=true";
+        String username = "root";
+        String password = "123456";
+        System.setProperty("jdbc.driver", "com.mysql.jdbc.Driver");
+        return DriverManager.getConnection(url, username, password);
+    }
+}
+
+```
