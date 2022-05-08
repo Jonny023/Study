@@ -157,3 +157,34 @@ psql -h localhost -U dba -d demo
 alter user test password '1234561';
 ```
 
+## 时区问题
+
+> 查看时区是否正确
+
+```bash
+# 正确的时间应该是11点，结果少了8小时
+select now();
+             now              
+------------------------------
+ 2022-05-08 03:24:34.82124+00
+
+# 查看时区
+show timezone;
+ TimeZone 
+----------
+ UTC
+(1 row)
+
+```
+
+## 修改时区配置
+
+> 修改时区为PRC，重启docker容器
+
+```sh
+vi //opt/greenplum/gpdata/master/gpseg-1/postgresql.conf
+
+# timezone = 'UTC'
+timezone = 'PRC'
+```
+
