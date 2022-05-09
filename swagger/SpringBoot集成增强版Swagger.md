@@ -318,10 +318,10 @@ public class UserController {
 # spring security放行
 
 ```java
-package cn.com.geely.oauth2.config;
+package cn.com.oauth2.config;
 
-import cn.com.geely.oauth2.contants.UrlExclude;
-import cn.com.geely.oauth2.service.MyUserDetailsService;
+import cn.com.oauth2.contants.UrlExclude;
+import cn.com.oauth2.service.MyUserDetailsService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
