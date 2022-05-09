@@ -314,3 +314,93 @@ public class UserController {
 * 返回类未声明范性
 * 数据封装过程中做了转换，被转换类和目标类的属性不一致，如：通过json字符转换为实体类，原本属性为`name`, 目标类为`label`
 
+
+# spring security放行
+
+```java
+package cn.com.geely.oauth2.config;
+
+import cn.com.geely.oauth2.contants.UrlExclude;
+import cn.com.geely.oauth2.service.MyUserDetailsService;
+import org.springframework.context.annotation.Bean;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.crypto.password.PasswordEncoder;
+
+import javax.annotation.Resource;
+import javax.sql.DataSource;
+
+/**
+ * @description:
+ * @author: jonny
+ * @date: 2021-03-22
+ */
+@EnableWebSecurity
+public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
+
+    @Resource
+    private DataSource dataSource;
+
+    @Resource
+    private PasswordEncoder passwordEncoder;
+
+    @Resource
+    private MyUserDetailsService userDetailsService;
+
+    @Override
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+        //用户查询
+        auth.userDetailsService(userDetailsService)
+            .passwordEncoder(passwordEncoder);
+
+    }
+
+    @Bean
+    @Override
+    public AuthenticationManager authenticationManagerBean() throws Exception {
+        return super.authenticationManagerBean();
+    }
+
+    /**
+     * 允许匿名访问所有接口 主要是 oauth 接口
+     *
+     * @param http
+     * @throws Exception
+     */
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
+        //关闭iframe校验
+        http.headers().frameOptions().disable();
+        http
+            .logout()
+            .clearAuthentication(true)
+            .and()
+            .requestMatchers().anyRequest()
+            .and()
+            .authorizeRequests()
+            .antMatchers(UrlExclude.URLS).permitAll()
+            .and().cors()
+            .and()
+            .csrf()
+            .disable();
+    }
+
+    /**
+     * 忽略认证的请求
+     *
+     * @param web
+     * @throws Exception
+     */
+    @Override
+    public void configure(WebSecurity web) throws Exception {
+        web.ignoring().antMatchers("/webjars/**", "/resources/**", "index.html", "/oauth/logout", "/oauth2/**","/user/**", "/**/hm.js?si="
+            , "/swagger", "/v2/api-docs", "/*.js", "/*.html", "/swagger-resources/**", "/swagger-ui.html/**", "/**/favicon.ico", "/api/auth/**", "/monitor/metrics"
+            , "/user/login/username/**", "/druid/**"
+        );
+    }
+}
+```
