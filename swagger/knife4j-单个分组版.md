@@ -91,7 +91,6 @@ public class SwaggerConfig {
 
 # 问题
 
-* 某些app.xxxx.js出现`failed to load response data`
 
 * Knife4j文档请求异常，控制台app.js报错`Cannot read property 'id' of null`
 
