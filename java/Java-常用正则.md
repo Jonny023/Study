@@ -252,3 +252,8 @@ boolean flag = pattern.matcher(str).find();
 Pattern.compile("^.*\\.(?:xls|xlsx|csv)$", Pattern.CASE_INSENSITIVE);
 ```
 
+## http地址
+
+```java
+String regex = "(ht|f)tp(s?)\\:\\/\\/[0-9a-zA-Z]([-.\\w]*[0-9a-zA-Z])*(:(0-9)*)*(\\/?)([a-zA-Z0-9\\-\\.\\?\\,\\'\\/\\\\&%\\+\\$#_=]*)?";
+```
