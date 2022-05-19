@@ -40,3 +40,10 @@ Resource resource = new ClassPathResource("/file");
         e.printStackTrace();
     }
 ```
+
+
+### jdk获取resources目录下的资源
+
+```java
+ClassLoader.getSystemResource("data").toURI()
+```
