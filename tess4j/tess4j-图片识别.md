@@ -17,6 +17,8 @@
     * chi_sim.traineddata - 中文
     * eng.traineddata - 英文
 
+> 字库文件可以放到项目下的resources资源目录下
+
 * demo代码
 
 ```java
