@@ -29,3 +29,19 @@ public static List<Integer> getIndexList(String s, char c) {
             .collect(Collectors.toList());
 }
 ```
+
+## 直接获取
+
+```java
+// a -> [a]
+// test a.b -> [test a,test a.b]
+
+public static List<String> getIndexList(String s, char c) {
+    List<String> list = IntStream.range(0, s.length())
+            .filter(index -> s.charAt(index) == c)
+            .mapToObj(i -> s.substring(0, i))
+            .collect(Collectors.toList());
+    list.add(s);
+    return list;
+}
+```
