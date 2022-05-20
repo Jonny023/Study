@@ -44,4 +44,17 @@ public static List<String> getIndexList(String s, char c) {
     list.add(s);
     return list;
 }
+
+//方式2
+public static List<String> getList(String s, char c) {
+    int len = s.length();
+    List<String> list = new ArrayList<>();
+    for (int i = 0; i < len; i++) {
+        if (c == s.charAt(i)) {
+            list.add(s.substring(0, i));
+        }
+    }
+    list.add(s);
+    return list;
+}
 ```
