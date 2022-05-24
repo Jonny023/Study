@@ -1,5 +1,7 @@
 # 糊涂工具创建zip
 
+## zip打包下载
+
 ```java
 package org.example.util;
 
@@ -40,5 +42,25 @@ public class ZipUtil {
             e.printStackTrace();
         }
     }
+}
+```
+
+## 读取zip写入本地磁盘
+
+```java
+
+public static void main(String[] args) {
+    String path = "D:\\file\\file.zip";
+    ZipFile zipFile = ZipUtil.toZipFile(new File(path), Charset.forName("GBK"));
+    //读取指定目录文件列表，根目录传null或""
+    List<String> listNames = ZipUtil.listFileNames(zipFile, "json");
+    System.out.println(listNames);
+
+    ZipUtil.read(zipFile, (zipEntry) -> {
+        final String name = zipEntry.getName();
+        InputStream inputStream = ZipUtil.getStream(zipFile, zipEntry);
+        FileUtil.writeFromStream(inputStream, new File("d:\\zipOut\\" + name), true);
+        System.out.println(name);
+    });
 }
 ```
