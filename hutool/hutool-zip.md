@@ -34,6 +34,7 @@ public class ZipUtil {
                 zipOutputStream.putNextEntry(new ZipEntry("file/" + file.getName()));
 
                 IoUtil.copy(inputStream, zipOutputStream);
+                inputStream.close();
                 zipOutputStream.flush();
 
             }
