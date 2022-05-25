@@ -63,5 +63,10 @@ public static void main(String[] args) {
         FileUtil.writeFromStream(inputStream, new File("d:\\zipOut\\" + name), true);
         System.out.println(name);
     });
+    
+    //读取zip中指定路径文件
+    InputStream inputStream = ZipUtil.get(zipFile, "project.json");
+    String jsonString = IOUtils.toString(inputStream, StandardCharsets.UTF_8);
+    System.out.println(jsonString);
 }
 ```
