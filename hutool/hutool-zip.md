@@ -68,5 +68,6 @@ public static void main(String[] args) {
     InputStream inputStream = ZipUtil.get(zipFile, "project.json");
     String jsonString = IOUtils.toString(inputStream, StandardCharsets.UTF_8);
     System.out.println(jsonString);
+    zipFile.close();
 }
 ```
