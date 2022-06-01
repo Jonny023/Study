@@ -9,6 +9,9 @@
 synchronized:
 
 * monitor，waitset，monitorenter monitorexit 
+* 如果是静态方法锁的是Class对象
+* 同步代码块，锁的是括号里的对象
+* 非静态方法，锁的是当前类的实例对象
 
 cas：
 
