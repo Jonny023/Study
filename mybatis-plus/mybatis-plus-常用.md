@@ -11,6 +11,20 @@ mybatis-plus:
     mapUnderscoreToCamelCase: true
 ```
 
+## 打印sql
+
+```java
+# 方式一
+mybatis-plus:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl 
+    
+# 方式二 application.yml 中增加配置，指定 mapper 文件所在的包
+logging:
+  level:
+    com.baomidou.example.mapper: debug
+```
+
 ## 注解
 
 ```java
