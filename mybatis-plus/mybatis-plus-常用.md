@@ -26,4 +26,145 @@ private String id;
 
 //表名
 @TableName(value = "user")
+
+//逻辑删除
+@TableLogic
+private Boolean deleted;
+
+//自动赋值，日期可以自动赋值，userId需要自己实现MetaObjectHandler接口
+@TableField(fill = FieldFill.INSERT_UPDATE)
+private LocalDateTime createTime;
+```
+
+## 自动赋值
+
+* 示例
+
+```java
+
+package com.example.mybatis.domain;
+
+import com.baomidou.mybatisplus.annotation.*;
+
+import java.time.LocalDateTime;
+
+/**
+ * @author test
+ */
+@TableName("user")
+public class User {
+
+    @TableId(type = IdType.AUTO)
+    private Long id;
+
+    private LocalDateTime birthday;
+
+    private String addr;
+
+    private Double score;
+
+    @TableField(fill = FieldFill.INSERT_UPDATE)
+    private LocalDateTime createTime;
+
+    @TableLogic
+    private Boolean deleted;
+
+    @TableField(fill = FieldFill.INSERT_UPDATE)
+    private Long updator;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public LocalDateTime getBirthday() {
+        return birthday;
+    }
+
+    public void setBirthday(LocalDateTime birthday) {
+        this.birthday = birthday;
+    }
+
+    public String getAddr() {
+        return addr;
+    }
+
+    public void setAddr(String addr) {
+        this.addr = addr;
+    }
+
+    public Double getScore() {
+        return score;
+    }
+
+    public void setScore(Double score) {
+        this.score = score;
+    }
+
+    public LocalDateTime getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(LocalDateTime createTime) {
+        this.createTime = createTime;
+    }
+
+    public Boolean getDeleted() {
+        return deleted;
+    }
+
+    public void setDeleted(Boolean deleted) {
+        this.deleted = deleted;
+    }
+
+    public Long getUpdator() {
+        return updator;
+    }
+
+    public void setUpdator(Long updator) {
+        this.updator = updator;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", birthday=" + birthday +
+                ", addr='" + addr + '\'' +
+                ", score=" + score +
+                ", createTime=" + createTime +
+                ", deleted=" + deleted +
+                ", updator=" + updator +
+                '}';
+    }
+}
+```
+
+* 扩展实现
+
+```java
+package com.example.mybatis.handler;
+
+import com.baomidou.mybatisplus.core.handlers.MetaObjectHandler;
+import org.apache.ibatis.reflection.MetaObject;
+import org.springframework.stereotype.Component;
+
+@Component
+public class ExtMetaObjectHandler implements MetaObjectHandler {
+
+    private Long userId = 1L;
+
+    @Override
+    public void insertFill(MetaObject metaObject) {
+        this.strictInsertFill(metaObject, "updator", Long.class, userId);
+    }
+
+    @Override
+    public void updateFill(MetaObject metaObject) {
+        this.strictUpdateFill(metaObject, "updator", Long.class, userId);
+    }
+}
 ```
