@@ -32,6 +32,7 @@ private String id;
 private Boolean deleted;
 
 //自动赋值，日期可以自动赋值，userId需要自己实现MetaObjectHandler接口
+//自动赋值3.5.1版本日期类无需扩展即可赋值，低版本不确定是否需要手动赋值
 @TableField(fill = FieldFill.INSERT_UPDATE)
 private LocalDateTime createTime;
 ```
