@@ -123,3 +123,6 @@ SELECT userid as 账号,date_format(sendtime, '%Y%m%d') as 日期,count(case err
 select userid, date_format(sendtime, '%Y%m%d'), SUM(IF(errorcode='SUCC', 1, 0)) AS SUCC数量, SUM(IF(errorcode='FAIL', 1, 0)) AS FAIL数量 from mt_rvok group by userid, date_format(sendtime, '%Y%m%d')
 ```
 
+### 日期分组查询
+
+[日期每7天一组](https://blog.csdn.net/manitod/article/details/122087011)
