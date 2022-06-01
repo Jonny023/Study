@@ -13,7 +13,7 @@ mybatis-plus:
 
 ## 打印sql
 
-```java
+```yaml
 # 方式一
 mybatis-plus:
   configuration:
