@@ -17,3 +17,14 @@ Consider defining a bean of type 'springfox.documentation.schema.TypeNameExtract
 > 原因：项目用了多模块，多环境`@Profile()`，环境需要指定具体应用的配置
 >
 > `java -jar demo.jar --spring.profiles.active=dev,swagger`
+
+### NPE空指针问题
+
+> 不同的springboot版本路径匹配不同，高坂本用knife4j报错，则需要修改配置
+
+```yaml
+spring:
+  mvc:
+    pathmatch:
+      matching-strategy: ANT_PATH_MATCHER
+```
