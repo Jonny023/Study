@@ -20,7 +20,7 @@ Consider defining a bean of type 'springfox.documentation.schema.TypeNameExtract
 
 ### NPE空指针问题
 
-> 不同的springboot版本路径匹配不同，高坂本用knife4j报错，则需要修改配置
+> 不同的springboot版本路径匹配不同，高版本用knife4j报错，则需要修改配置
 
 ```yaml
 spring:
