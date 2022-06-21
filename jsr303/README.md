@@ -373,3 +373,12 @@ public ObjectMapper objectMapper() {
 }
 ```
 
+
+
+# 其他
+
+[aop拦截并记录错误1](https://blog.csdn.net/qq_36762677/article/details/83001451)
+
+[aop拦截并记录错误2](https://segmentfault.com/a/1190000021082382)
+
+[aop拦截并记录错误3](https://juejin.cn/post/6844904153672744967)
