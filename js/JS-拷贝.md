@@ -15,6 +15,9 @@ obj_back.id = 20;
 var obj = {id: 1, age: 20};
 var obj_bak = JSON.parse(JSON.stringify(obj));
 // obj_bak为{id: 1, age: 20}
+
+//深拷贝obj
+let cpobj = {...obj};
 ```
 
 ### 注意
