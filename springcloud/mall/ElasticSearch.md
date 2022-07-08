@@ -2,7 +2,7 @@
 
 [官网地址](https://www.elastic.co/cn/elasticsearch/)
 
-
+[文档地址](https://www.elastic.co/guide/en/elasticsearch/reference/current/index.html)
 
 ### 概念
 
@@ -177,5 +177,415 @@ POST /_bulk
 {"name": "小明"}
 {"update": {"_index": "sys", "_type": "user", "_id": "4"}}
 {"doc": {"name": "小丽"}}
+```
+
+
+
+#### 进阶检索
+
+[官方文档](https://www.elastic.co/guide/en/elasticsearch/reference/7.5/getting-started-search.html)
+
+##### 检索
+
+* 检索1
+
+> url参数
+
+```sh
+GET /bank/_search?q=*&&sort=account_number:asc
+```
+
+* 检索2(QueryDSL)
+
+> 请求体
+
+```sh
+GET /bank/_search
+{
+  "query": {
+    "match_all": {}
+  },
+  "sort": [
+    {
+      "account_number": "asc",
+      "age": "desc"
+    }
+  ]
+}
+```
+
+##### 分页
+
+> from，size
+
+```json
+GET /bank/_search
+{
+  "query": {
+    "match_all": {}
+  },
+  "sort": [
+    {
+      "balance": {
+        "order": "desc"
+      }
+    }
+  ],
+  "from": 5,
+  "size": 5
+}
+```
+
+##### 返回字段
+
+> _source
+
+```sh
+GET /bank/_search
+{
+  "query": {
+    "match_all": {}
+  },
+  "sort": [
+    {
+      "balance": {
+        "order": "desc"
+      }
+    }
+  ],
+  "from": 5,
+  "size": 5,
+  "_source": [
+    "firstname",
+    "age",
+    "balance"
+  ]
+}
+```
+
+##### match
+
+> 全文检索
+
+```sh
+GET /bank/_search
+{
+  "query": {
+    "match": {
+      "address": "Kings"
+    }
+  }
+}
+```
+
+##### match_parse
+
+> 匹配短语，不可分割
+
+```sh
+GET /bank/_search
+{
+  "query": {"match_phrase": {
+    "address": "mill lane"
+  }}
+}
+```
+
+##### multi_match
+
+> 多字段匹配，会分词
+
+```sh
+GET /bank/_search
+{
+  "query": {
+    "multi_match": {
+      "query": "mill",
+      "fields": [
+        "address",
+        "city"
+      ]
+    }
+  }
+}
+
+# 属性.keyword实现精确查询
+GET /bank/_search
+{
+  "query": {
+    "multi_match": {
+      "query": "Nogal",
+      "fields": [
+        "address.keyword",
+        "city.keyword"
+      ]
+    }
+  }
+}
+```
+
+##### 复合查询
+
+```sh
+GET /bank/_search
+{
+  "query": {
+    "bool": {
+      "must": [
+        {
+          "match": {
+            "gender": "M"
+          }
+        },
+        {
+          "match": {
+            "address": "mill"
+          }
+        }
+      ],
+      "must_not": [
+        {
+          "match": {
+            "age": "20"
+          }
+        }
+      ],
+      "should": [
+        {
+          "match": {
+            "lastname": "Holland"
+          }
+        }
+      ]
+    }
+  }
+}
+```
+
+##### filter(结果过滤)
+
+> 不会计算相关性得分
+
+```sh
+GET /bank/_search
+{
+  "query": {
+    "bool": {
+      "filter": [
+        {
+          "range": {
+            "age": {
+              "gte": 20,
+              "lte": 30
+            }
+          }
+        }
+      ]
+    }
+  }
+}
+```
+
+##### term
+
+> 精确查询用term(非text字段)，如age，**全文检索用match，非全文检索用term**
+
+```sh
+GET /bank/_search
+{
+  "query": {
+    "term": {
+      "state": "va"
+    }
+  }
+}
+```
+
+##### aggregations(聚合)
+
+[官方文档](https://www.elastic.co/guide/en/elasticsearch/reference/7.5/search-aggregations-metrics.html)
+
+```sh
+## 按年龄聚合，平均工资，平均年龄，size: 0只查看聚合数据
+GET /bank/_search
+{
+  "query": {
+    "match": {
+      "address": "mill"
+    }
+  },
+  "aggs": {
+    "aggAgg": {
+      "terms": {
+        "field": "age",
+        "size": 10
+      }
+    },
+    "ageAvg": {
+      "avg": {
+        "field": "age"
+      }
+    },
+    "balanceAvg": {
+      "avg": {
+        "field": "balance"
+      }
+    }
+  },
+  "size": 0
+}
+
+## 按照年龄聚合，并求这些人的平均工资
+GET /bank/_search
+{
+  "query": {
+    "match_all": {}
+  },
+  "aggs": {
+    "ageAgg": {
+      "terms": {
+        "field": "age",
+        "size": 1000
+      },
+      "aggs": {
+        "blanceAvg": {
+          "avg": {
+            "field": "balance"
+          }
+        }
+      }
+    }
+  },
+  "size": 0
+}
+
+## 统计不同年龄人数，不同年龄男女人数，以及男女平均工资
+GET /bank/_search
+{
+  "query": {
+    "match_all": {}
+  },
+  "aggs": {
+    "avgAgg": {
+      "terms": {
+        "field": "age"
+      },
+      "aggs": {
+        "genderAgg": {
+          "terms": {
+            "field": "gender.keyword",
+            "size": 10
+          },
+          "aggs": {
+            "blanceAgg": {
+              "avg": {
+                "field": "balance"
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "size": 0
+}
+
+```
+
+#### Mapping
+
+[官方文档](https://www.elastic.co/guide/en/elasticsearch/reference/7.5/mapping-types.html)
+
+> 6.0以后移除了类型的概念，去除type为了提高ES效率
+>
+> Mapping相当于声明数据字段类型
+
+```sh
+## 查看映射类型
+GET /bank/_mapping
+
+## 创建索引并映射
+PUT /my-index
+{
+  "mappings": {
+    "properties": {
+      "age": {"type": "integer"},
+      "email": {"type": "keyword"},
+      "name": {"type": "text"}
+    }
+  }
+}
+
+## 给索引添加新字段
+PUT /my-index/_mapping
+{
+  "properties": {
+    "employee-id": {
+      "type": "keyword",
+      "index": false
+    }
+  }
+}
+
+## 想要更新映射需要创建新的索引，然后通过数据迁移把数据迁移过来
+PUT /newbank
+{
+  "mappings": {
+    "properties": {
+      "account_number": {
+        "type": "long"
+      },
+      "address": {
+        "type": "text"
+      },
+      "age": {
+        "type": "long"
+      },
+      "balance": {
+        "type": "long"
+      },
+      "city": {
+        "type": "text"
+      },
+      "email": {
+        "type": "text"
+      },
+      "employer": {
+        "type": "text"
+      },
+      "firstname": {
+        "type": "text"
+      },
+      "gender": {
+        "type": "text"
+      },
+      "lastname": {
+        "type": "text"
+      },
+      "state": {
+        "type": "text"
+      }
+    }
+  }
+}
+```
+
+##### 数据迁移
+
+```sh
+##固定写法
+POST _reindex 
+
+## 将bank下的account迁移到newbank
+POST _reindex
+{
+  "source": {
+    "index": "bank",
+    "type": "account"
+  },
+  "dest": {
+    "index": "newbank"
+  }
+}
 ```
 
