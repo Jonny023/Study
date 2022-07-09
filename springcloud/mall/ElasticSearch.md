@@ -52,6 +52,16 @@ docker run --name es -p 9200:9200 -p 9300:9300 \
 -v /mydata/elasticsearch/data:/usr/share/elasticsearch/data \
 -v /mydata/elasticsearch/plugins:/usr/share/elasticsearch/plugins \
 -d elasticsearch:7.4.2
+
+# 增大内存
+docker run --name es -p 9200:9200 -p 9300:9300 \
+-e TZ=Asia/Shanghai \
+-e "discovery.type=single-node" \
+-e ES_JAVA_OPTS="-Xms64m -Xmx512m" \
+-v /mydata/elasticsearch/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml \
+-v /mydata/elasticsearch/data:/usr/share/elasticsearch/data \
+-v /mydata/elasticsearch/plugins:/usr/share/elasticsearch/plugins \
+-d elasticsearch:7.4.2
 ```
 
 #### 安装
@@ -587,5 +597,130 @@ POST _reindex
     "index": "newbank"
   }
 }
+```
+
+#### 分词器
+
+[官方测试](https://www.elastic.co/guide/en/elasticsearch/reference/7.5/test-analyzer.html)
+
+> 默认只支持英文分词，中文分词需要安装分词器
+
+[IK分词器](https://github.com/medcl/elasticsearch-analysis-ik)
+
+
+
+
+
+##### 安装分词器
+
+> 分词器要和es版本一致，可以通过http://ip:9200查看es版本
+
+```sh
+# 安装wget
+yum install wget
+
+# 可以直接命令下载，也可以外部下载再上传
+wget https://github.com/medcl/elasticsearch-analysis-ik/releases/download/v7.4.2/elasticsearch-analysis-ik-7.4.2.zip
+
+# 查看zip文件内容
+unzip -l elasticsearch-analysis-ik-7.4.2.zip
+
+# 解压
+unzip elasticsearch-analysis-ik-7.4.2.zip -d /mydata/elasticsearch/plugins/ik
+
+# 删除文件，不然无法启动
+rm -f elasticsearch-analysis-ik-7.4.2.zip
+
+# 修改权限
+chmod 777 -R ik
+
+# 重启es
+```
+
+
+
+##### 使用分词器
+
+```sh
+# 内置分词器
+POST /_analyze
+{
+  "analyzer": "standard",
+  "text": "Hello world , how are you?"
+}
+
+# ik分词
+POST /_analyze
+{
+  "analyzer": "ik_smart",
+  "text": "好好学习天天向上"
+}
+
+POST /_analyze
+{
+  "analyzer": "ik_max_word",
+  "text": "好好学习天天向上"
+}
+```
+
+
+
+##### 安装nginx
+
+```sh
+mkdir -p /mydata/nginx
+
+# 启动一个容器
+docker run -p 80:80 --name nginx -d nginx:1.10
+
+cd /mydata/nginx
+
+# 拷贝配置到容器外部
+docker cp nginx:/etc/nginx .
+
+# 删除容器
+docker rm -f nginx
+
+mv nginx conf
+
+chmod 777 -R /mydata/nginx/
+
+# 启动一个新容器
+docker run -p 80:80 --name nginx \
+-v /mydata/nginx/html:/usr/share/nginx/html \
+-v /mydata/nginx/logs:/var/log/nginx \
+-v /mydata/nginx/conf:/etc/nginx \
+-d nginx:1.10
+```
+
+##### 创建es分词资源
+
+```sh
+cd /mydata/nginx/html
+
+mkdir -p es
+
+cd es
+
+vi fenci.txt
+
+# 输入内容
+尚硅谷
+人民政府
+
+# 访问地址
+ip:80/es/fenci.txt
+```
+
+#### 自定义分词
+
+```sh
+vi /mydata/elasticsearch/plugins/ik/config/IKAnalyzer.cfg.xml
+
+# 配置远程分词地址
+<entry key="remote_ext_dict">http://192.168.56.111/es/fenci.txt</entry>
+
+# 重启docker容器
+docker restart es
 ```
 
