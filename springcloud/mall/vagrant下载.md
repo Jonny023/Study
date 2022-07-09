@@ -12,6 +12,9 @@ setx VAGRANT_HOME "G:\developer\vms\os1" /M
 # 想要保存到哪里，就到哪个路径下执行命令
 vagrant init centos/7
 
+# 如果默认下载慢，可以用第三方镜像：https://mirrors.ustc.edu.cn/centos-cloud/centos/7/vagrant/x86_64/images/
+vagrant init centos7 https://mirrors.ustc.edu.cn/centos-cloud/centos/7/vagrant/x86_64/images/CentOS-7.box
+
 # 删除虚拟机
 vagrant destroy
 
@@ -33,6 +36,16 @@ vagrant reload
 # 配置虚拟机固定ip,因为默认用的是nat【端口转发】，访问不方便，建议配置host-only的ip
 # 编辑文件Vagrantfile，配置ip部分，具体网段请查看ipconfig【虚拟网卡网段】
 config.vm.network "private_network", ip: "192.168.56.111"
+
+# 编辑配置配置dns和网关
+vi /etc/sysconfig/network-scripts/ifcfg-eth1
+GATEWAY=192.168.56.1
+DNS1=114.114.114.114
+DNS2=8.8.8.8
+
+# 重启网卡
+systemctl restart network
+service network restart
 
 # 默认用户名和密码：vagrant
 # 对应root用户的密码：vagrant
@@ -64,6 +77,55 @@ PermitRootLogin yes
 
 # 重启服务
 sudo systemctl restart sshd
+
+
+# 修改时区
+rm -rf /etc/localtime
+ln -s /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
+
+
+
+
+# 更新yum源
+## 1.进入yum源配置目录
+
+cd /etc/yum.repos.d
+
+## 2. 备份原来的yum源，便于恢复，改啥都得留个备份，万一玩儿了还能恢复
+
+mv CentOS-Base.repo CentOS-Base.repo.bk
+
+## 3. 下载新的CentOS-Base.repo 到/etc/yum.repos.d/
+## 更新为阿里云的源
+wget -O /etc/yum.repos.d/CentOS-Base.repo http://mirrors.aliyun.com/repo/Centos-7.repo
+## 更新为163的源
+wget -O /etc/yum.repos.d/CentOS-Base.repo http://mirrors.163.com/.help/CentOS6-Base-163.repo
+## 更新为搜狐的源
+wget -O /etc/yum.repos.d/CentOS-Base.repo http://mirrors.sohu.com/help/CentOS-Base-sohu.repo
+
+## 4、运行yum makecache生成缓存
+yum clean all
+yum makecache
+
+
+
+# 时间同步，如果centos时间和windows时间不一致
+date -R
+
+# （查看时间状态）
+timedatectl
+
+#  (将时钟调整为与本地时钟一致, 0 为设置为 UTC 时间)
+timedatectl set-local-rtc 1
+
+#  （设置系统时区为上海）
+timedatectl set-timezone Asia/Shanghai
+
+# 安装ntp
+yum -y install ntp
+
+# 同步
+ntpdate ntp1.aliyun.com
 ```
 
 

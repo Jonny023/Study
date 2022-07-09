@@ -62,6 +62,9 @@ docker run --name es -p 9200:9200 -p 9300:9300 \
 -v /mydata/elasticsearch/data:/usr/share/elasticsearch/data \
 -v /mydata/elasticsearch/plugins:/usr/share/elasticsearch/plugins \
 -d elasticsearch:7.4.2
+
+# 开机自启
+docker update es --restart=always
 ```
 
 #### 安装
@@ -724,3 +727,8 @@ vi /mydata/elasticsearch/plugins/ik/config/IKAnalyzer.cfg.xml
 docker restart es
 ```
 
+
+
+#### Java High Level Rest Client
+
+[官方文档](https://www.elastic.co/guide/en/elasticsearch/client/java-rest/7.5/java-rest-high-getting-started.html)
