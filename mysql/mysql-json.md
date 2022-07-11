@@ -27,3 +27,32 @@ update demo set text = json_insert(
 );
 ```
 
+
+
+### json数组
+
+```sql
+select json from test;
+
+-- 第2个参数必须为json格式中的内容
+select * from test where JSON_CONTAINS(json->'$[*].id', '"1001"', '$');
+
+-- "$[1].id"
+select JSON_SEARCH(json, 'all', '1002') from test ;
+
+-- 精确匹配
+select * from test where JSON_SEARCH(json, 'all', '1002') is not null;
+
+-- 模糊匹配
+select * from test where JSON_SEARCH(json, 'all', '100%') is not null;
+
+
+select * from (select '{"id": "1001", "name": "张三"}' as json) temp where JSON_EXTRACT(json, '$.id') = '1001';
+
+-- "$[0].id"
+select json_search('[{"id": "1001", "name": "张三"},{"id": "1002", "name": "李四"}]', 'all', '1001%');
+
+-- ["1001", "1002"]
+select JSON_EXTRACT('[{"id": "1001", "name": "张三"},{"id": "1002", "name": "李四"}]', '$**.id');
+```
+
