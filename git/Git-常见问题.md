@@ -42,7 +42,28 @@ git remote prune origin
 git config --global http.sslverify false
 ```
 
-## github访问慢
+### github访问慢
 
 > 安装`fastgithub`
+
+
+
+### No1
+
+> 更新git到最新，提交代码提示不是安全目录
+
+> $ git add -A
+> fatal: detected dubious ownership in repository at 'J:/github/Study'
+> To add an exception for this directory, call:
+>
+>         git config --global --add safe.directory J:/github/Study
+>
+> Set the environment variable GIT_TEST_DEBUG_UNSAFE_DIRECTORIES=true and run
+> again for more information.
+
+* 解决方案
+
+```sh
+git config --global --add safe.directory "*"
+```
 
