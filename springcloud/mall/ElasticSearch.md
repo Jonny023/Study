@@ -694,6 +694,14 @@ docker run -p 80:80 --name nginx \
 -v /mydata/nginx/logs:/var/log/nginx \
 -v /mydata/nginx/conf:/etc/nginx \
 -d nginx:1.10
+
+
+# nginx proxy_pass丢失host
+location / {
+	# 携带host
+	proxy_set_header Host $host;
+	proxy_pass http://127.0.0.1:88;
+}
 ```
 
 ##### 创建es分词资源
