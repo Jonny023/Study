@@ -1,3 +1,158 @@
+## 多字段排序
+
+### 实体类
+
+```java
+package com.example.demo.domain.entity;
+
+import lombok.Builder;
+import lombok.Data;
+
+@Data
+@Builder
+public class Student {
+
+    private Long id;
+    private String stuName;
+    private Integer age;
+    private Double score;
+    private Integer height;
+
+}
+```
+
+### 示例
+
+```java
+package com.example.demo.test;
+
+import com.example.demo.domain.entity.Student;
+import lombok.Builder;
+import lombok.Data;
+import org.junit.Test;
+
+import java.util.Arrays;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Objects;
+
+import static java.lang.System.out;
+
+public class Demo {
+
+    public static final String AGE = "age";
+    public static final String HEIGHT = "height";
+    public static final String SCORE = "score";
+
+    @Data
+    @Builder
+    public static class Sort {
+        /**
+         * 排序字段
+         */
+        private String fieldName;
+        /**
+         * 排序规则：asc/desc
+         */
+        private SortEnum sort;
+
+        public enum SortEnum {
+            ASC,DESC
+        }
+    }
+
+    /**
+     *  多字段动态排序
+     */
+    @Test
+    public void exe() {
+        List<Student> list = getList();
+        List<Sort> sorts = getSorts();
+        Comparator<Student> comparator = null;
+        int count = 0;
+        for (Sort sort : sorts) {
+            if (count == 0) {
+                comparator = firstSort(sort);
+            } else {
+                thenOtherSort(comparator, sort);
+            }
+            count++;
+        }
+
+        out.println("原集合: " + list);
+
+        //排序
+        list.sort(comparator);
+        out.println("排序后的集合: " + list);
+    }
+
+    /**
+     *  其他排序
+     * @param comparator
+     * @param sort
+     */
+    private void thenOtherSort(Comparator<Student> comparator, Sort sort) {
+        switch (sort.getFieldName()) {
+            case AGE:
+                comparator = comparator.thenComparing(Student::getAge);
+                break;
+            case HEIGHT:
+                comparator = comparator.thenComparing(Student::getHeight);
+                break;
+            case SCORE:
+                comparator = comparator.thenComparing(Student::getScore);
+                break;
+            default:
+                break;
+        }
+        if (Sort.SortEnum.DESC == sort.getSort()) {
+            comparator = comparator.reversed();
+        }
+    }
+
+    /**
+     *  第一排序
+     * @param sort
+     */
+    private Comparator<Student> firstSort(Sort sort) {
+        Comparator<Student> comparator = null;
+        switch (sort.getFieldName()) {
+            case AGE:
+                comparator = Comparator.comparing(Student::getAge);
+                break;
+            case HEIGHT:
+                comparator = Comparator.comparing(Student::getHeight);
+                break;
+            case SCORE:
+                comparator = Comparator.comparing(Student::getScore);
+                break;
+            default:
+                break;
+        }
+        if (Sort.SortEnum.DESC == sort.getSort()) {
+            comparator = Objects.requireNonNull(comparator).reversed();
+        }
+        return comparator;
+    }
+
+    private List<Sort> getSorts() {
+        return Arrays.asList(
+                Sort.builder().fieldName(AGE).sort(Sort.SortEnum.ASC).build(),
+                Sort.builder().fieldName(SCORE).sort(Sort.SortEnum.DESC).build(),
+                Sort.builder().fieldName(HEIGHT).sort(Sort.SortEnum.DESC).build()
+        );
+    }
+
+    private List<Student> getList() {
+        return Arrays.asList(
+                Student.builder().id(1L).stuName("小张").age(20).score(80D).height(180).build(),
+                Student.builder().id(1L).stuName("小明").age(22).score(94D).height(165).build(),
+                Student.builder().id(1L).stuName("小慧").age(17).score(76D).height(169).build()
+        );
+    }
+}
+```
+
 ## 冒泡排序
 
 * 循环比较前后两个值的大小，比较`n * n`次，通过中间变量交换值
