@@ -1,5 +1,7 @@
 ## springboot-日期转换器
 
+> 实体类入参定义为：前端传字符串的日期自动转换为LocalDate、LocalDateTime
+
 ```java
 package com.example.springbootdemo.config;
 
