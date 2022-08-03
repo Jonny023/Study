@@ -28,6 +28,15 @@ System.out.println("开始时间：" + minDate);
 System.out.println("结束时间：" + maxDate);
 ```
 
+### 获取指定日期当月第一天和最后一天
+
+```java
+DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+LocalDate now = LocalDate.parse("2021-06-20", dateTimeFormatter);
+LocalDateTime beginDateTime = LocalDateTime.of(now.with(TemporalAdjusters.firstDayOfMonth()), LocalTime.MIN);
+LocalDateTime endDateTime = LocalDateTime.of(now.with(TemporalAdjusters.lastDayOfMonth()), LocalTime.MAX);
+```
+
 ### 日期工具（获取指定周第一天和最后一天[国外]）
 
 ```java
