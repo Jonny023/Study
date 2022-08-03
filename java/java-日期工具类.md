@@ -37,6 +37,12 @@ LocalDateTime beginDateTime = LocalDateTime.of(now.with(TemporalAdjusters.firstD
 LocalDateTime endDateTime = LocalDateTime.of(now.with(TemporalAdjusters.lastDayOfMonth()), LocalTime.MAX);
 ```
 
+### 计算日期天数
+
+```java
+long days = ChronoUnit.DAYS.between(beginDateTime, endDateTime);
+```
+
 ### 日期工具（获取指定周第一天和最后一天[国外]）
 
 ```java
@@ -382,7 +388,7 @@ public class DateUtil {
 }
 ```
 
-## 将秒转为天时分秒字符串
+### 将秒转为天时分秒字符串
 
 ```java
 /**
