@@ -13,6 +13,10 @@ System.out.println(System.currentTimeMillis());
 
 ```java
 
+LocalDateTime localDateTime = LocalDateTime.now();
+LocalDateTime minTime = localDateTime.with(LocalTime.MIN);
+LocalDateTime maxTime = localDateTime.with(LocalTime.MAX);
+
 LocalDateTime startTime = LocalDateTime.now().withHour(0).withMinute(0).withSecond(0).withNano(0);
 LocalDateTime endTime = LocalDateTime.now().withHour(23).withMinute(59).withSecond(59).withNano(999999999);
 
