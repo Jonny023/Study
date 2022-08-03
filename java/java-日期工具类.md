@@ -1,4 +1,23 @@
-## 日期工具（获取指定周第一天和最后一天[国外]）
+## 日期工具
+
+### 获取日期毫秒
+
+```java
+System.out.println(Clock.systemDefaultZone().millis());
+System.out.println(Clock.systemUTC().millis());
+System.out.println(Instant.now().toEpochMilli());
+System.out.println(System.currentTimeMillis());
+```
+
+### 一天的开始0点和结束23点
+
+```java
+
+LocalDateTime startTime = LocalDateTime.now().withHour(0).withMinute(0).withSecond(0).withNano(0);
+LocalDateTime endTime = LocalDateTime.now().withHour(23).withMinute(59).withSecond(59).withNano(999999999);
+```
+
+### 日期工具（获取指定周第一天和最后一天[国外]）
 
 ```java
 package com.groovy;
