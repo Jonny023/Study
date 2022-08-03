@@ -3,6 +3,10 @@
 ## 日期函数
 
 ```sql
+
+ -- 近30天，不包含今天
+ select * from tab where date(data_time) between DATE_SUB(DATE_SUB(now(), interval 1 day), interval 30 day) and DATE_SUB(now(), interval 1 day)
+
 -- 字符转日期
 select str_to_date('2021/12/21', '%Y/%m/%d') as day;
 
