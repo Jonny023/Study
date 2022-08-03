@@ -15,6 +15,17 @@ System.out.println(System.currentTimeMillis());
 
 LocalDateTime startTime = LocalDateTime.now().withHour(0).withMinute(0).withSecond(0).withNano(0);
 LocalDateTime endTime = LocalDateTime.now().withHour(23).withMinute(59).withSecond(59).withNano(999999999);
+
+LocalDateTime min = LocalDateTime.of(LocalDate.now(), LocalTime.MIN);
+LocalDateTime max = LocalDateTime.of(LocalDate.now(), LocalTime.MAX);
+Date minDate = Date.from(min.atZone(ZoneId.systemDefault()).toInstant());
+Date maxDate = Date.from(max.atZone(ZoneId.systemDefault()).toInstant());
+
+System.out.println("开始时间：" + min);
+System.out.println("结束时间：" + max);
+
+System.out.println("开始时间：" + minDate);
+System.out.println("结束时间：" + maxDate);
 ```
 
 ### 日期工具（获取指定周第一天和最后一天[国外]）
