@@ -17,6 +17,16 @@
   ```bash
   vi /etc/sysconfig/network-scripts/ifcfg-ens33
   ```
+  
+ * 文件内容查找
+ 
+ ```sh
+ # 查找置顶目录下所有文件内容包含字符
+find ./ -name "*" | xargs grep "8001"
+
+# 查找文件是否包含指定字符
+grep "keyword" file
+ ```
 
 * 重启网卡
 
