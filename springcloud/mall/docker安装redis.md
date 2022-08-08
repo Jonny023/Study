@@ -30,6 +30,6 @@ appendonly yes
 ### 重启服务
 
 ```
-docker redstart redis
+docker restart redis
 ```
 
