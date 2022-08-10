@@ -7,6 +7,14 @@
 ## 1.配置环境变量
 
 > 配置好后验证：`python --version`
+> dos输入python打开了应用商店
+
+```shell
+# 通过where命令找到python.exe路径，删除其他路径的文件
+C:\Users\admin>where python
+C:\Users\admin\AppData\Local\Microsoft\WindowsApps\python.exe
+D:\devtools\python-3.10.6\python.exe
+```
 
 ```shell
 path D:\devtools\python-3.9.9
