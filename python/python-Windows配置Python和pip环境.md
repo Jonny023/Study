@@ -47,3 +47,7 @@ pip --version
 pip3 --version
 ```
 
+## pip不是内部或外部命令
+
+* 配置环境变量：D:\devtools\python-3.10.6\Scripts
+
