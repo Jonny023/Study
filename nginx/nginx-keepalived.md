@@ -1,5 +1,7 @@
 ## keepalived +nginx(docker-compose)主备高可用
 
+> keepalived仅支持两台主机形成主备，不能做更多机器的集群，先要实现需要使用lvs
+
 
 
 |     节点          | ip              | port |
