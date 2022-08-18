@@ -1,5 +1,7 @@
 ## SpringBoot动态更新数据库url
 
+[参考](https://icode.best/i/00350443878337)
+
 > 项目在运行过程中，动态更新数据库url,username,password，实现可以通过druid连接池的restart()方法实现，配置数据源保存在服务器本地用户目录下
 
 ### 准备
