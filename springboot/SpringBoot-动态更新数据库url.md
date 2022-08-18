@@ -10,7 +10,7 @@ CREATE TABLE `user` (
     `id` bigint NOT NULL AUTO_INCREMENT,
     `username` varchar(100) DEFAULT NULL,
     PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4;
 
 INSERT INTO test2.`user` (id, username) VALUES(1, 'zhangsan');
 
@@ -21,7 +21,7 @@ CREATE TABLE `user` (
     `id` bigint NOT NULL AUTO_INCREMENT,
     `username` varchar(100) DEFAULT NULL,
     PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4;
 INSERT INTO test2.`user` (id, username) VALUES(1, 'lisi');
 ```
 
