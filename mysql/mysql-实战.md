@@ -126,3 +126,46 @@ select userid, date_format(sendtime, '%Y%m%d'), SUM(IF(errorcode='SUCC', 1, 0)) 
 ### 日期分组查询
 
 [日期每7天一组](https://blog.csdn.net/manitod/article/details/122087011)
+
+
+### 例四
+
+```sql
+-- 方式1
+SELECT
+	stu_name
+FROM
+	student x
+group by
+	stu_name
+HAVING
+	min(score) > 80;
+
+-- 方式2
+select
+	distinct stu_name
+from
+	student s1
+where
+	not exists (
+	select
+		s2.stu_name
+	from
+		student s2
+	where
+		s1.stu_name = s2.stu_name
+		and s2.score <= 80
+	group by
+		stu_name);
+		
+-- 方式3
+select
+	distinct a.stu_name
+from
+	student a
+left join student b on
+	a.stu_name = b.stu_name
+	and b.score <= 80
+where
+	b.id is null;
+```
