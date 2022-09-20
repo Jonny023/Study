@@ -130,6 +130,8 @@ select userid, date_format(sendtime, '%Y%m%d'), SUM(IF(errorcode='SUCC', 1, 0)) 
 
 ### 例四
 
+> 查询所有科目都>80分的学生姓名
+
 ```sql
 -- 方式1
 SELECT
