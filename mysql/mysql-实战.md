@@ -115,7 +115,7 @@ SELECT userid as 账号,date_format(sendtime, '%Y%m%d') as 日期,count(case err
 ```
 
 * 为啥不用`sum`？
-	* 这里的`case when then end`没做处理，当`sun(null)`返回的是`null`，所以改成了`count`
+	* 这里的`case when then end`没做处理，当`sum(null)`返回的是`null`，所以改成了`count`
 
 > 方式二
 
