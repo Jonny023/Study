@@ -29,3 +29,22 @@ public class DruidDBConfig {
     }
 }
 ```
+
+### 版本变化
+
+* springboot 2.4之前
+
+```yaml
+spring:
+  profiles:
+    active: dev
+```
+
+* springboot 2.4之后
+
+```yaml
+spring:
+  config:
+    activate:
+      on-profile: dev
+```
