@@ -32,19 +32,25 @@ public class DruidDBConfig {
 
 ### 版本变化
 
-* springboot 2.4之前
+* springboot 2.4之后，如果多个环境配置放在同一个文件中，可以通过这种方式区分
 
 ```yaml
 spring:
   profiles:
-    active: dev
-```
-
-* springboot 2.4之后
-
-```yaml
+    active: uat
+---
+server:
+  port: 801
 spring:
   config:
     activate:
       on-profile: dev
+
+---
+server:
+  port: 802
+spring:
+  config:
+    activate:
+      on-profile: uat
 ```
