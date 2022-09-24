@@ -17,6 +17,24 @@ docker run -d \
 --env MODE=standalone \
 --env NACOS_SERVER_IP=192.168.56.101 \
 nacos/nacos-server
+
+mkdir -p /data/nacos/{logs,conf,data}
+docker cp nacos:/home/nacos/logs/  /data/nacos/
+docker cp nacos:/home/nacos/conf/  /data/nacos/
+docker cp nacos:/home/nacos/data/  /data/nacos/
+
+docker rm -f nacos
+
+docker run -d \
+--name nacos \
+-p 8848:8848 \
+--env MODE=standalone \
+--env NACOS_SERVER_IP=192.168.56.101 \
+--restart=always \
+-v /data/nacos/logs:/home/nacos/logs \
+-v /data/nacos/conf:/home/nacos/conf \
+-v /data/nacos/data:/home/nacos/data \
+nacos/nacos-server
 ```
 
 ### 访问
