@@ -26,3 +26,45 @@
 </build>
 ```
 
+
+### 跳过测试类
+
+```xml
+
+<build>
+    <plugins>
+        <plugin>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-maven-plugin</artifactId>
+            <configuration>
+                <excludes>
+                    <exclude>
+                        <groupId>org.projectlombok</groupId>
+                        <artifactId>lombok</artifactId>
+                    </exclude>
+                </excludes>
+                <includeSystemScope>true</includeSystemScope>
+                <!-- 如果没有该配置，devtools不会生效 -->
+                <fork>true</fork>
+                <layout>JAR</layout>
+                <classifier>exec</classifier>
+            </configuration>
+            <executions>
+                <execution>
+                    <goals>
+                        <!-- 可以把依赖的包都打包到生成的Jar包中 -->
+                        <goal>repackage</goal>
+                    </goals>
+                </execution>
+            </executions>
+        </plugin>
+        <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-surefire-plugin</artifactId>
+            <configuration>
+                <skip>true</skip>
+            </configuration>
+        </plugin>
+    </plugins>
+</build>
+```
