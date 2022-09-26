@@ -373,6 +373,14 @@ public ObjectMapper objectMapper() {
 }
 ```
 
+### 异常
+
+> 捕获异常ConstraintViolationException
+
+```java
+String message = exception.getConstraintViolations().stream().map(ConstraintViolation::getMessage).collect(Collectors.joining());
+```
+
 
 
 # 其他
