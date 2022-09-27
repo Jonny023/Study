@@ -63,3 +63,10 @@ public class MybatisPlusConfig {
 public class App {}
 ```
 
+## 用法2
+
+```java
+PageInfo<XxxVO> pageInfo = PageMethod.startPage(param.getPageNum(), param.getPageSize()).doSelectPageInfo(() ->
+    getBaseMapper().pageList()
+);
+```
