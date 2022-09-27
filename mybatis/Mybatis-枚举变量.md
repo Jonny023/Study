@@ -9,10 +9,10 @@
     where xxx = #{hospitalId}
     <choose>
         <when test="type == @com.cnskytec.coding.enums.AppointmentQueryEnum@COMMUNICATE">
-            and am.status in (-1, 0)
+            and status in (-1, 0)
         </when>
         <otherwise>
-            and am.status = ${@com.cnskytec.coding.enums.AppointmentQueryEnum@COMMUNICATE}
+            and status = ${@com.cnskytec.coding.enums.AppointmentQueryEnum@COMMUNICATE}
         </otherwise>
     </choose>
     order by add_time desc
