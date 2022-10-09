@@ -173,3 +173,39 @@ static int[] array(int[] ars) {
     return ars;
 }
 ```
+
+
+## 字符排序
+
+```java
+public static void main(String[] args) {
+    //正则取反：((?!正则表达式).)*$
+    String regex = "((?![0-9]).)*$";
+    List<String> list = Arrays.asList("12楼", "1楼", "18楼", "4楼", "5楼", "20楼");
+
+    //升序排序
+    List<String> resultList = list.stream().sorted(
+            Comparator.comparing(a -> Integer.valueOf(a.replaceAll(regex, "")))
+    ).collect(Collectors.toList());
+
+    //降序排序
+    List<String> descList = list.stream().sorted(
+            Comparator.comparing(a -> Integer.valueOf(String.valueOf(a).replaceAll(regex, ""))).reversed()
+    ).collect(Collectors.toList());
+
+    System.out.println("原集合：" + list);
+    System.out.println("正序排序后的集合：" + resultList);
+    System.out.println("降序排序后的集合：" + descList);
+
+}
+
+@org.junit.jupiter.api.Test
+public void run() {
+    List<String> list = Arrays.asList("10楼", "5楼", "4楼", "12楼", "7楼", "18楼");
+    List<String> resultList = list.stream().sorted(Comparator.comparingInt(String::hashCode)).collect(Collectors.toList());
+    List<String> descList = list.stream().sorted(Comparator.comparingInt(String::hashCode).reversed()).collect(Collectors.toList());
+    System.out.println(resultList);
+    System.out.println(descList);
+
+}
+```
