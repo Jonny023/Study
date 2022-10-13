@@ -25,4 +25,28 @@ public ResultVO fileUploadExceptionHandler(MultipartException e) {
     logger.error(msg, e);
     return ResultVO.error(ResultEnum.FILE_UPLOAD_ERROR.getCode(), msg);
 }
+
+//或者
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.multipart.MaxUploadSizeExceededException;
+
+import java.util.HashMap;
+import java.util.Map;
+
+@RestControllerAdvice
+public class UploadHandler {
+
+    @Value("${spring.servlet.multipart.max-file-size}")
+    private String maxFileSize;
+
+    @ExceptionHandler(MaxUploadSizeExceededException.class)
+    public Map<String, Object> handlerMaxUploadFile(MaxUploadSizeExceededException e) {
+        Map<String, Object> map = new HashMap<>();
+        map.put("code", 500);
+        map.put("message", String.format("文件上传限制大小为：%s", maxFileSize));
+        return map;
+    }
+}
 ```
