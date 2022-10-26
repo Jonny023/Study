@@ -137,6 +137,8 @@ public class BodyReaderWrapper extends HttpServletRequestWrapper {
 package com.example.springbootdemo.servlet;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.core.annotation.Order;
+import org.springframework.http.MediaType;
 
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
@@ -147,6 +149,7 @@ import java.io.IOException;
  * 缓存body数据
  */
 @Slf4j
+@Order(Integer.MIN_VALUE)
 @WebFilter(filterName = "bodyReaderFilter", urlPatterns = "/*")
 public class BodyReaderFilter implements Filter {
 
@@ -158,6 +161,19 @@ public class BodyReaderFilter implements Filter {
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
         log.info("==================执行过滤器================");
+
+        HttpServletRequest httpRequest = (HttpServletRequest) request;
+        String contentType = httpRequest.getContentType();
+
+
+	//这里如果不执行request.getParameterMap()，后续如果是url传参获取不到数据
+        if (contentType != null && contentType.contains(MediaType.APPLICATION_FORM_URLENCODED_VALUE)) {
+            //如果是application/x-www-form-urlencoded, 参数值在request body中以 a=1&b=2&c=3...形式存在，
+            //若直接构造BodyReaderHttpServletRequestWrapper，在将流读取并存到copy字节数组里之后,
+            //httpRequest.getParameterMap()将返回空值！
+            //若运行一下 httpRequest.getParameterMap(), body中的流将为空! 所以两者是互斥的！
+            httpRequest.getParameterMap();
+        }
         ServletRequest requestWrapper = null;
         if (request instanceof HttpServletRequest) {
             requestWrapper = new BodyReaderWrapper((HttpServletRequest) request);
