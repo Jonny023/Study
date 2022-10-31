@@ -365,12 +365,38 @@ kubectl delete node nodename
 ## 常用命令
 
 ```sh
-# 查看节点状态
+# 查看版本号
+kubectl version --short
+kubectl version
+
+# 查看集群信息
+kubectl cluster-info
+
+# 查看集群节点状态
 kubectl get node
 kubectl get nodes
+kubectl get nodes -o wide
+
+# 查看节点详细信息（<node>上一个命令的name）
+kubectl describe node <node>
 
 # 获取正在运行的pod
 kubectl get pod -n kube-system
+
+# 查看服务及端口
+kubectl get svc
+kubectl get svc -o wide
+
+# 查看所有资源
+kubectl get all
+
+# 查询pod及集群信息
+kubectl get pod -n kube-system -o wide
+watch kubectl get pod -n kube-system -o wide
+
+# 查看namesapace
+kubectl get pods --all-namespaces
+kubectl get pods --all-namespaces -o wide
 
 # 查看日志
 kubectl logs {podName} -n kube-system
