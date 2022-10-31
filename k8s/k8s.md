@@ -18,13 +18,13 @@
 
 ## 步骤
 
-1. 节点准备工作（所有节点）
-2. 部署容器运行时docker（所有节点）
-3. 部署kubeadm,kubelet,kubectl这三个服务（所有节点）
+1. 准备（所有节点）
+2. 安装docker（所有节点）
+3. 部署kubeadm,kubelet,kubectl服务（所有节点）
 4. 初始化master节点（master节点）
 5. node节点使用kubeadm join 加入集群(所有node节点）
 
-## 准备
+## 1.准备
 
 ```sh
 #设置主机名
@@ -88,7 +88,7 @@ chmod 755 /etc/sysconfig/modules/ipvs.modules && bash /etc/sysconfig/modules/ipv
 yum install ipset ipvsadm -y
 ```
 
-## 安装docker
+## 2.安装docker
 
 ```sh
 # 1. 如果已经安装了docker,卸载旧版本(版本过低的情况下（k8s版本和docker版本有依赖关系)
@@ -149,7 +149,7 @@ sudo systemctl restart docker
 
 
 
-## 部署kubeadm,kubelet,kubectl
+## 3.部署kubeadm,kubelet,kubectl
 
 ```sh
 # 由于官网中的地址不可访问，所以添加阿里源
@@ -201,9 +201,9 @@ echo "export KUBECONFIG=/etc/kubernetes/admin.conf" >> /etc/profile
 source /etc/profile
 ```
 
-## 初始化master
+## 4.初始化master
 
-### 1.创建kubeadm-init.yaml
+### 4.1.创建kubeadm-init.yaml
 
 ```sh
 # 生成kubeadm-init.yaml
@@ -219,7 +219,7 @@ vim kubeadm-init.yaml
 #添加podSubnet: 192.168.0.0/16
 ```
 
-### 2.完整的kubeadm-init.yaml
+### 4.2.完整的kubeadm-init.yaml
 
 ```yaml
 apiVersion: kubeadm.k8s.io/v1beta3
@@ -261,7 +261,7 @@ networking:
 scheduler: {}
 ```
 
-### 3.执行init
+### 4.3.执行init
 
 ```sh
 kubeadm init --config kubeadm-init.yaml
@@ -314,16 +314,16 @@ kubeadm join 192.168.70.4:6443 --token abcdef.0123456789abcdef \
 	--discovery-token-ca-cert-hash sha256:488a5f0a3e6206976e72801acd55f0334c753962addb7f6a07cfe2dfc0283270
 ```
 
-## 安装网络插件
+## 4.4安装网络插件
 
-### 安装calico
+### 4.4.1安装calico
 
 ```sh
 curl https://docs.projectcalico.org/manifests/calico.yaml -O
 kubectl apply -f calico.yaml
 ```
 
-## kube-proxy开启ipvs
+### 4.4.2kube-proxy开启ipvs
 
 ```sh
 #修改ConfigMap的kube-system/kube-proxy中的config.conf，mode: “ipvs”：
@@ -339,7 +339,7 @@ kubectl logs kube-proxy-xxx -n kube-system
 
 
 
-## node节点加入集群(子节点)
+## 5.node节点加入集群(子节点)
 
 * 在子节点服务器上执行kubeadm join 命令（master节点init操作生成的）
 
@@ -362,8 +362,6 @@ kubectl drain nodename --delete-local-data --force --ignore-daemonsets
 kubectl delete node nodename
 ```
 
-
-
 ## 常用命令
 
 ```sh
@@ -382,8 +380,13 @@ crictl images
 
 # k8s查看镜像
 crictl ps -a
-ctr ps -a
+ctr ps ls
 
+# 存放路径
 /etc/kubernetes
+
+# 删除pod
+kubectl delete service kubernetes-dashboard --namespace=kubernetes-dashboard
+kubectl delete -f recommended.yaml
 ```
 
