@@ -248,6 +248,7 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class FeignConfig {
 
+    //启用Fegin自定义注解 如@RequestLine @Param
     @Bean
     public Contract feignContract() {
         return new Contract.Default();
@@ -291,6 +292,91 @@ public interface AuthFeignClient {
     @RequestLine("GET /api/test/login")
     @Headers({"Content-Type: application/json;charset=UTF-8", "token1: {token1}"})
     void request(@Param("token1") String token1);
+}
+```
+
+### 6.openfeign多参数传递
+
+> Caused by: java.lang.IllegalStateException: Method has too many Body parameters: public abstract void com.example.springcloudfeign.feign.UserFeignClient.save(java.lang.String,java.lang.String)
+
+* 不能用@RequestLine的方式传多个参数
+* 下面的方式适用于多个对象传参，非body方式，body方式（@RequestBody）只允许接收一个对象，多个对象不适用
+
+```java
+//多个参数需要用@RequestParam声明，原先没有加注解void save(String username, String roleName);导致启动报错
+//方式1
+@PostMapping("/api/test/save")
+void save(@RequestParam("username") String username, @RequestParam("roleName") String roleName);
+
+//方式2
+@PostMapping("/api/test/save")
+void save(@RequestParam Map<String, Object> map);
+
+
+//被调用接口入参格式
+@PostMapping("/save")
+public void save(UserRequest user, RoleRequest role) {
+    log.info("user param: {}", user);
+    log.info("role param: {}", role);
+}
+```
+
+
+
+### 7.openfeign文件上传
+
+* 接口提供方接口参数示例
+
+```java
+@PostMapping("/save")
+public void save(UserRequest user, RoleRequest role, @RequestPart("file") MultipartFile file) {
+    log.info("file param: {} {}", file.getContentType(), file.getOriginalFilename());
+    log.info("user param: {}", user);
+    log.info("role param: {}", role);
+}
+```
+
+* openfeign接口示例
+
+```java
+package com.example.springcloudfeign.feign;
+
+import com.example.springcloudfeign.vo.R;
+import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.http.MediaType;
+import org.springframework.stereotype.Component;
+import org.springframework.util.MultiValueMap;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+@Component
+@FeignClient(name = "demo")
+public interface UserFeignClient {
+
+    @PostMapping(value = "/api/test/save", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    void save(@RequestParam("username") String username, @RequestParam("roleName") String roleName, @RequestPart("file") MultipartFile file);
+}
+```
+
+* 接口示例
+
+* 需要依赖spring-test
+
+  ```xml
+  <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-test</artifactId>
+  </dependency>
+  ```
+
+```java
+@PostMapping("/save")
+public void save(UserRequest user, RoleRequest role) throws IOException {
+    //本地file转MultipartFile
+    File pdfFile = new File("C:\\Users\\admin\\Desktop\\code\\test.txt");
+    FileInputStream fileInputStream = new FileInputStream(pdfFile);
+    MultipartFile multipartFile = new MockMultipartFile(pdfFile.getName(), pdfFile.getName(), ContentType.APPLICATION_OCTET_STREAM.toString(), fileInputStream);
+    userFeignClient.save(user.getUsername(), role.getRoleName(), multipartFile);
 }
 ```
 
