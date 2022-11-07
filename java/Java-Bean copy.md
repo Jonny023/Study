@@ -2,6 +2,8 @@
 
 ### 方式1【速度快】
 
+> 如果是lombok，实体对象用了@Accessors(chain = true)，调用copy方法会导致对象属性无法copy，所以只能使用BeanUtils.copyProperties(source, target);方式来解决报错问题
+
 ```java
 package com.example.springbootsentinel.utils;
 
@@ -49,9 +51,9 @@ public class Convertor {
             return null;
         }
         T2 target = destSupplier.get();
-        BeanCopier copier = getInstance(source, target);
-        copier.copy(source, target, null);
-        return target;
+        //BeanCopier copier = getInstance(source, target);
+        //copier.copy(source, target, null);
+        BeanUtils.copyProperties(source, target);
     }
 
     private static <T2, T1> List<T2> copyList(List<T1> source, Class<T2> targetClass) {
