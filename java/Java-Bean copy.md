@@ -56,23 +56,23 @@ public class Convertor {
         BeanUtils.copyProperties(source, target);
     }
 
-    private static <T2, T1> List<T2> copyList(List<T1> source, Class<T2> targetClass) {
+    public static <T2, T1> List<T2> copyList(List<T1> source, Class<T2> targetClass) {
         if (CollectionUtils.isEmpty(source)) {
             return Collections.emptyList();
         }
         List<T2> resultList = new ArrayList<>();
-        try {
-            T2 target = targetClass.newInstance();
-            for (T1 t1 : source) {
-                resultList.add(copy(t1, () -> target));
-            }
-        } catch (InstantiationException | IllegalAccessException e) {
-            e.printStackTrace();
+        for (T1 t1 : source) {
+            resultList.add(copy(t1, () -> {
+                try {
+                    return targetClass.newInstance();
+                } catch (InstantiationException | IllegalAccessException e) {
+                    throw new RuntimeException(e);
+                }
+            }));
         }
 
         return resultList;
     }
-
     /**
      * 生成key
      *
