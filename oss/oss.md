@@ -15,6 +15,7 @@ public OSS getOSSClient() {
     return new OSSClientBuilder().build(endpoint, accessKeyId, accessKeySecret);
 }
 
+/*
  * 根据key删除OSS服务器上的文件
  *
  * @param filePath   文件路径app/xxx/xxx.png 文件路径最前面不能有/
