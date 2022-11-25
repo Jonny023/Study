@@ -9,4 +9,10 @@ wrapper.eq(Demo::getA, 1).eq(Demo::getB, 2);
 wrapper.or(queryWrapper -> {
     queryWrapper.eq(Demo::getA, 2).eq(Demo::getB, 3);
 });
+
+//select * from user where id = ? and state = ? and (age = ? or sex = ?)
+LambdaQueryWrapper<User> wrapper = Wrappers.<User>lambdaQuery()
+                .eq(User::getId, param.getId())
+                .eq(User::getState, 1)
+                .and(elem -> elem.eq(User::getAge, 28).or().eq(User::getSex(), "男"));
 ```
