@@ -209,3 +209,71 @@ public void run() {
 
 }
 ```
+
+## 不确定集合排序的问题
+
+> 若通过stream方式排序，如果元数据list是List<?>不确定泛型数据，排序完后不能通过引用方式传递，因为List<?>不可修改，stream返回的是新的对象，因此排序后返回的是新的集合，需要用新的变量接收
+
+```java
+package com.cnskytec.config;
+
+import lombok.Builder;
+import lombok.Data;
+import lombok.ToString;
+
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
+import java.util.stream.Collectors;
+
+public class Test {
+
+    public static void main(String[] args) {
+
+        List<User> list = new ArrayList<>();
+        list.add(User.builder().age(18).score(90D).build());
+        list.add(User.builder().age(16).score(99D).build());
+        list.add(User.builder().age(18).score(80D).build());
+
+        System.out.println(list);
+        System.out.println(sortDesc(list));
+
+        System.out.println(sortAsc(list));
+
+
+    }
+
+    /**
+     * 多字段同时降序
+     *
+     * @param list
+     */
+    public static List<?> sortDesc(List<?> list) {
+        List<User> result = (List<User>) list;
+        List<User> sortResult = result.stream().sorted(Comparator.comparing(User::getAge).reversed().thenComparing(User::getScore, Comparator.reverseOrder())).collect(Collectors.toList());
+        //引用传递无效
+        //list = sortResult;
+        return sortResult;
+    }
+
+    /**
+     * 多字段同时升序
+     *
+     * @param list
+     */
+    public static List<?> sortAsc(List<?> list) {
+        List<User> result = (List<User>) list;
+        return result.stream().sorted(Comparator.comparing(User::getAge).thenComparing(User::getScore)).collect(Collectors.toList());
+    }
+
+
+    @Data
+    @Builder
+    @ToString
+    public static class User {
+
+        private Integer age;
+        private Double score;
+    }
+}
+```
