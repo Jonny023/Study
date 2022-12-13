@@ -21,6 +21,9 @@ pip install lxml==
 
 # 安装指定版本
 pip install lxml==4.9.0
+
+# 升级pip版本，切换到安装目录执行命令
+python.exe -m pip install --upgrade pip
 ```
 
 
