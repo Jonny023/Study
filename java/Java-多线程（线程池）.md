@@ -90,3 +90,23 @@ public class ThreadPoolService {
         }
     }
 ```
+
+
+## java多线程
+
+[参考地址](https://github.com/CyC2018/CS-Notes/blob/master/notes/Java%20%E5%B9%B6%E5%8F%91.md)
+
+### 线程中断
+
+* 普通线程中断可以调用`interrupt()`方法
+  * 调用前可以判断`!interrupted()`是否已中断，`true`中断，`false`未中断，主要用于循环中断时判断
+
+* 线程池中断调用`shutdownNow()`可以立即中断线程池，`shutdown()`不会立即中断
+
+```java
+Future<?> future = executorService.submit(() -> {
+    // ..
+});
+future.cancel(true);
+```
+
