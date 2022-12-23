@@ -31,3 +31,27 @@ No.3
 mvn install:install-file -DgroupId=com.google.code -DartifactId=kaptcha -Dversion=2.3.2 -Dfile=d:\libs\kaptcha-2.3.jar -Dpackaging=jar -DgeneratePom=true
 ```
 ### 注解：${basedir}项目的更目录
+
+
+## 打包
+
+```xml
+<plugin>
+    <groupId>org.apache.maven.plugins</groupId>
+    <artifactId>maven-dependency-plugin</artifactId>
+    <version>2.10</version>
+    <executions>
+        <execution>
+            <id>copy-dependencies</id>
+            <phase>compile</phase>
+            <goals>
+                <goal>copy-dependencies</goal>
+            </goals>
+            <configuration>
+                <outputDirectory>${project.build.directory}/${project.build.finalName}/WEB-INF/lib</outputDirectory>
+                <includeScope>system</includeScope>
+            </configuration>
+        </execution>
+    </executions>
+</plugin>
+```
