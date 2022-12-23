@@ -34,6 +34,7 @@ mvn install:install-file -DgroupId=com.google.code -DartifactId=kaptcha -Dversio
 
 
 ## 打包
+> systemPath引入的jar默认不会打包到lib目录下，需要配置一下
 
 ```xml
 <plugin>
