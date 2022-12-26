@@ -102,4 +102,21 @@ List<UserVO> userVOList = users.stream().map(user -> {
 	return new UserVO(user.getId(), user.getUsername());
 }).collect(Collectors.toList());
 System.out.println(userVOList);
+
+
+
+
+List<Integer> list = Arrays.asList(1, 2, 3, 1, 2, 4, 5, 20);
+        //统计list每个元素出现的次数
+        Map<Integer, Integer> map = list.stream() // list 对应的 Stream
+                .collect(Collectors.toMap(e -> e, e -> 1, (a, b) -> a + b));
+        System.out.println(map);
+
+
+//存在重复的元素集合
+List<Integer> result = list.stream().collect(Collectors.toMap(e -> e, e -> 1, (a, b) -> a + b)).entrySet().stream()
+	.filter(entry -> entry.getValue() > 1) // 过滤出元素出现次数大于 1 的 entry
+	.map(Map.Entry::getKey) // 获得 entry 的键（重复元素）对应的 Stream
+	.collect(Collectors.toList());// 转化为 List
+System.out.println(result);
 ```
