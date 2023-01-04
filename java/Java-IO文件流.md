@@ -1,5 +1,22 @@
 ## IO文件流
 
+### 读取文件大小
+
+> 推荐用java.nio.channels.FileChannel.size()或者java.io.File.length()读取文件大小，不要用fileInputStream.available()获取文件大小，文件大于2GB不精准
+
+```java
+//java.nio.channels.FileChannel.size()或者java.io.File.length()
+File file = new File("E:\\迅雷下载\\commons-fileupload-1.4-bin.zip");
+FileInputStream fileInputStream = new FileInputStream(file);
+FileChannel channel = fileInputStream.getChannel();
+System.out.println(channel.size());
+BigDecimal divide = BigDecimal.valueOf(1024);
+System.out.println(BigDecimal.valueOf(channel.size()).divide(divide).divide(divide).setScale(2, RoundingMode.HALF_UP) + "MB");
+System.out.println(file.length());
+//获取文件大小，文件超过2GB就不准确
+//fileInputStream.available();
+```
+
 * 读取文件
 
 > 文件
