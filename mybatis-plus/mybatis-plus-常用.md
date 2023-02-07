@@ -2,6 +2,8 @@
 
 ## 配置
 
+> springboot启动类加了`@MapperScan`，`UserMapper`接口不用注解，如果启动类没有扫描注解，`Mapper`接口需要添加`@Mapper`注解
+
 ```yaml
 mybatis-plus:
   configuration: # MyBatis 原生支持的配置
