@@ -1,5 +1,16 @@
 # SpringBoot Redis缓存
 
+[redis注入的坑](https://blog.csdn.net/qq_33758347/article/details/116238892)
+
+* 使用@Resource和@Autowired注入bean尽然不是同一个实例
+  * 1、使用@Autowired首先通过类型匹配，而RedisTemplate是StringRedisTemplate父级也就是同源。如果只注入了StringRedisTemplate或
+    RedisTemplate时，会导致byType找到的不一定是当前引用的Template，此时如果序列化不是当前Template格式就会报错
+  * 2、使用@Resource首先通过byName，而项目使用时指定name。所以只注入其中一个时，如果name相同没有问题，如果name不同则通过byType注入。
+    此时必然不一致。
+  * 建议：
+    1、项目只是用一种Template（推荐）
+    2、使用两种时使用@Resource注解，且通过name注入
+
 * `pom.xml`配置
   * 之所以排除`lettuce`是因为连接池用`lettuce`经常容易连不上，换成`jedis`连接池
 
