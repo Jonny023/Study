@@ -106,6 +106,19 @@ create tablespace test datafile '/home/oracle/app/oracle/oradata/test/test.dbf' 
 # maxsize 300m 最大增长到300m
 
 
+
+#【指定表空间给已存在的用户】
+grant connect,resource to system;
+grant dba to system;
+
+#赋予用户的表空间权限【经测试无效】
+alter user username default tablespace username;
+ALTER USER system quota unlimited on test; 
+GRANT UNLIMITED TABLESPACE TO system ; 
+
+
+
+
 create user test identified by test123 default tablespace test;
 # test 为用户名 ，test123 为密码
 # default tablespace test 指定用户test的默认表空间
@@ -143,6 +156,7 @@ grant unlimited tablespace to system;
 
 #查看表空间
 select * from v$tablespace;
+select tablespace_name from dba_tablespaces;
 
 #给表空间重命名
 #语法： alter tablespace 旧名称 rename to 新名称;
@@ -151,6 +165,7 @@ alter tablespace newspace rename to myspace;
 #删除表空间[including contents cascade constraints]并把包含的数据和约束删除
 #语法： drop tablespace 表空间名 [including contents cascade constraints];
 drop tablespace myspace including contents cascade constraints;
+drop tablespace test including contents and datafiles cascade constraints;
 
 
 
@@ -176,5 +191,129 @@ shutdown immediate;
 startup;
 #退出软链接
 exit;
+```
+
+
+
+### 权限
+
+```sh
+grant connect,resource to system;  
+grant create any sequence to system;  
+grant create any table to system;  
+grant delete any table to system;  
+grant insert any table to system;  
+grant select any table to system;  
+grant unlimited tablespace to system;  
+grant execute any procedure to system;  
+grant update any table to system;  
+grant create any view to system;  
+
+# 赋予dba权限
+grant dba to study;
+
+#指定表空间给已存在的用户
+ALTER USER study DEFAULT TABLESPACE study;
+
+ALTER USER system DEFAULT TABLESPACE test;
+grant create session,create table,unlimited tablespace to system;
+grant create view,create trigger,create sequence,create procedure to system;
+grant connect,resource,dba to system;
+```
+
+
+
+## 登录限制
+
+```sql
+#修改登录为不限制
+alter profile default limit password_life_time unlimited;
+alter profile default limit FAILED_LOGIN_ATTEMPTS unlimited;
+
+# 需要再次设置密码无限制登录才会生效
+alter user system identified by helowin;
+
+
+
+#查看结果
+select * from dba_profiles;
+```
+
+
+
+### 表空间
+
+[参考](https://blog.51cto.com/gblfy/5658620)
+
+```sql
+# 查看表空间存放路径
+select file_name from dba_data_files where tablespace_name='TEST';
+
+#查看表空间状态
+select status from dba_tablespaces where tablespace_name='TEST';
+
+#修改为脱机状态
+alter tablespace test offline;
+alter tablespace test online;
+
+#只读
+alter tablespace test read only;
+
+#可读写
+alter tablespace test read write;
+
+#删除表空间以及表空间下面的数据文件
+drop tablespace 表空间名称 including contents;
+
+#删除表空间为test以及表空间下面的数据文件
+drop tablespace test including contents;
+```
+
+### 导入导出
+
+```sh
+imp usr_4/usr_4@localhost:1521/ORCL file=D:/1.dmp full=y [fromuser=usr_4 touser=usr_4]--导入
+exp usr_4/usr_4@localhost:1521/ORCL file=D:/1.dmp [owner=usr_4] [rows=n表示不导出数据]--导出
+```
+
+```sh
+#1、使用SQL*Plus导入导出数据：
+#（1）导出数据：
+exp username/password@database file=data.dmp
+
+exp system/helowin@helowin file=data.dmp
+
+#（2）导入数据：
+imp username/password@database file=data.dmp
+
+
+#使用Oracle Data Pump导入导出数据：
+#（1）导出数据：
+expdp username/password@database directory=dump_dir dumpfile=data.dmp
+
+#（2）导入数据：
+impdp username/password@database directory=dump_dir dumpfile=data.dmp
+```
+
+### 远程连接
+
+```sql
+sqlplus /nolog
+conn user/passwd@ip:1521/instance_name as sysdba
+```
+
+
+
+### 查看数据库
+
+```sql
+#查看数据库名
+SELECT NAME FROM V$DATABASE;
+
+
+SELECT t.tablespace_name, round(SUM(bytes / (1024 * 1024)), 0) ts_size
+  FROM dba_tablespaces t, dba_data_files d
+ WHERE t.tablespace_name = d.tablespace_name
+ GROUP BY t.tablespace_name;
 ```
 
