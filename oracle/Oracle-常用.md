@@ -39,3 +39,31 @@ to_char(TO_DATE('20211225', 'YYYYMMDD'), 'yyyyww') as week2
 FROM dual
 ```
 
+### 字段转行
+
+> 都好分割字段转为多行
+
+* 源数据
+
+| ID   | ROLE_ID         | NAME |
+| ---- | --------------- | ---- |
+| 3    | 20              | 王五 |
+| 1    | 222,888,213,218 | 张三 |
+| 2    | 444,999,289     | 李四 |
+
+```sql
+SELECT DISTINCT a.ID,regexp_substr(a.ROLE_ID, '[^,]+', 1, level) as ROLE_ID, level FROM "test" a where a.ID > 0 connect by level <= REGEXP_COUNT(a.ROLE_ID,'[^,]+') order by a.ID
+```
+
+* 转换后
+
+| ID   | ROLE_ID | LEVEL |
+| ---- | ------- | ----- |
+| 1    | 213     | 3     |
+| 1    | 218     | 4     |
+| 1    | 222     | 1     |
+| 1    | 888     | 2     |
+| 2    | 289     | 3     |
+| 2    | 444     | 1     |
+| 2    | 999     | 2     |
+| 3    | 20      | 1     |

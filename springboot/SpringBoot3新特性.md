@@ -1,6 +1,6 @@
 ## springboot3新特性
 
-
+> springboot3基于`jdk17+spring6`
 
 ### 自定义starter
 
