@@ -18,3 +18,11 @@
     order by add_time desc
 </select>
 ```
+
+## 枚举映射问题
+
+```java
+org.apache.ibatis.executor.resultset.DefaultResultSetHandler#applyAutomaticMappings
+org.apache.ibatis.type.BaseTypeHandler#getResult(java.sql.ResultSet, java.lang.String)
+com.baomidou.mybatisplus.core.handlers.MybatisEnumTypeHandler#valueOf
+```
