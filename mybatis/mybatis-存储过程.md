@@ -17,6 +17,6 @@
 </parameterMap>
 
 <select id="generatorNo" statementType="CALLABLE" parameterMap="parameter" resultType="string">
-    EXEC dbo.usp_util_auto_billno #{tenantId},#{code},#{businessDate},#{updateBy},#{updateName},#{p_code},#{p_message};
+    EXEC dbo.generator_no #{tenantId},#{code},#{businessDate},#{updateBy},#{updateName},#{p_code},#{p_message};
 </select>
 ```
