@@ -23,3 +23,71 @@ SET SHOWPLAN_ALL OFF;
 ## 坑
 
 * sqlserver分页必须排序，否则语法错误
+
+
+
+## 常用
+
+### 创建数据库并指定编码
+
+```sql
+CREATE DATABASE xxx COLLATE Chinese_PRC_CI_AS;
+```
+
+
+
+### 日期
+
+```sql
+select GETDATE() as '当前日期',
+CONVERT(varchar(11),GETDATE(),112)+REPLACE(CONVERT(varchar(12),GETDATE(),108),':','') as yyyyMMddHHmmss,
+DateName(year,GetDate()) as '年',
+-- 英文月
+DateName(month,GetDate()) as '月',
+DateName(day,GetDate()) as '日',
+DateName(dw,GetDate()) as '星期',
+DateName(week,GetDate()) as '周数',
+DateName(hour,GetDate()) as '时',
+DateName(minute,GetDate()) as '分',
+DateName(second,GetDate()) as '秒',
+-- 年月日无符号分隔
+CONVERT(varchar(11),GETDATE(),112) as ymd,
+-- 时分秒
+CONVERT(varchar(12),GETDATE(),108) as Hms,
+year(getdate()),month(getdate()),day(getdate())
+```
+
+
+
+### 分页
+
+```sql
+-- 默认编码为SQL_Latin1_General_CP1_CI_AS
+-- sql查询的时候查询数据变成了??问号
+
+# 数据库的编码不对，修改下数据库的编码
+ALTER DATABASE [数据库名] COLLATE Chinese_PRC_CI_AS
+
+ALTER TABLE test.dbo.[user] ALTER COLUMN name varchar(100) COLLATE Chinese_PRC_CI_AS NULL;
+
+
+-- 方式1
+select * from (
+　　　　select *, ROW_NUMBER() OVER(Order by id ) AS sort_id from [user]
+　　) as b
+where b.sort_id between 0 and 20
+---where RowId BETWEEN 当前页数-1*条数 and 页数*条数---   
+
+
+-- 方式2 （sqlserver 2012+推荐）
+-- 分页下标从0开始，sqlserver2012及以上版本才支持offset这种分页方式
+select id, name from [user] order by id offset 0 rows fetch next 5 rows only 
+
+-- 方式3
+-- mssql2012以下版本
+select top 3 * from [user]
+where id not in (select top 2 id from [user])
+--where id not in (select top 条数*页数  id  from [user])  
+
+```
+

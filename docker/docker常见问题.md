@@ -20,3 +20,22 @@ docker run -d -v xx:xxx 容器名
 # 重启容器
 docker restart <container-name/ID>
 ```
+
+
+
+### 2.拉取镜像报错
+
+> docker pull mcr.microsoft.com/mssql/server:2012-latest
+> Error response from daemon: Head "https://mcr.microsoft.com/v2/mssql/server/manifests/2012-latest": dial tcp: lookup mcr.microsoft.com on 192.168.124.1:53: no such host
+
+* 解决方法
+
+  > 重启docker
+
+  ```sh
+  [root@bogon ~]# systemctl restart docker
+  [root@bogon ~]# docker pull mcr.microsoft.com/mssql/server:2022-latest
+  2022-latest: Pulling from mssql/server
+  ```
+
+  

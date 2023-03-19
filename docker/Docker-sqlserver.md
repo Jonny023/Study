@@ -130,3 +130,38 @@ go
 -e "TZ=Asia/Shanghai"
 ```
 
+
+
+
+
+## mssql2012
+
+
+
+#### 密码至少为8位
+
+[官网地址](https://learn.microsoft.com/zh-cn/sql/linux/quickstart-install-connect-docker?view=sql-server-ver16&pivots=cs1-bash)
+
+> 没有权限时报错：SQL Server 2022 will run as non-root by default.
+> This container is running as user mssql.
+> To learn more visit https://go.microsoft.com/fwlink/?linkid=2099216.
+> /opt/mssql/bin/sqlservr: Error: The system directory [/.system] could not be created. File: LinuxDirectory.cpp:420 [Status: 0xC0000022 Access Denied errno = 0xD(13) Permission denied]
+
+```sh
+# SA_PASSWORD 环境变量已弃用。 请改用 MSSQL_SA_PASSWORD。
+
+# 创建目录并设置权限，必须设置权限，不然报错
+mkdir -p /opt/mssql2012 && chmod 777 /opt/mssql2012
+
+# 启动容器，sa密码至少要8位
+docker run -e "ACCEPT_EULA=Y" -e "MSSQL_SA_PASSWORD=Abc12345" \
+   -p 1433:1433 \
+   --name mssql2012 \
+   -v /opt/mssql2012:/var/opt/mssql \
+   --hostname mssql01 \
+   -e "TZ=Asia/Shanghai" \
+   -e MSSQL_COLLATION=Chinese_PRC_CI_AS \
+   -d mcr.microsoft.com/mssql/server:2022-latest
+
+```
+
