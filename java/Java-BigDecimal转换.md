@@ -1,5 +1,19 @@
 # BigDecimal转换
 
+> 获取精度，小数位数
+
+* 精度为整数部分和小数部分总长度（200.12精度为5）
+
+```java
+BigDecimal bigDecimal = BigDecimal.valueOf(200.12);
+
+//5
+System.out.println("精度：" + bigDecimal.precision());
+
+//2
+System.out.println("小数位数：" + bigDecimal.scale());
+```
+
 > 保留指定位数
 
 ```java
