@@ -15,6 +15,9 @@
 -Dfile.encoding=UTF-8
 ```
 
+### idea标签页换行显示
+
+> 打开idea设置》Editor》General》Editor Tabs》Appearance》去掉Show tabs in one row选项
 
 
 ### idea（ctrl+鼠标左键）进入类文件会覆盖窗口，不会在新窗口打开
