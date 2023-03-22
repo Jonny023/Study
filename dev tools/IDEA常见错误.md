@@ -14,3 +14,15 @@
 ```bash
 -Dfile.encoding=UTF-8
 ```
+
+
+
+### idea（ctrl+鼠标左键）进入类文件会覆盖窗口，不会在新窗口打开
+
+> 打开idea设置》Editor》General》Editor Tabs》去掉Opening Policy【Enable preview tab】
+
+```bash
+Opening Policy
+Enable preview tab
+The preview tab is reused to show files selected with a single clickin the Project tool window, and files opened during debugging.
+```
