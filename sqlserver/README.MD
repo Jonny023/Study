@@ -91,3 +91,10 @@ where id not in (select top 2 id from [user])
 
 ```
 
+### varchar(5) 与 nvarchar(5)区别
+
+> 编码统一为中文：Chinese_PRC_CI_AS
+
+* varchar(5) 一个汉字两个字节，如果输入英文或数字可以输入5个字符，如果是中文，最多只能存2个【汉字】
+* nvarchar(5) 限制长度无论任何字符，都限制为5个
+
