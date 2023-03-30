@@ -72,3 +72,12 @@ rocketmqinc/rocketmq \
 sh mqbroker -c /opt/rocketmq-4.3.2/conf/broker.conf 
 
 ```
+
+## rocketmq控制台点击【生产者】搜索报错
+
+> 原因是程序调用发送消息后就shutdown了，若想要看效果可以注释掉shutdown()方法，搜索时选择生产者对应的topic以及生产者组
+
+```sh
+// 关闭生产者实例
+//producer.shutdown();
+```
