@@ -2,7 +2,7 @@
 
 * Putty
 * OpenSSH
-* Xshell
+* Xshell (需破解)
   * 配合Xftp文件上传
 * FinalShell
   * 自带文件上传
@@ -16,6 +16,7 @@
   * 自带文件上传
 * 宝塔终端
   * 自带文件上传
+* termius
 
 
 
@@ -47,3 +48,14 @@
 ```sh
 ssh -N -L 0.0.0.0:22:localhost:22 root@192.168.56.101
 ```
+
+## Termius（需破解）
+
+### 隧道（端口转发）
+
+> 将远程端口映射到本地，让局域网的其他主机可以直接连接服务器，下图可以让局域网其他主机访问我本地22端口实现远程登录我虚拟机里面的服务器
+
+* Local port number和Bind address为本地的地址和端口，一般用0.0.0.0和端口为指定端口，允许所有网段访问此端口
+* Destination address和Destionation port number为本地ip和对应服务器的端口，一般用localhost加上对应的端口
+
+![](./img/port_forwarding.png)
