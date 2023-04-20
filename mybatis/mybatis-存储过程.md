@@ -1,5 +1,7 @@
 ## mybatis调用存储过程
 
+### 以下为sqlserver的存储过程调用
+
 > 网上的示例代码都是直接调用`call xxxx(#{id})`,需要将参数抽取到parameterMap中，以下示例为sqlserver的存储过程
 
 * mode="IN" 入参
