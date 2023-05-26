@@ -78,3 +78,12 @@ public class CalcUtil {
 }
 ```
 
+## 去除小数末尾0，可能导致科学计数法，用toPlainString()解决
+
+> stripTrailingZeros()去除0
+> toPlainString() 输出为字符，防止科学计数
+
+```java
+stripTrailingZeros().toPlainString()
+```
+
