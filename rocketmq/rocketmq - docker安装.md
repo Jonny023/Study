@@ -68,7 +68,7 @@ docker run -d  \
 -v /etc/rocketmq/conf/broker.conf:/opt/rocketmq-4.3.2/conf/broker.conf \
 -e "NAMESRV_ADDR=namesrv:9876" \
 -e "MAX_POSSIBLE_HEAP=200000000" \
-rocketmqinc/rocketmq \
+rocketmqinc/rocketmq:4.3.2 \
 sh mqbroker -c /opt/rocketmq-4.3.2/conf/broker.conf 
 
 ```
