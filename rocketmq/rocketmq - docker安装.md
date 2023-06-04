@@ -75,7 +75,7 @@ sh mqbroker -c /opt/rocketmq-4.3.2/conf/broker.conf
 
 ## 可视化控制台
 
-```java
+```sh
 docker run -d \
 --restart=always \
 --name rmqadmin \
@@ -89,7 +89,7 @@ pangliang/rocketmq-console-ng
 
 > 原因是程序调用发送消息后就shutdown了，若想要看效果可以注释掉shutdown()方法，搜索时选择生产者对应的topic以及生产者组
 
-```sh
+```java
 // 关闭生产者实例
 //producer.shutdown();
 ```
