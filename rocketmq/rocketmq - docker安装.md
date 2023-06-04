@@ -73,6 +73,18 @@ sh mqbroker -c /opt/rocketmq-4.3.2/conf/broker.conf
 
 ```
 
+## 可视化控制台
+
+```java
+docker run -d \
+--restart=always \
+--name rmqadmin \
+-e "JAVA_OPTS=-Drocketmq.namesrv.addr=192.168.56.101:9876 \
+-Dcom.rocketmq.sendMessageWithVIPChannel=false" \
+-p 8080:8080 \
+pangliang/rocketmq-console-ng
+```
+
 ## rocketmq控制台点击【生产者】搜索报错
 
 > 原因是程序调用发送消息后就shutdown了，若想要看效果可以注释掉shutdown()方法，搜索时选择生产者对应的topic以及生产者组
