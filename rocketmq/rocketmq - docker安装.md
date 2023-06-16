@@ -93,3 +93,53 @@ pangliang/rocketmq-console-ng
 // 关闭生产者实例
 //producer.shutdown();
 ```
+
+## 可视化控制台2
+
+```sh
+docker run -d --name rocketmq-dashboard -e "JAVA_OPTS=-Drocketmq.namesrv.addr=192.168.56.101:9876" -p 8888:8080 -t apacherocketmq/rocketmq-dashboard:latest
+```
+
+> 可能出现问题，docker pull 是一直waiting
+
+```sh
+[root@localhost ~]# docker run -d --name rocketmq-dashboard -e "JAVA_OPTS=-Drocketmq.namesrv.addr=192.168.56.101:9876" -p 8888:8080 -t youlixishi/rocket                                                         mq-dashboard
+Unable to find image 'youlixishi/rocketmq-dashboard:latest' locally
+latest: Pulling from youlixishi/rocketmq-dashboard
+2d473b07cdd5: Retrying in 1 second
+07f579ac0467: Retrying in 1 second
+bc5957953950: Retrying in 1 second
+5d5200b5890f: Waiting
+c68650c06f95: Waiting
+463e6149cbb7: Waiting
+e38e6ba6d8ed: Waiting
+5f7a753fba61: Waiting
+1e039b1cde67: Waiting
+b8adbfd02420: Waiting
+0f1e390e1026: Waiting
+a6b906c9838c: Waiting
+
+```
+
+### 解决方法
+
+> 更换docker镜像源地址
+
+```sh
+# 创建目录
+mkdir -p /etc/docker
+
+# 写入
+tee /etc/docker/daemon.json <<-'EOF'
+{
+   "registry-mirrors": ["https://9cpn8tt6.mirror.aliyuncs.com"]
+}
+EOF
+
+# 重启服务
+systemctl daemon-reload
+systemctl restart docker
+
+# 查看配置
+cat /etc/docker/daemon.json 
+```
