@@ -6,6 +6,8 @@
   
 * 安装完成，在dos中分别输入如下指令测试
 
+> 如果是解压版，直接在path路径下添加环境变量: `C:\Program Files\nodejs`
+
 ```
 node -v
 
