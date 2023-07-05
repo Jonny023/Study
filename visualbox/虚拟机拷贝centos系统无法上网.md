@@ -1,4 +1,4 @@
-## visualbox复制系统后启动无法上网
+## virtualbox复制系统后启动无法上网
 
 ```sh
 
