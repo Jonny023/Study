@@ -1,4 +1,4 @@
-## visualbox调整磁盘大小
+## virtualbox调整磁盘大小
 
 * (参考)[https://betheme.net/news/txtlist_i26982v.html?action=onClick]
 
@@ -17,7 +17,7 @@
 ```sh
 VBoxManage modifymedium "临时vdi虚拟硬盘.vdi" --resize 扩容后大小(单位MB)
 
-# 进入visualbox安装目录
+# 进入virtualbox安装目录
 cd /d G:\VirtualBox
 
 #设置为50GB 50*1024MB
