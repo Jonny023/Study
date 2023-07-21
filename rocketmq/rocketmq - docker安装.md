@@ -61,8 +61,9 @@ docker run -d  \
 --restart=always \
 --name rmqbroker \
 --link rmqnamesrv:namesrv \
--p 10911:10911 \
 -p 10909:10909 \
+-p 10911:10911 \
+-p 10912:10912 \
 -v /etc/rocketmq/data/broker/logs:/root/logs \
 -v /etc/rocketmq/data/broker/store:/root/store \
 -v /etc/rocketmq/conf/broker.conf:/opt/rocketmq-4.3.2/conf/broker.conf \
@@ -142,4 +143,12 @@ systemctl restart docker
 
 # 查看配置
 cat /etc/docker/daemon.json 
+```
+
+# 清空mq数据重启
+```sh
+rm -rf /etc/rocketmq/data/broker/logs/rocketmqlogs/*
+rm -rf /etc/rocketmq/data/broker/store/*
+rm -rf /etc/rocketmq/data/namesrv/logs/*
+rm -rf /etc/rocketmq/data/namesrv/store/*
 ```
