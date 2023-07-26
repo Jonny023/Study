@@ -87,3 +87,16 @@ public class CalcUtil {
 stripTrailingZeros().toPlainString()
 ```
 
+## 判断Bigdecimal是否为整数
+
+```java
+/**
+ * 判断BigDecimal是否为整数
+ *
+ * @param number 需判断的数
+ * @return true 整数，false 非整数
+ */
+public static boolean isInteger(BigDecimal number) {
+    return number.stripTrailingZeros().scale() <= 0 || number.remainder(BigDecimal.ONE).compareTo(BigDecimal.ZERO) == 0;
+}
+```
