@@ -87,7 +87,7 @@ public class CalcUtil {
 stripTrailingZeros().toPlainString()
 ```
 
-## 判断Bigdecimal是否为整数
+## 判断BigDecimal是否为整数
 
 ```java
 /**
