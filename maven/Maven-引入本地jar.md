@@ -56,3 +56,19 @@ mvn install:install-file -DgroupId=com.google.code -DartifactId=kaptcha -Dversio
     </executions>
 </plugin>
 ```
+
+## springboot
+
+```xml
+<build>
+    <plugins>
+        <plugin>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-maven-plugin</artifactId>
+            <configuration>
+                <includeSystemScope>true</includeSystemScope>
+            </configuration>
+        </plugin>
+    </plugins>
+</build>
+```
