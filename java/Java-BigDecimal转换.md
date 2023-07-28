@@ -100,3 +100,22 @@ public static boolean isInteger(BigDecimal number) {
     return number.stripTrailingZeros().scale() <= 0 || number.remainder(BigDecimal.ONE).compareTo(BigDecimal.ZERO) == 0;
 }
 ```
+
+## 获取BigDecimal小数位数（去掉末尾的0）
+
+```java
+/**
+ * 获取decimal小数位数
+ *
+ * @param number 需要获取的值
+ * @return
+ */
+public static int scale(BigDecimal number) {
+    // 非负数，没有小数位数
+    if (number.signum() != -1) {
+        return 0;
+    }
+    int scale = number.stripTrailingZeros().scale();
+    return Math.max(scale, 0);
+}
+```
