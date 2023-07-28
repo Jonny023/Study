@@ -38,3 +38,17 @@
     <include refid="Common.pagingEnd"/>  
 </select>  
 ```
+
+## 公共mapper
+> 要用一个公共mapper.xml来处理的话必须写全路径
+
+```xml
+<mapper namespace="com.mapper.common.CommonMapper">
+<sql id="commonDate">
+  <include refid="com.mapper.common.CommonMapper.common"></include>
+</sql>
+<sql id="common">
+
+</sql>
+
+```
