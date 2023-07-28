@@ -101,21 +101,16 @@ public static boolean isInteger(BigDecimal number) {
 }
 ```
 
-## 获取BigDecimal小数位数（去掉末尾的0）
+## 获取BigDecimal小数位数（去掉末尾的0,为0不算小数位数）
 
 ```java
 /**
  * 获取decimal小数位数
  *
  * @param number 需要获取的值
- * @return
+ * @return 返回0和大于0
  */
 public static int scale(BigDecimal number) {
-    // 非负数，没有小数位数
-    if (number.signum() != -1) {
-        return 0;
-    }
-    int scale = number.stripTrailingZeros().scale();
-    return Math.max(scale, 0);
+    return Math.max(number.stripTrailingZeros().scale(), 0);
 }
 ```
