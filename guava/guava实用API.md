@@ -21,3 +21,11 @@ Map<String, String> params = Splitter.on("&").trimResults().withKeyValueSeparato
 ```java
 com.google.common.collect.Lists.partition(list, 2000);
 ```
+
+### list转字符
+
+将集合[1,2,3,4]转为"1,2,3,4"
+
+```java
+Joiner.on(StringPool.COMMA).join(list)
+```
