@@ -59,4 +59,17 @@ public class Main {
     }
 }
 
+//获取元素下表（无序） 集合元素可以重复，重复的下标放到一个集合中{80=[5, 6], 3=[2], 4=[3], 20=[1], 5=[4], 10=[0]}
+Map<Integer, List<Integer>> unOrder = IntStream.range(0, ints.size())
+        .boxed().collect(Collectors.groupingBy(ints::get, Collectors.toList()));
+
+//获取元素下表（有序） 集合元素可以重复，重复的下标放到一个集合中{10=[0], 20=[1], 3=[2], 4=[3], 5=[4], 80=[5]}
+Map<Integer, List<Integer>> orderResult = IntStream.range(0, ints.size())
+        .boxed().collect(Collectors.groupingBy(ints::get, LinkedHashMap::new, Collectors.toList()));
+
+//返回map 集合元素不能重复，重复则报错Duplicate key xxx {80=5, 3=2, 4=3, 20=1, 5=4, 10=0}
+Map<Integer, Integer> result = IntStream.range(0, ints.size())
+        .boxed()
+        .collect(Collectors.toMap(ints::get, Function.identity()));
+
 ```
