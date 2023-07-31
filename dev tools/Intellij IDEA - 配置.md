@@ -25,7 +25,9 @@ idea.log.path=F:/IDEAConfig/log
 
 ## 类注释
 
-> 类名通过`/**`自动添加备注
+> 类名通过`/**`自动添加备注(Live Templates)，`$DATE$ $TIME$`需要配置变量：
+> DATE date("yyyy-MM-dd")
+> TIME time("HH:mm")
 
 ```java
 **
@@ -35,4 +37,12 @@ idea.log.path=F:/IDEAConfig/log
  */
 ```
 
-> 
+> File and Code Templates > Includes
+
+```java
+/**
+ * @author xxx E-mail:1234@qq.com
+ * @date 创建时间：$DATE $TIME
+ * @description
+ */
+```
