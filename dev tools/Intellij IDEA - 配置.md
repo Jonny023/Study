@@ -16,3 +16,23 @@ idea.log.path=F:/IDEAConfig/log
 ```bash
 -encoding utf-8
 ```
+
+## idea中文乱码
+
+```prpperties
+-Dfile.encoding=UTF-8
+```
+
+## 类注释
+
+> 类名通过`/**`自动添加备注
+
+```java
+**
+ * @author xxx E-mail:1234@qq.com
+ * @date 创建时间：$DATE$ $TIME$
+ * @description
+ */
+```
+
+> 
