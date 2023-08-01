@@ -93,3 +93,11 @@ spring:
 mvn clean package -Ptest -DskipTests=true
 ```
 
+## 启动报错，配置文件里面的变量未被替换
+
+> 原因可能是build编译配置里面有多个配置，如src/main/java把src/main/resources覆盖了，src/main/java下如果没有如yml文件就不要配置includes
+
+```sh
+mvn clean compile -DskipTests=true resources:resources
+```
+
