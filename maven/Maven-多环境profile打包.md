@@ -95,9 +95,10 @@ mvn clean package -Ptest -DskipTests=true
 
 ## 启动报错，配置文件里面的变量未被替换
 
-> 原因可能是build编译配置里面有多个配置，如src/main/java把src/main/resources覆盖了，src/main/java下如果没有如yml文件就不要配置includes
+> 原因1 可能是build编译配置里面有多个配置，如src/main/java把src/main/resources覆盖了，src/main/java下如果没有如yml文件就不要配置includes
 
 ```sh
 mvn clean compile -DskipTests=true resources:resources
 ```
 
+> 原因2 pom是多module模式，子模块需要指定`<packaging>jar</packaging>`，只有父pom才能用`<packaging>pom</packaging>`，需要注意下
