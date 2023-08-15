@@ -42,7 +42,7 @@ mysqld remove
 ```
 
 
-## 注意！！！ 必须执行flush privileges;
+## 注意！！！ 必须先执行flush privileges;
 ### 密码
 
 > 以管理员身份运行
