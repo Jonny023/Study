@@ -283,3 +283,8 @@ compile: 无论是多模块还是直接依赖打包都会存在
 
 * test/runtime: 在类中都无法引用，编译无法通过
 
+## 指定配置文件打包
+
+```xml
+mvn clean package -s "D:\dev_tools\apache-maven-3.3.9\conf\settings - copy.xml"
+```
