@@ -34,6 +34,19 @@ SET SHOWPLAN_ALL OFF;
 CREATE DATABASE xxx COLLATE Chinese_PRC_CI_AS;
 ```
 
+### 查询时区分大小写
+
+> sqlserver默认不区分字母大小写，若要区分大小写可以指定：`COLLATE Chinese_PRC_CS_AI_WS`
+
+```sql
+-- 默认不区分大小写
+-- 区分大小写查询， COLLATE Chinese_PRC_CS_AI_WS可以放到查询条件左边或右边
+SELECT * FROM goods WHERE code COLLATE Chinese_PRC_CS_AI_WS like 'a%';
+SELECT * FROM goods WHERE code = 'B9040' COLLATE Chinese_PRC_CS_AI_WS ;
+
+SELECT * FROM goods WHERE code LIKE 'B%' COLLATE Chinese_PRC_CS_AI_WS;
+SELECT * FROM goods WHERE code = 'B9040' COLLATE Chinese_PRC_CS_AI_WS;
+```
 
 
 ### 日期
