@@ -42,7 +42,7 @@ CREATE DATABASE xxx COLLATE Chinese_PRC_CI_AS;
 -- 默认不区分大小写
 -- 区分大小写查询， COLLATE Chinese_PRC_CS_AI_WS可以放到查询条件左边或右边
 SELECT * FROM goods WHERE code COLLATE Chinese_PRC_CS_AI_WS like 'a%';
-SELECT * FROM goods WHERE code = 'B9040' COLLATE Chinese_PRC_CS_AI_WS ;
+SELECT * FROM goods WHERE code COLLATE Chinese_PRC_CS_AI_WS = 'B9040';
 
 SELECT * FROM goods WHERE code LIKE 'B%' COLLATE Chinese_PRC_CS_AI_WS;
 SELECT * FROM goods WHERE code = 'B9040' COLLATE Chinese_PRC_CS_AI_WS;
