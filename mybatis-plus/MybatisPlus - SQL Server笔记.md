@@ -14,7 +14,7 @@ private Date createDate;
 
 ### 查询大小写敏感
 
-> apply()方法传入的是sql，有sql注入风险
+> apply()方法传入的是sql，有sql注入风险，还需要注意apply方法会在sql中添加` AND xxxx`并不是直接拼接
 ```java
 //针对查询
 wrapper.apply("code COLLATE Chinese_PRC_CS_AI_WS = {0}", "A010");
