@@ -34,6 +34,22 @@ SET SHOWPLAN_ALL OFF;
 CREATE DATABASE xxx COLLATE Chinese_PRC_CI_AS;
 ```
 
+### 编码（修改）
+
+```sql
+-- 默认编码为SQL_Latin1_General_CP1_CI_AS
+-- sql查询的时候查询数据变成了??问号
+
+-- 数据库的编码不对，修改下数据库的编码
+ALTER DATABASE [数据库名] COLLATE Chinese_PRC_CI_AS
+
+-- 不区分大小写
+ALTER TABLE test.dbo.[user] ALTER COLUMN name varchar(100) COLLATE Chinese_PRC_CI_AS NULL;
+
+-- 大小写敏感
+ALTER TABLE test.dbo.[user] ALTER COLUMN code varchar(20) COLLATE Chinese_PRC_CS_AS;
+```
+
 ### 查询时区分大小写
 
 > sqlserver默认不区分字母大小写，若要区分大小写可以指定：`COLLATE Chinese_PRC_CS_AI_WS`
@@ -75,15 +91,6 @@ year(getdate()),month(getdate()),day(getdate())
 ### 分页
 
 ```sql
--- 默认编码为SQL_Latin1_General_CP1_CI_AS
--- sql查询的时候查询数据变成了??问号
-
-# 数据库的编码不对，修改下数据库的编码
-ALTER DATABASE [数据库名] COLLATE Chinese_PRC_CI_AS
-
-ALTER TABLE test.dbo.[user] ALTER COLUMN name varchar(100) COLLATE Chinese_PRC_CI_AS NULL;
-
-
 -- 方式1
 select * from (
 　　　　select *, ROW_NUMBER() OVER(Order by id ) AS sort_id from [user]
