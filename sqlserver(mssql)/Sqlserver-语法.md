@@ -97,3 +97,7 @@ select REPLACE(CONVERT(varchar(20), GETDATE(), 120), '-', '/')
 -- yyyy-mm-dd hh:mm
 select SUBSTRING(CONVERT(varchar(20), GETDATE(), 120),0, len(CONVERT(varchar(20), GETDATE(), 120))-2) 
 ```
+
+## java jdbc in查询参数超过2100个的问题
+
+> jdbc + mybatis限制#{param}参数为2100个，超过会报错，解决方法可以不同过#{}预编译，通过${}进行sql拼接
