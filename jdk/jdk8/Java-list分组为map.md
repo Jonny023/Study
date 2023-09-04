@@ -49,3 +49,9 @@ System.out.println(result1);//{1={20=[User{id=1, age=20, name='张三'}, User{id
     
 ```
 
+### 多字段组合分组
+```java
+goodsList.stream().collect(Collectors.toMap(goods -> goods.getName() + "-" + goods.getRemarks(), Functions.identity()));
+//搜集为LinkedHashMap
+goodsList.stream().collect(Collectors.toMap(goods -> goods.getName() + "-" + goods.getRemarks(), Functions.identity(), LinkedHashMap::new));
+```
