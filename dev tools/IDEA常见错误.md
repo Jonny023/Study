@@ -31,3 +31,17 @@ Opening Policy
 Enable preview tab
 The preview tab is reused to show files selected with a single clickin the Project tool window, and files opened during debugging.
 ```
+
+### 解决IDEA报错:java 找不到符号
+
+> pom添加依赖
+
+```xml
+<!-- java: JPS incremental annotation processing is disabled. Compilation results on partial recompilation may be inaccurate. Use build process "jps.track.ap.dependencies" VM flag to enable/disable incremental annotation processing environment.-->
+<dependency>
+  <groupId>com.intellij</groupId>
+  <artifactId>annotations</artifactId>
+  <version>6.0.3</version>
+  <scope>provided</scope>
+</dependency>
+```
