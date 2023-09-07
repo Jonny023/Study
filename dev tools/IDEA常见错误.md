@@ -32,7 +32,7 @@ Enable preview tab
 The preview tab is reused to show files selected with a single clickin the Project tool window, and files opened during debugging.
 ```
 
-### 解决IDEA报错:java 找不到符号
+### 4.解决IDEA报错:java 找不到符号
 
 > pom添加依赖
 
