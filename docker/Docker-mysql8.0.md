@@ -54,3 +54,9 @@ alter user 'root'@'%' IDENTIFIED WITH mysql_native_password by '123456';
 flush privileges;
 ```
 
+## 客户端连接报错
+
+> Public Key Retrieval is not allowed
+
+* 连接参数或者url添加参数:`allowPublicKeyRetrieval=true`
+
