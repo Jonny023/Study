@@ -33,6 +33,9 @@ mysql -uroot
 # 查看用户权限
 select user,host,authentication_string from mysql.user;
 
+# 存在多个root用户，删除其中一个
+DROP USER 'root'@'localhost';
+
 # 选择库
 use mysql
 
