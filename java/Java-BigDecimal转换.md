@@ -114,3 +114,15 @@ public static int scale(BigDecimal number) {
     return Math.max(number.stripTrailingZeros().scale(), 0);
 }
 ```
+
+## float转BigDecimal精度丢失问题
+
+> 将float的7.45f向上取整保留1位小数导致精度问题，float需要先转换为String，再通过BigDecimal的构造器创建
+
+```java
+float f = 7.45f;
+System.out.println(BigDecimal.valueOf(f).setScale(1, RoundingMode.HALF_UP));// 7.4
+BigDecimal result = new BigDecimal(Float.toString(f));
+System.out.println(result); // 7.45
+System.out.println(result.setScale(1, RoundingMode.HALF_UP)); // 7.5
+```
