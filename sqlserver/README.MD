@@ -20,6 +20,28 @@ select 1 as col;
 SET SHOWPLAN_ALL OFF;
 ```
 
+## 查看表是否被锁
+
+```sql
+SELECT
+	*
+FROM
+	sys.dm_tran_locks
+WHERE
+	resource_type = 'OBJECT'
+	AND resource_database_id = DB_ID('表名')
+	AND resource_associated_entity_id = OBJECT_ID('goods');
+
+-- 查询被锁的表
+select  request_session_id spid,
+ OBJECT_NAME(resource_associated_entity_id) tableName
+ from  sys.dm_tran_locks where   resource_type ='OBJDECT';
+ 
+
+-- 释放被锁的表
+KILL 0
+```
+
 ## 坑
 
 * sqlserver分页必须排序，否则语法错误
