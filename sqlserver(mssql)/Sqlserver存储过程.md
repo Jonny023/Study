@@ -76,3 +76,12 @@ BEGIN CATCH
   RAISERROR (N'错误信息', 16, 1) 
 END CATCH
 ```
+
+### 临时表
+
+```sql
+CREATE TABLE ##tmpTable (
+    id INT,
+    name VARCHAR(50) 
+);
+```
