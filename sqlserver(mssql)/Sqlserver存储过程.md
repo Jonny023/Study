@@ -54,3 +54,25 @@ END
 CLOSE items  
 DEALLOCATE items
 ```
+
+### 异常+事务
+
+```sql
+BEGIN TRY
+  BEGIN TRAN
+
+    -- SQL 语句
+  	print 1/0
+  COMMIT TRAN
+END TRY
+BEGIN CATCH
+  ROLLBACK TRAN
+
+  SELECT
+    ERROR_NUMBER() AS code,
+    ERROR_MESSAGE() AS message
+
+  -- 抛出自定义错误
+  RAISERROR (N'错误信息', 16, 1) 
+END CATCH
+```
