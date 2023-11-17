@@ -46,7 +46,7 @@ WHERE
 
 
 
--- 查看标所
+-- 查看表锁
 select 0 as spid, blocked from (select * from sysprocesses where blocked > 0) a 
 	where not exists(
 		select * from (select * from sysprocesses where blocked > 0) b where a.blocked = spid
