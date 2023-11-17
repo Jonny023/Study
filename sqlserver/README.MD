@@ -53,7 +53,7 @@ select 0 as spid, blocked from (select * from sysprocesses where blocked > 0) a
 	)
 union select spid, blocked from sysprocesses where blocked > 0
 
-kill spid
+kill blocked
  
 
 -- 释放被锁的表
