@@ -36,6 +36,14 @@ WHERE
 select  request_session_id spid,
  OBJECT_NAME(resource_associated_entity_id) tableName
  from  sys.dm_tran_locks where   resource_type ='OBJDECT';
+
+select 0 as spid, blocked from (select * from sysprocesses where blocked > 0) a 
+	where not exists(
+		select * from (select * from sysprocesses where blocked > 0) b where a.blocked = spid
+	)
+union select spid, blocked from sysprocesses where blocked > 0
+
+kill spid
  
 
 -- 释放被锁的表
