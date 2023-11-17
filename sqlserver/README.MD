@@ -23,20 +23,30 @@ SET SHOWPLAN_ALL OFF;
 ## 查看表是否被锁
 
 ```sql
-SELECT
-	*
-FROM
-	sys.dm_tran_locks
-WHERE
-	resource_type = 'OBJECT'
-	AND resource_database_id = DB_ID('表名')
-	AND resource_associated_entity_id = OBJECT_ID('goods');
+-- 会话ID (session_id)、请求状态 (status)、等待类型 (wait_type)、等待时间 (wait_time) 和阻塞会话ID (blocking_session_id)
+SELECT 
+    OBJECT_NAME(p.object_id) AS TableName,
+    r.session_id,
+    r.status,
+    r.wait_type,
+    r.wait_time,
+    r.blocking_session_id
+FROM 
+    sys.dm_exec_requests r
+JOIN 
+    sys.dm_tran_locks l ON r.session_id = l.request_session_id
+JOIN 
+    sys.partitions p ON l.resource_associated_entity_id = p.hobt_id
+JOIN 
+    sys.objects o ON p.object_id = o.object_id
+WHERE 
+    l.resource_database_id = DB_ID() -- Filter by current database
+    AND l.resource_type = 'OBJECT' -- Looking for object-level locks
+    AND r.wait_type IS NOT NULL -- The request is waiting for something
 
--- 查询被锁的表
-select  request_session_id spid,
- OBJECT_NAME(resource_associated_entity_id) tableName
- from  sys.dm_tran_locks where   resource_type ='OBJDECT';
 
+
+-- 查看标所
 select 0 as spid, blocked from (select * from sysprocesses where blocked > 0) a 
 	where not exists(
 		select * from (select * from sysprocesses where blocked > 0) b where a.blocked = spid
