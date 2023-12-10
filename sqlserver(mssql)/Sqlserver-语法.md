@@ -37,6 +37,24 @@ CLOSE user_cursor
 DEALLOCATE user_cursor
 ```
 
+## 执行sql
+
+```sql
+-- 简单执行sql
+DECLARE @sql varchar(MAX) = 'insert into tab (col) select col from test'
+EXEC (@sql)
+
+-- 执行指定sql或表达式，类似eval()函数
+DECLARE @expr nvarchar(max) = N'SELECT ROUND((1+100)/10,2)+200-40 AS total'
+EXECUTE sp_executesql @expr
+
+-- 执行sql并将结果赋值给变量
+DECLARE @total decimal(10,2)
+DECLARE @expr nvarchar(max) = N'SELECT @total=ROUND((1+100)/10,2)+200-40'
+EXEC sp_executesql @expr, N'@total decimal(10,2) OUTPUT', @total = @total OUTPUT
+PRINT @total
+```
+
 
 ## 更新时间
 
