@@ -1,5 +1,42 @@
 # Sqlserver
 
+## 获取上一记录、下一记录
+
+```sq1
+-- LAG和LEAD函数,分别获取上一条和下一条记录的值进行比较
+SELECT 
+  id, 
+  name,
+  LAG(name) OVER(ORDER BY id) AS prev_name,
+  LEAD(name) OVER(ORDER BY id) AS next_name,
+  LAG(age) OVER(ORDER BY id) AS prev_age,
+  LEAD(age) OVER(ORDER BY id) AS next_age
+FROM [user]
+
+-- 通过游标获取上一记录、当前记录
+DECLARE @id int, @name varchar(50)
+DECLARE @prev_id int, @prev_name varchar(50)
+DECLARE user_cursor CURSOR SCROLL FOR SELECT id, name FROM [user] ORDER BY id DESC 
+
+OPEN user_cursor
+FETCH NEXT FROM user_cursor INTO @id, @name
+
+WHILE @@FETCH_STATUS = 0  
+BEGIN
+
+  -- compare current row with prev row
+  IF @id <> @prev_id
+     PRINT '当前记录id:'+CAST(@id as varchar(10)) + ', 上一记录id:'+CAST(@prev_id as varchar(10))
+
+  SET @prev_id = @id
+  SET @prev_name = @name
+
+  FETCH NEXT FROM user_cursor INTO @id, @name
+END
+CLOSE user_cursor
+DEALLOCATE user_cursor
+```
+
 * 更新`datetime`或`datetime2`类型为当前系统时间：`SYSUTCDATETIME()`
 
 ```sql
