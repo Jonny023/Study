@@ -135,10 +135,20 @@ begin
 	if exists(select 1 from sc c left join student s on s.sno = c.sno where s.sno is null)
 	begin
 	  -- insert into student(sno) select c.sno from sc c left join student s on s.sno = c.sno where s.sno is null
-    -- inserted 是一个临时表，它包含了插入操作中的所有记录，inserted代表if里面查询里面的所有数据
+	  -- inserted 是一个临时表，它包含了插入操作中的所有记录，inserted代表if里面查询里面的所有数据
 	  insert into student(sno) select sno from inserted
 	end
 end
 go
 insert into sc(sno,cno,degree) values('s20070301','c02',78)
+```
+
+## 类型转换
+
+```sql
+-- 转换decimal
+select cast(1 as decimal(10,2))
+
+-- 转换为字符
+select cast(1111 as varchar(max))
 ```
