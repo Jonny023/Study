@@ -37,6 +37,9 @@ CLOSE user_cursor
 DEALLOCATE user_cursor
 ```
 
+
+## 更新时间
+
 * 更新`datetime`或`datetime2`类型为当前系统时间：`SYSUTCDATETIME()`
 
 ```sql
