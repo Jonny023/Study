@@ -101,3 +101,44 @@ select SUBSTRING(CONVERT(varchar(20), GETDATE(), 120),0, len(CONVERT(varchar(20)
 ## java jdbc in查询参数超过2100个的问题
 
 > jdbc + mybatis限制#{param}参数为2100个，超过会报错，解决方法可以不同过#{}预编译，通过${}进行sql拼接
+
+
+## 触发器
+
+> 可以通过创建触发器来触发默写事件，比如一个表insert时触发要不要同时在领一张表中插入数据
+
+```sql
+-- 表结构
+drop table student
+drop table sc
+create table student (
+	sno varchar(20) not null
+)
+create table sc (
+	sno varchar(20) not null,
+	cno varchar(20) not null,
+	degree int not null
+)
+
+
+go
+-- 删除触发器
+drop trigger student_sc_insert1
+
+-- 创建触发器
+create trigger student_sc_insert1
+on sc
+after insert
+
+as
+begin
+	if exists(select 1 from sc c left join student s on s.sno = c.sno where s.sno is null)
+	begin
+	  -- insert into student(sno) select c.sno from sc c left join student s on s.sno = c.sno where s.sno is null
+    -- inserted 是一个临时表，它包含了插入操作中的所有记录，inserted代表if里面查询里面的所有数据
+	  insert into student(sno) select sno from inserted
+	end
+end
+go
+insert into sc(sno,cno,degree) values('s20070301','c02',78)
+```
