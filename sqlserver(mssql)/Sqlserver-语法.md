@@ -35,6 +35,46 @@ BEGIN
 END
 CLOSE user_cursor
 DEALLOCATE user_cursor
+
+
+-- 通过游标获取上一记录、当前记录
+DECLARE @id int, @name varchar(50)
+DECLARE @prev_id int, @prev_name varchar(50)
+drop table #temp
+SELECT t.* INTO #temp from (SELECT 1 AS id, 'xxx1' as name UNION ALL SELECT 2 AS id, 'xxx2' as name UNION ALL SELECT 3 AS id, 'xxx3' as name) t
+DECLARE @count int
+DECLARE @index int = 1
+SELECT @count = count(1) from #temp
+DECLARE user_cursor CURSOR SCROLL FOR SELECT * from #temp
+
+OPEN user_cursor
+FETCH NEXT FROM user_cursor INTO @id, @name
+
+WHILE @@FETCH_STATUS = 0
+BEGIN
+
+  -- compare current row with prev row
+--  IF @id <> @prev_id
+--  BEGIN
+--     PRINT '当前记录id:'+CAST(@id as varchar(10)) + ', 上一记录id:'+CAST(@prev_id as varchar(10))     
+--  END
+  
+  IF (@index = @count) BEGIN
+  	PRINT '当前为最后一条，当前记录id:'+CAST(@id as varchar(10)) + ', 上一记录id:'+CAST(@prev_id as varchar(10))
+  END
+  ELSE BEGIN
+  	PRINT '当前记录id:'+CAST(@id as varchar(10)) + ', 上一记录id:'+CAST(@prev_id as varchar(10))
+  END
+  print cast(@index as varchar(10)) + ':' + cast(@count as varchar(10))
+
+  SET @prev_id = @id
+  SET @prev_name = @name
+  SET @index += 1;
+
+  FETCH NEXT FROM user_cursor INTO @id, @name
+END
+CLOSE user_cursor
+DEALLOCATE user_cursor
 ```
 
 ## 执行sql
