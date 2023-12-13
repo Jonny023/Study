@@ -250,3 +250,10 @@ select cast(1 as decimal(10,2))
 -- 转换为字符
 select cast(1111 as varchar(max))
 ```
+
+## 去除尾0
+
+```sql
+-- ### 表示保留小数位数
+select FORMAT(1.0120, '0.###')
+```
