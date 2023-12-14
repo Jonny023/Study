@@ -70,3 +70,15 @@ PageInfo<XxxVO> pageInfo = PageMethod.startPage(param.getPageNum(), param.getPag
     getBaseMapper().pageList()
 );
 ```
+
+## 多表联合查询导致返回数据记录数和数据条数不一直
+
+> 分页数据不一致，多表left join导致分页数据不一致
+
+```java
+// 默认开启了sql优化，只会查主表的记录数，需要设置关闭count时的优化
+page.setOptimizeCountSql(false);
+
+// 分页查询如果不用默认的查询记录数，可以设置为关闭，这种关闭场景适合如app上滑加载更多
+page.setSearchCount(false);
+```
