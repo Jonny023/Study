@@ -17,3 +17,12 @@ docBase: 文件存放的路径，可以用绝对路径，如果你直接配置do
 如果项目有权限控制，则需要特别注意配置好path，如果path为空，任何人都可以访问到你的文件，因为文件和你的tomcat相当于是兄弟关系，并不是父子关系，所以权限控制不到文件的
 
 ### 404请[参考](https://blog.csdn.net/istend/article/details/52892208)
+
+
+### 文件虚拟路径映射
+
+```xml
+<Context path="/img" docBase="G:\photo" reloadable="true"/>
+```
+
+* 项目访问就是：localhost:8080/img/file.png
