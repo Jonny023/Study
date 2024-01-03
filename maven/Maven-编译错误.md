@@ -44,3 +44,28 @@ java: Internal error in the mapping processor: java.lang.NullPointerException  	
 ```bash
 java -jar demo.jar --spring.profiles.active=dev,swagger
 ```
+
+### 打包报错
+
+* maven打包报错：
+
+```sh
+[ERROR] Failed to execute goal org.apache.maven.plugins:maven-compiler-plugin:3.8.1:compile (default-compile) on project hui-api-busi-module-trade: Compilation failure -> [Help 1]
+[ERROR] 
+[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.
+[ERROR] Re-run Maven using the -X switch to enable full debug logging.
+[ERROR] 
+[ERROR] For more information about the errors and possible solutions, please read the following articles:
+[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/MojoFailureException
+[ERROR] 
+[ERROR] After correcting the problems, you can resume the build with the command
+[ERROR]   mvn <goals> -rf :hui-api-busi-module-trade
+
+Process finished with exit code 1
+```
+
+#### 解决方案
+
+* 删除java类中未使用的引用
+
+[参考地址](https://blog.csdn.net/weixin_68696833/article/details/125313895)
