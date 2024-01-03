@@ -50,7 +50,7 @@ java -jar demo.jar --spring.profiles.active=dev,swagger
 * maven打包报错：
 
 ```sh
-[ERROR] Failed to execute goal org.apache.maven.plugins:maven-compiler-plugin:3.8.1:compile (default-compile) on project hui-api-busi-module-trade: Compilation failure -> [Help 1]
+[ERROR] Failed to execute goal org.apache.maven.plugins:maven-compiler-plugin:3.8.1:compile (default-compile) on project xxxx: Compilation failure -> [Help 1]
 [ERROR] 
 [ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.
 [ERROR] Re-run Maven using the -X switch to enable full debug logging.
