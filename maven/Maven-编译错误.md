@@ -1,4 +1,4 @@
-No.1 程序包 com.sun.istack.internal 不存在
+* No.1 程序包 com.sun.istack.internal 不存在
 
 > pom文件新增
 
@@ -69,3 +69,32 @@ Process finished with exit code 1
 * 删除java类中未使用的引用
 
 [参考地址](https://blog.csdn.net/weixin_68696833/article/details/125313895)
+
+* No.3
+
+  > 多线程编译
+>
+> -T 4 是直接指定4线程
+> -T 1C 表示CPU线程的倍数
+
+```sh
+mvn clean -T 4 -s D:\dev_tools\apache-maven-3.3.9\conf\settings33.xml -Dmaven.repo.local=D:\M4 -DskipTests=true compile
+```
+
+
+
+> 编译乱码报错
+
+```sh
+-DarchetypeCatalog=internal -Dfile.encoding=GBK
+```
+
+
+
+> 错误: 找不到符号
+>
+> Error:(10, 8) java: 程序包java.mail不存在之类这样的情况
+
+```sh
+mvn -U idea:idea
+```
