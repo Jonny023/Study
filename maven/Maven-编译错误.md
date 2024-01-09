@@ -70,10 +70,10 @@ Process finished with exit code 1
 
 [参考地址](https://blog.csdn.net/weixin_68696833/article/details/125313895)
 
-* No.3
+## No.3 maven项目明明没问题，重启后突然找不到包，library里面只能看到jdk，无法引入第三方jar
 
-  > 多线程编译
->
+*  多线程编译
+
 > -T 4 是直接指定4线程
 > -T 1C 表示CPU线程的倍数
 
