@@ -257,3 +257,32 @@ select cast(1111 as varchar(max))
 -- ### 表示保留小数位数
 select FORMAT(1.0120, '0.###')
 ```
+
+## 明细数据分组小计
+
+```sql
+;with cte as (
+    select *, row_number() over(order by id) as rn
+    from report_hr_emp_comm_customer_detail WHERE task_id = 1747422519452418050 AND row_data_type = 0
+)
+select
+    case when grouping(c.rn) = 1 then '小计' else c.schema_name end as schema_name,customer_name,employee_name,
+    sum(c.sale_amount) as sale_amount
+from cte as c
+group by grouping sets ((c.schema_name,customer_name,employee_name), (c.schema_name,customer_name,employee_name, c.rn))
+order by c.schema_name,customer_name,employee_name;
+
+-- having grouping(c.schema_name) = 0表示只需要数据明细和小计数据，having grouping(c.schema_name) = 1表示合计
+;with cte as (
+    select *, row_number() over(order by id) as rn
+    from report_hr_emp_comm_customer_detail WHERE task_id = 1747422519452418050 AND row_data_type = 0
+)
+select
+    case when grouping(c.rn) = 1 then '小计' else c.schema_name end as schema_name,
+    customer_name,employee_name ,
+    sum(c.sale_amount) as sale_amount
+from cte as c
+group by rollup ((c.schema_name, c.customer_name, employee_name ), c.rn)
+having grouping(c.schema_name) = 0
+order by c.schema_name,c.customer_name,employee_name;
+```
