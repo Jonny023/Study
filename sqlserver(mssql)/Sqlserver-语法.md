@@ -260,6 +260,58 @@ select FORMAT(1.0120, '0.###')
 
 ## 明细数据分组小计
 
+* 这种方式可以解决分组数据错乱问题
+```sql
+    -- 分组写入小计
+    ;WITH cte AS (
+	SELECT *, ROW_NUMBER() OVER(ORDER BY id) AS rn
+	FROM #tmp_report_hr_emp_comm_customer_detail WHERE task_id = @p_task_id AND tenant_id = @p_tenant_id AND row_data_type = 100
+    )
+     INSERT INTO #tmp_report_hr_emp_comm_customer_detail (
+	tenant_id, task_id, schema_id, employee_id,row_data_type,
+	customer_id,bill_cat_id, bill_id, bill_no, bill_time, goods_id,schema_name,
+	sale_amount, sale_gross_profit_amount, sale_quantity, sale_settle_amount, comm_amount
+     )
+    SELECT
+	c.tenant_id,
+	c.task_id,
+	c.schema_id,
+	c.employee_id,
+	0 AS row_data_type,
+	c.customer_id,
+	c.bill_cat_id,
+	c.bill_id,
+	c.bill_no,
+	c.bill_time,
+	c.goods_id,
+	c.schema_name,
+	c.sale_amount,
+	c.sale_gross_profit_amount,
+	c.sale_quantity,
+	c.sale_settle_amount,
+	c.comm_amount
+    FROM cte c
+    WHERE rn IS NOT NULL
+    UNION ALL
+    SELECT
+	@p_tenant_id AS tenant_id, @p_task_id AS task_id,
+	schema_id,
+	employee_id,
+	1 AS row_data_type,
+	MAX(c.customer_id) AS customer_id,
+	MAX(c.bill_cat_id) AS bill_cat_id,
+	MAX(c.bill_id) AS bill_id,
+	MAX(c.bill_no) AS bill_no,
+	MAX(c.bill_time) AS bill_time,
+	MAX(c.goods_id) AS goods_id,
+	'小计' AS schema_name,
+	SUM(c.sale_amount) AS sale_amount,SUM(sale_gross_profit_amount) AS sale_gross_profit_amount, SUM(sale_quantity) AS sale_quantity, SUM(sale_settle_amount) AS sale_settle_amount, SUM(comm_amount) AS comm_amount
+    FROM cte AS c
+    GROUP BY c.schema_id, c.employee_id
+    ORDER BY c.schema_id,c.employee_id, row_data_type;
+```
+
+> 这种方式有问题（分组小计错乱）
 ```sql
 ;with cte as (
     select *, row_number() over(order by id) as rn
