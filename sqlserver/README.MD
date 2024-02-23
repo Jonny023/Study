@@ -158,3 +158,22 @@ where id not in (select top 2 id from [user])
 * varchar(5) 一个汉字两个字节，如果输入英文或数字可以输入5个字符，如果是中文，最多只能存2个【汉字】
 * nvarchar(5) 限制长度无论任何字符，都限制为5个
 
+
+### 批量查询
+
+```sql
+SELECT 
+	*
+FROM stock ss 
+WHERE EXISTS (
+	SELECT 1
+	FROM (
+--	<foreach item="item" index="index" collection="values">
+--	    VALUES (#{item.col1}, #{item.col2})
+--	    <if test="index != values.size()-1">,</if>
+--	</foreach>
+		VALUES (6392298028455522304,6392969612160188416), (6392540937872613376, 6392969612160188416)
+	) AS T(goods_id, warehouse_id)
+	WHERE ss.goods_id = T.goods_id AND ss.warehouse_id = T.warehouse_id
+)
+```
