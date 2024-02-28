@@ -39,5 +39,17 @@ http-server c:\ -p 8088
 
 # 实时更新文件
 http-server -c-1   （只输入http-server的话，更新了代码后，页面不会同步更新）
+
+
+npm install -g http-server
+http-server -c-1 -p 80
+-d dist 指定目录
+-p 指定端口号
+
+
+npm install -g history-server
+history-server biz -p 80
+biz 项目目录名称，指定后无需输入项目名访问
+-p 指定端口
 ```
 
