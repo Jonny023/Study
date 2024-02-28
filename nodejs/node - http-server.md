@@ -36,5 +36,8 @@ http-server .
 
 # 指定端口运行
 http-server c:\ -p 8088
+
+# 实时更新文件
+http-server -c-1   （只输入http-server的话，更新了代码后，页面不会同步更新）
 ```
 
