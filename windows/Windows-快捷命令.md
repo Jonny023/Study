@@ -24,6 +24,8 @@ iexplore 打开IE浏览器
 
 subl sublime配置环境变量
 
+inetcpl.cpl Internet属性（系统代理）
+
 **安装了office套件：**
 
 * excel 打开excel
