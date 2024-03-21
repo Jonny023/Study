@@ -177,3 +177,9 @@ WHERE EXISTS (
 	WHERE ss.goods_id = T.goods_id AND ss.warehouse_id = T.warehouse_id
 )
 ```
+
+### 多行合并到一起，类似mysql的concat功能，将多行的id拼接到一起用逗号分隔，如：1,2,3,4
+
+```sql
+SELECT STUFF((SELECT ',' + CAST(id AS VARCHAR(20)) FROM tab FOR XML PATH('')), 1, 1, '') AS id;
+```
