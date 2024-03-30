@@ -1,10 +1,5 @@
 ## docker-compose安装mysql
 
-### 查看详细日志
-
-```
-docker-compose --compatibility up -d
-```
 
 ### mysql配置
 
