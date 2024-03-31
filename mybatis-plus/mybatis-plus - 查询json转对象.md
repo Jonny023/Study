@@ -58,3 +58,9 @@ public class Test {
 }
 ```
 
+> 返回结果
+
+```json
+[{"id":1,"content":[{"id":1,"name":"张三"},{"id":2,"name":"李四"}]}]
+```
+
