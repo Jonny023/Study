@@ -7,6 +7,8 @@
 | 1    | [{"id":1,"name":"张三"},{"id":2,"name":"李四"}] |
 
 
+## com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler这个转换器是mybatisplus为mybatisplus默认实现了的，还有json和fastjson的，需要可自行添加依赖使用
+
 ## 方式1
 
 ```xml
