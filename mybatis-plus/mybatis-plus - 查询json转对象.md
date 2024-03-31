@@ -6,14 +6,6 @@
 | ---- | ----------------------------------------------- |
 | 1    | [{"id":1,"name":"张三"},{"id":2,"name":"李四"}] |
 
-> application.yml配置
-
-```yaml
-mybatis-plus:
-  type-handlers-package: com.example.handler
-```
-
-
 
 ## 方式1
 
@@ -64,3 +56,12 @@ public class Test {
 [{"id":1,"content":[{"id":1,"name":"张三"},{"id":2,"name":"李四"}]}]
 ```
 
+
+## 若自定义转换器，需添加配置
+
+> application.yml配置
+
+```yaml
+mybatis-plus:
+  type-handlers-package: com.example.handler
+```
