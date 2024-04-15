@@ -1,3 +1,9 @@
+* 查看锁
+
+```sql
+select * from performance_schema.data_locks;
+```
+
 > mysql出表锁表如何处理（com.mysql.cj.jdbc.exceptions.MySQLTransactionRollbackException: Lock wait timeout exc）
 
 ```sql
