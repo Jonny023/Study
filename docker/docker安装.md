@@ -2,6 +2,36 @@
 
 [原文地址](https://juejin.cn/post/6844903790630404104)
 
+### 设置yum源和docker源
+
+> 可以创建一个脚本一并执行
+
+```sh
+# 备份当前的YUM源配置文件
+sudo cp /etc/yum.repos.d/CentOS-Base.repo /etc/yum.repos.d/CentOS-Base.repo.backup
+ 
+# 移除旧的YUM源配置文件
+sudo rm -f /etc/yum.repos.d/CentOS-Base.repo
+ 
+# 下载新的YUM源配置文件（以CentOS 7为例）
+sudo curl -o /etc/yum.repos.d/CentOS-Base.repo http://mirrors.aliyun.com/repo/Centos-7.repo
+ 
+# 清理YUM缓存并生成新的缓存
+sudo yum clean all
+sudo yum makecache
+ 
+# 对于Docker，假设你使用的是阿里云的Docker源
+# 移除旧的Docker源配置文件（如果有的话）
+sudo rm -f /etc/yum.repos.d/docker-ce.repo
+ 
+# 下载新的Docker源配置文件
+sudo curl -o /etc/yum.repos.d/docker-ce.repo https://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo
+ 
+# 清理Docker YUM缓存并生成新的缓存
+sudo yum clean all
+sudo yum makecache
+```
+
 ### 方式1：使用脚本安装
 
 #### 1. 确保 yum 包更新到最新。
