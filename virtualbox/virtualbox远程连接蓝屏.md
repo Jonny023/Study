@@ -1,5 +1,7 @@
 # virtualbox问题
 
+### [virtualbox历史版本](https://www.virtualbox.org/wiki/Download_Old_Builds_7_0)
+
 ### 问题1
 * 安装virtualbox（版本7.0.16）后，在虚拟机里面安装了centos7，通过ssh工具远程连接虚拟机就蓝屏报错：
 
@@ -7,7 +9,6 @@
 
 * [官网解决](https://www.virtualbox.org/ticket/22045)
 	* 官方说需要将版本降低到7.0.14，果然我降低后重新安装，远程连接不报错了
-
 
 ### 问题2
 
