@@ -1,4 +1,4 @@
-# k3s
+# k3s在线安装
 
 
 
@@ -14,31 +14,31 @@
 
 [端口说明](https://ranchermanager.docs.rancher.com/zh/getting-started/installation-and-upgrade/installation-requirements/port-requirements)
 
-
+[参考](https://www.rehiy.com/post/547/)
 
 ### 环境说明
 
 * virtualbox对应的虚拟机：网络模式：NAT+host-only双网卡
 * CentOS 7.9
 
-* k3s版本：1.25.0
+* k3s版本：1.26.5
 
 | 主机名     | IP地址（host-only网卡对应的IP） | 说明     |
 | ---------- | ------------------------------- | -------- |
-| k8s-master | 192.168.56.105                  | 主节点   |
-| k8s-node1  | 192.168.56.106                  | 工作节点 |
-| k8s-node2  | 192.168.56.107                  | 工作节点 |
+| k8s-master | 192.168.56.102                  | 主节点   |
+| k8s-node1  | 192.168.56.103                  | 工作节点 |
+| k8s-node2  | 192.168.56.104                  | 工作节点 |
 
 > 设置每台主机名
 
 ```sh
-# 192.168.56.105
+# 192.168.56.102
 hostnamectl set-hostname k8s-master
 
-# 192.168.56.106
+# 192.168.56.103
 hostnamectl set-hostname k8s-node1
 
-# 192.168.56.107
+# 192.168.56.104
 hostnamectl set-hostname k8s-node2
 ```
 
@@ -49,9 +49,9 @@ hostnamectl set-hostname k8s-node2
 ```sh
 # 设置主机地址
 # vim /etc/hosts
-192.168.56.105 k8s-master
-192.168.56.106 k8s-node1
-192.168.56.107 k8s-node2
+192.168.56.102 k8s-master
+192.168.56.103 k8s-node1
+192.168.56.104 k8s-node2
 ```
 
 > 设置完成后重启网卡
@@ -107,6 +107,8 @@ sudo iptables -L -n --line-numbers | grep :644*
 
 [参考地址](https://www.cnblogs.com/roy2220/p/14766334.html)
 
+[参考](https://docs.rancher.cn/docs/k3s/faq/_index/)
+
 #### master
 
 - 在`k8s-master`节点执行：
@@ -115,25 +117,26 @@ sudo iptables -L -n --line-numbers | grep :644*
 # 若果是物理机可以直接用这个命令
 curl -sfL https://rancher-mirror.rancher.cn/k3s/k3s-install.sh | INSTALL_K3S_VERSION=v1.26.5+k3s1 INSTALL_K3S_MIRROR=cn sh -
 
-# 本文是通过虚拟机多网卡跑的k3s，需要通过--node-ip指定控制平面的ip，和物理机的host-only网卡绑定，不然工作节点无法和master进行通信，因为网络是隔离的（通过--node-ip指定INTERNAL-IP）
+# 本文是通过虚拟机多网卡跑的k3s，需要通过--node-ip指定当前节点的ip，和物理机的host-only网卡绑定，不然工作节点无法和master进行通信，因为网络是隔离的（通过--node-ip指定INTERNAL-IP），多网卡通过--flannel-iface=enp0s8指定网卡
 # 多个master节点需要指定--cluster-init 
-curl -sfL https://rancher-mirror.rancher.cn/k3s/k3s-install.sh | INSTALL_K3S_VERSION=v1.26.5+k3s1 INSTALL_K3S_MIRROR=cn sh -s - server --flannel-iface=enp0s8 --node-ip=192.168.56.105
+curl -sfL https://rancher-mirror.rancher.cn/k3s/k3s-install.sh | INSTALL_K3S_VERSION=v1.26.5+k3s1 INSTALL_K3S_MIRROR=cn sh -s - server --flannel-iface=enp0s8
+
 
 #安装完成后，查看节点状态
 kubectl get node
 #查看token
 cat /var/lib/rancher/k3s/server/node-token
-#K109a08fd0bf41a6e1bc9b5c8b95bc07d1a5c3f05533ba0120ac908025886850efc::server:489ed0952c39bc2b583d9ddb03367035
+#K109e40238d2526c28a9fcf3da1f13aab359ec314ef31be13ade6abd6fcec99ab97::server:5ea4aa01e7b9fd3548ff9bcd2068c684
 
 # 查看集群信息
 kubectl cluster-info
 
 
-# 多网卡多主多从（将k8s-node1和k8s-node都加入为master）
-# k8s-node1
-curl -sfL https://rancher-mirror.rancher.cn/k3s/k3s-install.sh | INSTALL_K3S_VERSION=v1.26.5+k3s1 INSTALL_K3S_MIRROR=cn K3S_URL=https://k8s-master:6443 K3S_TOKEN=489ed0952c39bc2b583d9ddb03367035 sh -s - server --flannel-iface=enp0s8 --node-ip=192.168.56.106
+# 多网卡多主多从（将k8s-node1和k8s-node2都加入为master）
+# k8s-node1 可通过--node-ip=192.168.56.103绑定ip或者通过--flannel-iface=enp0s8绑定网卡
+curl -sfL https://rancher-mirror.rancher.cn/k3s/k3s-install.sh | INSTALL_K3S_VERSION=v1.26.5+k3s1 INSTALL_K3S_MIRROR=cn K3S_URL=https://k8s-master:6443 K3S_TOKEN=5ea4aa01e7b9fd3548ff9bcd2068c684 sh -s - server --flannel-iface=enp0s8
 # k8s-node2
-curl -sfL https://rancher-mirror.rancher.cn/k3s/k3s-install.sh | INSTALL_K3S_VERSION=v1.26.5+k3s1 INSTALL_K3S_MIRROR=cn K3S_URL=https://k8s-master:6443 K3S_TOKEN=489ed0952c39bc2b583d9ddb03367035 sh -s - server --flannel-iface=enp0s8 --node-ip=192.168.56.107
+curl -sfL https://rancher-mirror.rancher.cn/k3s/k3s-install.sh | INSTALL_K3S_VERSION=v1.26.5+k3s1 INSTALL_K3S_MIRROR=cn K3S_URL=https://k8s-master:6443 K3S_TOKEN=5ea4aa01e7b9fd3548ff9bcd2068c684 sh -s - server --flannel-iface=enp0s8
 ```
 
 #### slave(工作节点)
@@ -145,12 +148,17 @@ curl -sfL https://rancher-mirror.rancher.cn/k3s/k3s-install.sh | INSTALL_K3S_VER
 ```sh
 # 单网卡（工作节点都执行这条命令即可）
 # k8s-master token可以用整个完整的token，也可以只复制最后一段
-curl -sfL https://rancher-mirror.rancher.cn/k3s/k3s-install.sh | INSTALL_K3S_VERSION=v1.26.5+k3s1 INSTALL_K3S_MIRROR=cn K3S_URL=https://k8s-master:6443 K3S_TOKEN=489ed0952c39bc2b583d9ddb03367035 sh -
+curl -sfL https://rancher-mirror.rancher.cn/k3s/k3s-install.sh | INSTALL_K3S_VERSION=v1.26.5+k3s1 INSTALL_K3S_MIRROR=cn K3S_URL=https://k8s-master:6443 K3S_TOKEN=5ea4aa01e7b9fd3548ff9bcd2068c684 sh -
 
-# 多网卡，通过--node-ip指定INTERNAL-IP
-curl -sfL https://rancher-mirror.rancher.cn/k3s/k3s-install.sh | INSTALL_K3S_VERSION=v1.26.5+k3s1 INSTALL_K3S_MIRROR=cn K3S_URL=https://k8s-master:6443 K3S_TOKEN=489ed0952c39bc2b583d9ddb03367035 sh -s - agent --node-ip=192.168.56.106
+# 多网卡，通过--flannel-iface=enp0s8指定网卡
+curl -sfL https://rancher-mirror.rancher.cn/k3s/k3s-install.sh | INSTALL_K3S_VERSION=v1.26.5+k3s1 INSTALL_K3S_MIRROR=cn K3S_URL=https://k8s-master:6443 K3S_TOKEN=5ea4aa01e7b9fd3548ff9bcd2068c684 INSTALL_K3S_EXEC="--flannel-iface=enp0s8" sh -
 
-curl -sfL https://rancher-mirror.rancher.cn/k3s/k3s-install.sh | INSTALL_K3S_VERSION=v1.26.5+k3s1 INSTALL_K3S_MIRROR=cn K3S_URL=https://k8s-master:6443 K3S_TOKEN=489ed0952c39bc2b583d9ddb03367035 sh -s - agent --node-ip=192.168.56.107
+curl -sfL https://rancher-mirror.rancher.cn/k3s/k3s-install.sh | INSTALL_K3S_VERSION=v1.26.5+k3s1 INSTALL_K3S_MIRROR=cn K3S_URL=https://k8s-master:6443 K3S_TOKEN=5ea4aa01e7b9fd3548ff9bcd2068c684 INSTALL_K3S_EXEC="--flannel-iface=enp0s8" sh -
+
+# # 或者通过--node-ip指定INTERNAL-IP
+curl -sfL https://rancher-mirror.rancher.cn/k3s/k3s-install.sh | INSTALL_K3S_VERSION=v1.26.5+k3s1 INSTALL_K3S_MIRROR=cn K3S_URL=https://k8s-master:6443 K3S_TOKEN=5ea4aa01e7b9fd3548ff9bcd2068c684 sh -s - agent --node-ip=192.168.56.103
+
+curl -sfL https://rancher-mirror.rancher.cn/k3s/k3s-install.sh | INSTALL_K3S_VERSION=v1.26.5+k3s1 INSTALL_K3S_MIRROR=cn K3S_URL=https://k8s-master:6443 K3S_TOKEN=5ea4aa01e7b9fd3548ff9bcd2068c684 sh -s - agent --node-ip=192.168.56.104
 ```
 
 * 查看节点状态
@@ -159,10 +167,37 @@ curl -sfL https://rancher-mirror.rancher.cn/k3s/k3s-install.sh | INSTALL_K3S_VER
 
 ```sh
 # 每隔1秒刷新一下节点状态（master执行）
-watch -n 1 kubectl get node
+watch -n 1 kubectl get node -owide
 
 kubectl top node
 ```
+
+
+
+## 配置网络
+
+> 跨服务商云主机集群通信，比如：阿里云和腾讯云的2台服务器作为master和worker节点部署时，需要这样配置
+
+* [参考地址](https://kingsd.top/2020/05/14/k3s-Region/)
+
+  ```sh
+  kubectl annotate node k8s-node1 flannel.alpha.coreos.com/public-ip-overwrite=节点公网ip --overwrite
+  ```
+
+  
+
+* 修改完后分别重启两次master和worker节点
+
+  * ```sh
+    # 重启master
+    systemctl restart k3s
+    
+    # 重启worker
+    systemctl restart k3s-agent
+    ```
+  
+* 查看dst变成了配置的地址
+  * bridge fdb show | grep flannel
 
 
 
@@ -184,6 +219,10 @@ mirrors:
 重启每个节点
 
 ```sh
+mkdir -p /etc/rancher/k3s/ && scp -r k8s-master:/etc/rancher/k3s /etc/rancher/
+
+sed -i 's/127.0.0.1:6443/k8s-master:6443/' /etc/rancher/k3s/k3s.yaml
+
 # master节点执行
 systemctl restart k3s
 
@@ -192,6 +231,8 @@ systemctl restart k3s-agent
 
 # 查看服务
 journalctl -u k3s -f
+
+journalctl -u k3s-agent -f
 ```
 
 查看配置是否生效。
@@ -212,7 +253,7 @@ kubectl delete all --all
 find / -name k3s*.sh
 
 # master
-# 关闭所有
+# 关闭所有 升级时可能用到
 sh /usr/local/bin/k3s-killall.sh
 # 执行卸载
 sh /usr/local/bin/k3s-uninstall.sh
@@ -259,8 +300,8 @@ Error from server: error dialing backend: proxy error from 127.0.0.1:6443 while 
 
 ```sh
 NAME         STATUS   ROLES                  AGE   VERSION        INTERNAL-IP      EXTERNAL-IP   OS-IMAGE                KERNEL-VERSION                 CONTAINER-RUNTIME
-k8s-master   Ready    control-plane,master   42m   v1.26.5+k3s1   192.168.56.105   <none>        CentOS Linux 7 (Core)   3.10.0-1160.114.2.el7.x86_64   containerd://1.7.1-k3s1
-k8s-node2    Ready    <none>                 40m   v1.26.5+k3s1   192.168.56.107   <none>        CentOS Linux 7 (Core)   3.10.0-1160.114.2.el7.x86_64   containerd://1.7.1-k3s1
-k8s-node1    Ready    <none>                 40m   v1.26.5+k3s1   192.168.56.106   <none>        CentOS Linux 7 (Core)   3.10.0-1160.114.2.el7.x86_64   containerd://1.7.1-k3s1
+k8s-master   Ready    control-plane,master   42m   v1.26.5+k3s1   192.168.56.102   <none>        CentOS Linux 7 (Core)   3.10.0-1160.114.2.el7.x86_64   containerd://1.7.1-k3s1
+k8s-node2    Ready    <none>                 40m   v1.26.5+k3s1   192.168.56.103   <none>        CentOS Linux 7 (Core)   3.10.0-1160.114.2.el7.x86_64   containerd://1.7.1-k3s1
+k8s-node1    Ready    <none>                 40m   v1.26.5+k3s1   192.168.56.104   <none>        CentOS Linux 7 (Core)   3.10.0-1160.114.2.el7.x86_64   containerd://1.7.1-k3s1
 ```
 

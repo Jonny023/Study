@@ -49,6 +49,9 @@ kubectl describe pod pod-name
 # 删除pod
 kubectl delete pod pod-name
 
+# 强制删除pod
+kubectl delete pod pod-name --force
+
 # 进入pod
 kubectl exec -it pod-name -- /bin/bash
 ```
