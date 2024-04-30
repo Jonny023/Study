@@ -1,6 +1,6 @@
 # k8s基础
 
-
+[参考文档](https://geekhour.net/2023/12/23/kubernetes/)
 
 ## 缩写
 

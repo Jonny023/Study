@@ -151,4 +151,4 @@ kubectl proxy --port=65001 --address='192.168.56.102' --accept-hosts='^192.168.*
 
 
 
-## 其他可视化：Kuboard、KubeSphere 
+## 其他可视化：Kuboard、KubeSphere
