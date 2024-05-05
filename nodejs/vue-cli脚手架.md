@@ -16,6 +16,6 @@ vue create my-app
 # 运行项目
 npm run serve
 
-# 默认为serve，可以进入package.json里面的scripts里面将serve修改为dev，运行用:npm run dev
+# 默认为serve，可以进入package.json里面，将scripts里面的serve修改为dev，运行用:npm run dev
 
 ```
