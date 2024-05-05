@@ -65,3 +65,45 @@ npm run build --report
 
 npm config set registry https://registry.npm.taobao.org
 ```
+
+
+## 配置2
+
+```sh
+# NODE_HOME D:\dev_tools\node-v14.21.3-win-x64
+path D:\dev_tools\node-v14.21.3-win-x64
+npm config set prefix "D:\dev_tools\node-v14.21.3-win-x64\node_global"
+npm config set cache "D:\dev_tools\node-v14.21.3-win-x64\node_cache"
+
+# 查看配置
+npm config ls
+
+# 报错时执行缓存清理
+npm cache clean --force
+npm config set strict-ssl false
+npm install
+
+
+# 获取当前镜像源
+npm config get registry 
+
+# 设置为淘宝地址
+npm config set registry https://registry.npmmirror.com
+
+# 官方默认源
+npm config set registry https://registry.npmjs.org
+
+# 安装cnpm
+npm install -g cnpm
+
+# 安装cnpm https://npmmirror.com/package/cnpm?version=9.4.0
+npm install -g cnpm https://registry.npmmirror.com
+
+# 安装报错，无权限，指定版本安装cnpm
+# 参考：https://blog.csdn.net/qq_39006954/article/details/130632763
+npm install -g cnpm@7.1.0 --registry=http://registry.npmmirror.com
+
+
+# 删除淘宝镜像源
+npm config delete registry https://registry.npm.taobao.org
+```
