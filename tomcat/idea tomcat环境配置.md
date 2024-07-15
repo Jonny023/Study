@@ -4,7 +4,7 @@
 
 > 在idea中启动tomcat，默认会在用户目录生成一堆临时运行目录，因为他读的`CATALINA_BASE`为用户目录
 
-![](./img/1.png)
+![](img/1.png)
 
 #### 如何处理
 
@@ -14,9 +14,11 @@
   CATALINA_BASE D:\devtools\apache-tomcat-7.0.61
   ```
 
+![](img/2.png)
+
 #### 效果
 
-![](./img/3.png)
+![](img/3.png)
 
 
 
@@ -24,8 +26,8 @@
 
 > Settings》Editor》General》Console》将Default Encoding设置为UTF-8
 
-![](./img/encoding1.png)
+![](img/encoding1.png)
 
 同时在tomcat VM Options中添加配置: `-Dfile.encoding=UTF-8`
 
-![](./img/encoding2.png)
+![](img/encoding2.png)
