@@ -8,7 +8,7 @@
 
 #### 如何处理
 
-* 在tomcat配置里面的`Stratup/Connection`里面分别为`Run`和`Debug`添加`CATALINA_BASE`变量
+* 在tomcat配置里面的`Stratup/Connection`里面分别为`Run`和`Debug`在`Pass environment variables`中添加`CATALINA_BASE`变量
 
   ```sh
   CATALINA_BASE D:\devtools\apache-tomcat-7.0.61
