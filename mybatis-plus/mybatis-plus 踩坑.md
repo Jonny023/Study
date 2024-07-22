@@ -98,7 +98,7 @@ PageHelper.startPage(pageDTO.getPage(), pageDTO.getPageSize(), true, false, fals
 
 ## 坑点2
 
-> mybatis-plu自带分页多表联查导致分页和总数据对应不上
+> mybatis-plus自带分页多表联查导致分页和总数据对应不上
 
 ### 依赖
 
@@ -136,7 +136,7 @@ public class MybatisPlusConfiguration1 {
 
 ### 分页方法
 
-> 需要设置关闭coun优化
+> 需要设置关闭count优化
 
 ```java
 @RequestMapping("/userRoleList")
