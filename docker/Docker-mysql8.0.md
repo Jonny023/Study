@@ -9,6 +9,10 @@ docker pull mysql:8
 * 运行容器
 
 ```shell
+
+mkdir -p /data/docker/volumes/mysql8/conf/conf.d/
+
+
 docker run -itd -p 3309:3306 --restart=always \
 --privileged=true \
 --name mysql8 \
