@@ -5,13 +5,13 @@
 * [参考2](https://zhuanlan.zhihu.com/p/443324194)
 
 ```sh
-docker pull registry.cn-hangzhou.aliyuncs.com/helowin/oracle_11g
+docker pull akaiot/oracle_11g
 
 #默认启动
-docker run -d -it -p 1521:1521 --name oracle11g --restart=always registry.cn-hangzhou.aliyuncs.com/helowin/oracle_11g
+docker run -d -it -p 1521:1521 --name oracle11g --restart=always akaiot/oracle_11g
 
 #持久化启动
-docker run -d -it -p 1521:1521 --name oracle11g -e TZ=Asia/Shanghai --restart=always --mount source=oracle_vol,target=/home/oracle/app/oracle/oradata registry.cn-hangzhou.aliyuncs.com/helowin/oracle_11g
+docker run --privileged -d -it -p 1521:1521 --name oracle11g -e TZ=Asia/Shanghai --restart=always --mount source=oracle_vol,target=/home/oracle/app/oracle/oradata akaiot/oracle_11g
 
 #查看启动的线程
 netstat -tulnp
@@ -73,6 +73,21 @@ firewall-cmd --query-port=1521/tcp
 # 连接无权限
 #ORA-01017: invalid username/password; logon denied
 # 用户名：system,实例：helowin，密码: helowin
+
+################ 查看服务名#################
+show parameter service_name;
+SELECT value FROM v$parameter WHERE name = 'service_names';
+SELECT name FROM v$active_services;
+
+#关闭数据库
+shutdown immediate;
+#启动数据库
+startup;
+
+# 关闭监听
+lsnrctl stop
+# 启动监听
+lsnrctl start
 
 
 ##密码默认为7天过期，设置为不限制##
@@ -315,5 +330,18 @@ SELECT t.tablespace_name, round(SUM(bytes / (1024 * 1024)), 0) ts_size
   FROM dba_tablespaces t, dba_data_files d
  WHERE t.tablespace_name = d.tablespace_name
  GROUP BY t.tablespace_name;
+```
+
+### 获取行号
+
+```sql
+SELECT 
+    ROW_NUMBER() OVER (ORDER BY ID DESC) AS row_num,ID, NAME
+FROM STUDENT;
+
+
+SELECT 
+    ROWNUM,ID, NAME
+FROM STUDENT;
 ```
 
