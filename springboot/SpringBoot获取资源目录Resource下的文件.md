@@ -96,3 +96,68 @@ public class MainController {
 }
 
 ```
+
+
+
+## springboot打包jar后访问资源文件
+
+> 经常遇到springboot打包jar后，因业务需要，比如文件上传模板存放到resources资源目录，本地开发环境能访问，但是打包jar部署到线上时却用不了了，下面是几种打包jar后也能访问的几种方式
+
+```java
+package org.example.controller;
+
+import org.example.utils.DownloadUtil;
+import org.springframework.context.ApplicationContext;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.ResourceLoader;
+import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import java.io.IOException;
+import java.io.InputStream;
+
+@RestController
+@RequestMapping("/file")
+public class FileController {
+
+    @javax.annotation.Resource
+    private ResourceLoader resourceLoader;
+    @javax.annotation.Resource
+    private ApplicationContext applicationContext;
+
+    @GetMapping("/1")
+    public void file1() {
+        InputStream inputStream = getClass().getClassLoader().getResourceAsStream("file/1.txt");
+        DownloadUtil.download(inputStream, "1.txt");
+    }
+
+    @GetMapping("/2")
+    public void file2() {
+        InputStream inputStream = getClass().getResourceAsStream("/file/2.txt");
+        DownloadUtil.download(inputStream, "2.txt");
+    }
+
+    @GetMapping("/3")
+    public void file3() throws IOException {
+        Resource resource = resourceLoader.getResource("classpath:/file/3.txt");
+        InputStream inputStream = resource.getInputStream();
+        DownloadUtil.download(inputStream, "3.txt");
+    }
+
+    @GetMapping("/4")
+    public void file4() throws IOException {
+        Resource resource = applicationContext.getResource("classpath:file/4.txt");
+        InputStream inputStream = resource.getInputStream();
+        DownloadUtil.download(inputStream, "4.txt");
+    }
+
+    @GetMapping("/5")
+    public void file5() throws IOException {
+        ClassPathResource resource = new ClassPathResource("file/5.txt");
+        DownloadUtil.download(resource.getInputStream(), "5.txt");
+    }
+}
+```

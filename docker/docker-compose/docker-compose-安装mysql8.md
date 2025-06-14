@@ -64,7 +64,7 @@ default-character-set=utf8mb4  # 设置mysql客户端默认字符集
 version: '3' # 指定了 Docker Compose 文件的格式版本，版本3是常用版本之一
 services:
   mysql:
-    image: mysql:8.3 # https://hub.docker.com/_/mysql/
+    image: mysql:8.3
     container_name: mysql8
     restart: unless-stopped #  指定了容器的重启策略，除了手动停止容器，其他情况都自动重启容器
     environment:
@@ -91,6 +91,7 @@ services:
 
 ```bash
 docker-compose -f docker-compose-mysql.yml -p mysql8 up -d
+# 或者
 docker-compose --compatibility -f docker-compose-mysql.yml -p mysql8 up -d
 ```
 
