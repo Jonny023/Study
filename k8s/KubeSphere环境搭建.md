@@ -284,6 +284,9 @@ NAME           STATUS   ROLES           AGE   VERSION
 kube-master    Ready    control-plane   89m   v1.26.6
 kube-worker1   Ready    worker          89m   v1.26.6
 kube-worker2   Ready    worker          89m   v1.26.6
+
+# 包含ip
+kubectl get nodes -o wide
 ```
 
 ### 5.2 查看集群信息
