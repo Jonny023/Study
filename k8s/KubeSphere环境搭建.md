@@ -240,6 +240,12 @@ watch -n2 "kubectl get pods -n kube-system | grep calico"
 ```sh
 scp root@kube-master:/etc/kubernetes/admin.conf root@kube-worker1:/root/admin.conf
 scp root@kube-master:/etc/kubernetes/admin.conf root@kube-worker2:/root/admin.conf
+
+# 每个worker执行
+# 管理员用户
+cp -p ~/admin.conf ~/.kube/config
+# 普通用户
+cp -p ~/admin.conf $HOME/.kube/config
 ```
 
 ## 3.访问
@@ -393,9 +399,23 @@ kubectl logs ks-console-6d4cf64b58-k5s4d -n kubesphere-system --tail=100
 kubectl logs ks-console-6d4cf64b58-k5s4d -n kubesphere-system --tail=100 -f
 ```
 
+## 6.补全工具
+
+> kubectl 自动补全
+
+```sh
+# 安装 
+yum install bash-completion -y
+  
+# 自动补全 
+echo 'source <(kubectl completion bash)' >>~/.bashrc 
+kubectl completion bash >/etc/bash_completion.d/kubectl 
+source /usr/share/bash-completion/bash_completion
+```
 
 
-## 6.卸载
+
+## 7.卸载
 
 ### 1.停止kk / k8s / containerd
 
@@ -467,7 +487,7 @@ rm -rf /etc/ssl/etcd
 
 #### 1.1 nat网卡
 
-> NAT网卡无法上网
+> NAT网卡无法访问公网
 
 ```sh
 # 方式1
@@ -503,7 +523,35 @@ systemctl restart network
 
 > host-only网卡重启后无ip，导致无法远程连接，每次重启都要`service network restart`才生效
 
-##### 1.2.1 创建系统服务
+* 问题分析
+  * 1.服务没启动
+  * 2.配置存在问题
+
+##### 1.2.1 方式1
+
+> 通过查看状态发现network服务是dead状态，需要启动开机自启
+
+```sh
+systemctl status network
+chkconfig network on
+systemctl start network
+
+# 确保网卡 UP
+ifup enp0s8
+
+# 手动获取 DHCP，这里会生成dhclient.leases
+dhclient -v enp0s8
+
+# 正常的
+[root@kube-worker1 ~]# ll /var/lib/dhclient/
+total 8
+-rw-r--r-- 1 root root 836 Feb  1 10:41 dhclient--enp0s8.lease
+-rw-r--r-- 1 root root 418 Jan 31 21:36 dhclient.leases
+```
+
+##### 1.2.2 方式2
+
+###### 1.2.2.1 创建系统服务
 
 * `/etc/systemd/system/ifup-enp0s3.service`
 
@@ -521,7 +569,7 @@ RemainAfterExit=yes
 WantedBy=multi-user.target
 ```
 
-##### 1.2.2 开机自启
+###### 1.2.2.2 开机自启
 
 ```sh
 systemctl daemon-reload
