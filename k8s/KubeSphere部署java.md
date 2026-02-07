@@ -277,6 +277,73 @@ echo "=============================="
 
 ![](./img/c10.png)
 
+
+
+## 8.ConfigMap配置
+
+### 8.1 完整配置
+
+#### 8.1.1 创建配置
+
+![](./img/config1.png)
+
+#### 8.1.2 挂载配置
+
+> 我的jar路径为/app/app.jar，所以将ConfigMap配置挂载到/app/config/application.properties，springboot默认会加载config:/配置
+
+![](./img/config2.png)
+
+#### 8.1.3 引入配置
+
+> 引入配置选择配置的指点，直接点确定，也可以选择性引入
+
+![](./img/config3.png)
+
+### 8.2 变量配置（常用）
+
+> 
+
+#### 8.2.1 创建配置
+
+![](./img/config4.png)
+
+#### 8.2.2 选择配置
+
+> kubesphere UI当前版本还没有相关的界面操作配置envFrom，所以只能手动编辑yaml配置
+
+![](./img/config5.png)
+
+```yaml
+# 配置到containers下，和env配置同一级
+envFrom:
+  - configMapRef:
+    name: server-demo-cm
+```
+
+#### 8.3 验证
+
+```sh
+# 进入pod
+kubectl exec -it server-demo-7df969c985-qj946 -n user-server -- sh
+
+printenv | grep SERVER
+env | grep SERVER
+
+cat /proc/1/environ
+
+echo $SERVER_PORT
+
+# 查看svc
+kubectl get svc -n user-server
+
+
+<service-name>.<namespace>.svc.cluster.local
+
+curl server-demo.user-server.svc.cluster.local:80/uc/index
+```
+
+
+
 ## 疑问
 
 ### 1.不同端口的含义
@@ -295,5 +362,17 @@ spec:
     - port: 80         # 集群内访问Service时用80
       targetPort: 8080 # Pod实际监听的端口
       nodePort: 30583  # 外部访问节点IP:30583
+```
+
+### 2.pod安装工具
+
+```sh
+# 更新源
+sed -i 's|deb.debian.org|archive.debian.org|g' /etc/apt/sources.list
+sed -i 's|security.debian.org|archive.debian.org|g' /etc/apt/sources.list
+apt update -o Acquire::Check-Valid-Until=false
+
+# 安装curl
+apt install curl dnsutils -y
 ```
 
