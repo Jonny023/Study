@@ -8,12 +8,16 @@ cd claudecode
 
 npm init -y
 
-# 安装claude code
+# 安装opencode-ai
 npm install opencode-ai @colbymchenry/codegraph --registry=https://registry.npmmirror.com/
 
 # node_modules 文件夹打包压缩
 # PowerShell 命令，也可以手动打包
 Compress-Archive -Path .\claudecode-offline -DestinationPath .\claudecode-offline.zip
+
+# 升级
+rm -rf node_modules package-lock.json
+npm install opencode-ai@latest @colbymchenry/codegraph@latest --registry=https://registry.npmmirror.com
 ```
 
 ## 内网安装

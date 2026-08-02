@@ -14,6 +14,10 @@ npm install @anthropic-ai/claude-code @colbymchenry/codegraph --registry=https:/
 # node_modules 文件夹打包压缩
 # PowerShell 命令，也可以手动打包
 Compress-Archive -Path .\claudecode-offline -DestinationPath .\claudecode-offline.zip
+
+# 升级
+rm -rf node_modules package-lock.json
+npm install @anthropic-ai/claude-code@latest @colbymchenry/codegraph@latest --registry=https://registry.npmmirror.com
 ```
 
 ## 内网安装

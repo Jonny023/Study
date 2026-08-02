@@ -16,6 +16,10 @@ npm install -g @anthropic-ai/claude-code --registry=https://registry.npmmirror.c
 
 # 验证版本
 claude –version
+
+# 升级
+rm -rf node_modules package-lock.json
+npm install @anthropic-ai/claude-code@latest @colbymchenry/codegraph@latest --registry=https://registry.npmmirror.com
 ```
 
 ## 2.跳过登陆检查

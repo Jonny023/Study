@@ -16,5 +16,10 @@ npm install @openai/codex @colbymchenry/codegraph --registry=https://registry.np
 # node_modules 文件夹打包压缩
 # PowerShell 命令，也可以手动打包
 Compress-Archive -Path .\codex -DestinationPath .\codex.zip
+
+
+# 升级
+rm -rf node_modules package-lock.json
+npm install @openai/codex@latest @colbymchenry/codegraph@latest --registry=https://registry.npmmirror.com
 ```
 
